@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Android_Test_Applycation</string>
+    <string name="app_name">COM S 309 login</string>
+    <string name="signin_button">Sign in</string>
+    <string name="password_hint">Password</string>
+    <string name="email_hint">E-mail</string>
+    <string name="please_sign_in">Please, sign in or sign up!</string>
+    <string name="see_text_message">See the message</string>
+    <string name="back_button">Back</string>
+    <string name="welcome_to_309">Welcome to 309\n experimental program!</string>
 </resources>
