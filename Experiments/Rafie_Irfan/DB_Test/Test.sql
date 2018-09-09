@@ -1,0 +1,1 @@
+SELECT nameProfile, emailProfile, reportFlag from Profile;
