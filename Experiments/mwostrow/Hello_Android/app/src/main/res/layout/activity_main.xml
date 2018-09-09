@@ -6,13 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/buttonNo"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="189dp"
+        android:layout_height="595dp"
+        android:text="No"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="2dp" />
+
+    <Button
+        android:id="@+id/buttonYes"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="193dp"
+        android:layout_height="591dp"
+        android:text="Yes"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="195dp"
+        tools:layout_editor_absoluteY="4dp" />
+
+    <ImageView
+        android:id="@+id/imageDog"
+        android:layout_width="371dp"
+        android:layout_height="587dp"
+        app:srcCompat="@drawable/download"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="4dp" />
+
+    <ImageView
+        android:id="@+id/imageCat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="invisible"
+        app:srcCompat="@drawable/Cat03"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
 
 </android.support.constraint.ConstraintLayout>
