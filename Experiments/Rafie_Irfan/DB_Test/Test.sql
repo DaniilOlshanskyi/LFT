@@ -1,1 +1,1 @@
-SELECT nameProfile, emailProfile, reportFlag from Profile;
+select * from profile;
