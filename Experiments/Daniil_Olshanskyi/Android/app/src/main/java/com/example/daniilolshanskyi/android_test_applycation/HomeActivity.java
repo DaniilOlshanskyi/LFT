@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -25,5 +27,17 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button SignInButton = (Button) findViewById(R.id.buttonSignIn);
+
+        SignInButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        EditText email = (EditText) findViewById(R.id.userEmail);
+                        Toast.makeText(getApplicationContext(), "You have entered:"+ email.getText().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
     }
 }
