@@ -39,7 +39,11 @@ public class HomeActivity extends AppCompatActivity {
                         if (password.getText().toString().isEmpty() || email.getText().toString().isEmpty()){
                             Toast.makeText(getApplicationContext(), "Fill both fields please!", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getApplicationContext(), email.getText().toString() + " has been registered!", Toast.LENGTH_LONG).show();
+                            if (email.getText().toString().contains("@")){
+                                Toast.makeText(getApplicationContext(), email.getText().toString() + " has been registered!", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please, enter a valid email!", Toast.LENGTH_LONG).show();
+                            }
                         }
 
                     }
