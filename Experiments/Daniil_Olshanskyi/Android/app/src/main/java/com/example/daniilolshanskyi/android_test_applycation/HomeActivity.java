@@ -35,7 +35,13 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         EditText email = (EditText) findViewById(R.id.userEmail);
-                        Toast.makeText(getApplicationContext(), "You have entered:"+ email.getText().toString(), Toast.LENGTH_LONG).show();
+                        EditText password = (EditText) findViewById(R.id.userPassword);
+                        if (password.getText().toString().isEmpty() || email.getText().toString().isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Fill both fields please!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), email.getText().toString() + " has been registered!", Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 }
         );
