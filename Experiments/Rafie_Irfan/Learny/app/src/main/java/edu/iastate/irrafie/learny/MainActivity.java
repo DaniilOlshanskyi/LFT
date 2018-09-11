@@ -1,13 +1,19 @@
 package edu.iastate.irrafie.learny;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.ArrayList;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,18 +23,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Button send_button;
-    private EditText emailText;
-    private EditText passText;
 
+
+    ArrayList<String> userInput = new ArrayList<String>();
     //this causes crashes
     //not due to null textbox
 
-    private View.OnClickListener sendButtonOnClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            send_buttonClicked();
-        }
-    };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -38,16 +38,19 @@ public class MainActivity extends AppCompatActivity {
         //Test
 
 
-        send_button.setOnClickListener(sendButtonOnClickListener);
     }
 
-    private void send_buttonClicked(){
-        String email = emailText.toString();
-        String pass = passText.toString();
-        emailText.setText("Test");
-        passText.setText("Test");
+    public void send_buttonClicked(View view){
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText emailText = (EditText) findViewById(R.id.emailText);
+        EditText passText = (EditText) findViewById(R.id.passText);
+        userInput.add(emailText.getText().toString());
+        userInput.add(passText.getText().toString());
+        String userMess = userInput.get(0);
+        String passMess = userInput.get(1);
+        intent.putExtra(EXTRA_MESSAGE, userMess + passMess);
+        startActivity(intent);
     }
-
 
 
 }
