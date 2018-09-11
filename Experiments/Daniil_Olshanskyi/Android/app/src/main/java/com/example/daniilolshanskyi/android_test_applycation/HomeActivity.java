@@ -31,8 +31,6 @@ public class HomeActivity extends AppCompatActivity {
         Button SignInButton = (Button) findViewById(R.id.buttonSignIn);
 
 
-        final Intent i = new Intent(HomeActivity.this, SwipeActivity.class);
-
         SignInButton.setOnClickListener(
                 new View.OnClickListener(){
                     @Override
@@ -44,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
                         } else {
                             if (email.getText().toString().contains("@")){
                                 Toast.makeText(getApplicationContext(), email.getText().toString() + " has been registered!", Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(HomeActivity.this, SwipeActivity.class);
                                 startActivity(i);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Please, enter a valid email!", Toast.LENGTH_LONG).show();

@@ -12,7 +12,7 @@ public class SwipeActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "SwipeOnStartgit ");
+        Log.i(TAG, "SwipeOnStart ");
     }
 
     @Override
