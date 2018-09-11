@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-    private Button send_button;
 
 
     ArrayList<String> userInput = new ArrayList<String>();
@@ -50,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         String passMess = userInput.get(1);
         intent.putExtra(EXTRA_MESSAGE, userMess + passMess);
         startActivity(intent);
+    }
+
+    public static String getArrayList(int n){
+        return userInput.get(n);
     }
 
 
