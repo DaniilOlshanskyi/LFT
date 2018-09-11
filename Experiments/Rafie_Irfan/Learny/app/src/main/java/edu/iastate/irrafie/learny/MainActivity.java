@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
+    private Button send_button;
 
 
     ArrayList<String> userInput = new ArrayList<String>();
@@ -47,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
         userInput.add(passText.getText().toString());
         String userMess = userInput.get(0);
         String passMess = userInput.get(1);
-        intent.putExtra(EXTRA_MESSAGE, userMess + passMess);
+        intent.putExtra("user_text", userMess);
+        intent.putExtra("pass_text", passMess);
         startActivity(intent);
     }
 
-    public static String getArrayList(int n){
+    public String getArrayList(int n){
         return userInput.get(n);
     }
 
