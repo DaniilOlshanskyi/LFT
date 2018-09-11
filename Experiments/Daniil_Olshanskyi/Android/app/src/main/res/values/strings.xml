@@ -7,4 +7,5 @@
     <string name="see_text_message">See the message</string>
     <string name="back_button">Back</string>
     <string name="welcome_to_309">Welcome to 309\n experimental program!</string>
+    <string name="title_activity_swipe">SwipeActivity</string>
 </resources>
