@@ -32,10 +32,10 @@ public class Profiles implements Serializable{
 		
 		@Column(name="prof_reportFlag")
 	    private int prof_reportFlag;
-		/*
+		
 		@Column(name="prof_modFlag")
 	    private int prof_modFlag;
-		*/
+		
 		@Column(name="prof_rep")
 	    private int prof_rep;
 		
@@ -44,9 +44,6 @@ public class Profiles implements Serializable{
 		
 		@Column(name="prof_suspend")
 	    private int prof_suspend;
-		
-		@Column(name="prof_mod_flag")
-		private int prof_mod_Flag;
 	    
 
 		public Integer getId() {
@@ -97,14 +94,14 @@ public class Profiles implements Serializable{
 		public void setprof_reportFlag(int prof_reportFlag) {
 			this.prof_reportFlag = prof_reportFlag;
 		}
-		/*
+		
 		public int getprof_modFlag() {
 			return prof_modFlag;
 		}
 		public void setprof_modFlag(int prof_modFlag) {
 			this.prof_modFlag = prof_modFlag;
 		}
-		*/
+		
 		public int getprof_rep() {
 			return prof_rep;
 		}
