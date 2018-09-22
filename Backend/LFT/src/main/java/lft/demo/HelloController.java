@@ -1,6 +1,9 @@
 package lft.demo;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +23,10 @@ public class HelloController {
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Profiles> getAllUsers(){
     	return userRepository.findAll();
+    }
+    
+    @GetMapping(path="/all/{id}")
+    public @ResponseBody Optional<Profiles> getUserById(int id){
+    	return userRepository.findById(id);
     }
 } 
