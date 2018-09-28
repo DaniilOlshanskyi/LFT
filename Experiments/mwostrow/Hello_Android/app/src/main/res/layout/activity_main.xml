@@ -34,14 +34,14 @@
         tools:layout_editor_absoluteX="6dp"
         tools:layout_editor_absoluteY="4dp" />
 
-    <ImageView
-        android:id="@+id/imageCat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/Cat03"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+    <!--<ImageView-->
+        <!--android:id="@+id/imageCat"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="invisible"-->
+        <!--app:srcCompat="@drawable/Cat03"-->
+        <!--tools:layout_editor_absoluteX="0dp"-->
+        <!--tools:layout_editor_absoluteY="0dp" />-->
 
 
 </android.support.constraint.ConstraintLayout>

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     Button b1, b2;
-    ImageView dog, cat;
+    ImageView dog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
         b2.bringToFront();
 
         dog = (ImageView) findViewById(R.id.imageDog);
-        cat = (ImageView) findViewById(R.id.imageCat);
+//        cat = (ImageView) findViewById(R.id.imageCat);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dog.setVisibility(View.INVISIBLE);
-                cat.setVisibility(View.VISIBLE);
+//                cat.setVisibility(View.VISIBLE);
             }
         });
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dog.setVisibility(View.INVISIBLE);
-                cat.setVisibility(View.VISIBLE);
+//                cat.setVisibility(View.VISIBLE);
             }
         });
     }
