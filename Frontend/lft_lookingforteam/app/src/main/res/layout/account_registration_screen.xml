@@ -34,25 +34,29 @@
 
     <EditText
         android:id="@+id/accountCreation_username"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="45"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/accountCreation_password"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:maxLength="45"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -109,7 +113,7 @@
         android:ellipsize="none"
         android:maxLines="100"
         android:scrollHorizontally="false"
-        android:text="Password must be at least 8 characters, and contain at least 1 letter, 1 nubmer, and 1 special character ($@$!%*#?&)"
+        android:text="Password must be at least 8 characters, and contain at least 1 letter, 1 nubmer, and 1 special character ($@$!%*#?&amp;)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accountCreation_password" />
