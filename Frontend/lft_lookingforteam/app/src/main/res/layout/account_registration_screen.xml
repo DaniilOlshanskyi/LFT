@@ -24,18 +24,20 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="8dp"
         android:text="Password:"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/accountCreation_password"
-        app:layout_constraintEnd_toStartOf="@+id/accountCreation_password" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/accountCreation_username"
-        android:layout_width="210dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
@@ -44,12 +46,15 @@
         android:maxLength="45"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/accountCreation_password"
-        android:layout_width="210dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
@@ -58,19 +63,20 @@
         android:maxLength="45"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="8dp"
         android:text="Username:"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/accountCreation_username"
-        app:layout_constraintEnd_toStartOf="@+id/accountCreation_username" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/acctRegSubmitButton"

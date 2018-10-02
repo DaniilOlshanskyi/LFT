@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.luke.lft_lookingforteam.app.AppController;
 import com.example.luke.lft_lookingforteam.net_utils.Const;
 
 import org.json.JSONException;
@@ -74,6 +75,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                         StringRequest postReq = new StringRequest(Request.Method.POST, Const.URL_POST_REQUEST, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                Toast.makeText(getApplicationContext(), "Server received request", Toast.LENGTH_LONG).show();
                                 Log.d("POSTreq", response);
                             }
                         }, new Response.ErrorListener() {
@@ -86,16 +88,27 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put(Const.PROFILE_USERNAME_KEY, username);
                                 params.put(Const.PROFILE_PASSWORD_KEY, password);
+                                params.put(Const.PROFILE_PERIOD_KEY, "availability not set");
+                                params.put(Const.PROFILE_GAMES_KEY, "");
+                                params.put(Const.PROFILE_PHOTO_KEY, "");
+                                params.put(Const.PROFILE_REPORT_FLAG_KEY, "0");
+                                params.put(Const.PROFILE_MOD_FLAG_KEY, "0");
+                                params.put(Const.PROFILE_REPUTATION_KEY, "0");
+                                params.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, "");
+                                params.put(Const.PROFILE_SUSPENDED_KEY, "0");
                                 return params;
                             }
                         };
 
+                        // make request
+                        AppController.getInstance().addToRequestQueue(postReq, "POST request");
+
                         // notify user that their account has been created :]
-                        Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
 
                         // TODO pass id of user account to accountview
-                        Intent i = new Intent(AccountRegistrationScreen.this, AccountViewScreen.class);
-                        startActivity(i);
+                        //Intent i = new Intent(AccountRegistrationScreen.this, AccountViewScreen.class);
+                        //startActivity(i);
                     }
                 }
             }
@@ -109,39 +122,49 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        // clear errorMsg to prepare for appending to it
+        // clear errorMsg to prepare for appensionus
         errorMsg.delete(0, errorMsg.length());
 
-        // check password length
+        // check password length, notify user and return false if less than 8 characters
         if (pwd.length() < 8) {
             errorMsg.append("Password is too short");
             return false;
         }
 
-        // TODO check syntax of these checks
-
         // check whether password contains a letter
+        // this pattern defines a regular statement where there is: 0 or more characters,
+        // then at least one letter (capital or lowercase), then 0 or more characters
         final String letterPattern = ".*(?=[a-zA-Z]+).*";
         pattern = Pattern.compile(letterPattern);
         matcher = pattern.matcher(pwd);
+        // if the matcher created from this pattern doesn't find a match in the password,
+        // then we know it doesn't contain any letters, so let the user know and return false
         if (!matcher.matches()) {
             errorMsg.append("Password must contain at least one letter");
             return false;
         }
 
         // check whether password contains a number
+        // this pattern defines a regular statement where there is: 0 or more characters,
+        // then at least one number, then 0 or more characters
         final String numPattern = ".*(?=[0-9]+).*";
         pattern = Pattern.compile(numPattern);
         matcher = pattern.matcher(pwd);
+        // if the matcher created from this pattern doesn't find a match in the password,
+        // then we know it doesn't contain any numbers, so let the user know and return false
         if (!matcher.matches()) {
             errorMsg.append("Password must contain at least one number");
             return false;
         }
 
         // check whether password contains a special character
+        // this pattern defines a regular statement where there is: 0 or more characters,
+        // then at least one special character, then 0 or more characters
         final String specCharPattern = ".*(?=[@$!%*#?&]+).*";
         pattern = Pattern.compile(specCharPattern);
         matcher = pattern.matcher(pwd);
+        // if the matcher created from this pattern doesn't find a match in the password,
+        // then we know it doesn't contain any special characters, so let the user know and return false
         if (!matcher.matches()) {
             errorMsg.append("Password must contain at least one special character");
             return false;
@@ -149,21 +172,12 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
         // if no issues are found with the password, return true
         return true;
-
-        // not really sure how this works
-//        Pattern pattern;
-//        Matcher matcher;
-//        final String PWD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@$!%*#?&])(?=\\S+$).{4,}$";
-//        pattern = Pattern.compile(PWD_PATTERN);
-//        matcher = pattern.matcher(pwd);
-//
-//        return matcher.matches();
     }
 
     // username availability method
     private boolean usernameAvailable(String username) {
 
-        // TODO make request to spring with username
+        // TODO make database query request to spring with username
 
 
         // if username is available, return true

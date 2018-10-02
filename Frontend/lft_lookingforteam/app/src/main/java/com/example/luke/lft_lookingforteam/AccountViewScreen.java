@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONObject;
 
 public class AccountViewScreen extends AppCompatActivity {
@@ -26,5 +29,8 @@ public class AccountViewScreen extends AppCompatActivity {
         profilePic = findViewById(R.id.accountView_profilePic);
 
         // TODO get profile from server and fill the layout
+
+        //JsonObjectRequest testrequest = new JsonObjectRequest(Request.Method.GET, )
+
     }
 }
