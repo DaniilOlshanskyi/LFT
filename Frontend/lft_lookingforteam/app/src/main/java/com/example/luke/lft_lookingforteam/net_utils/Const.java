@@ -2,7 +2,7 @@ package com.example.luke.lft_lookingforteam.net_utils;
 
 public class Const {
     public static final String URL_POST_REQUEST = "proj309-ad-08.misc.iastate.edu:8080/post_profile";
-    public static final String TEST_URL_GET_PROFILE_REQUEST = "proj309-ad-08.misc.iastate.edu:8080/all/1";
+    public static final String TEST_URL_GET_PROFILE_REQUEST = "http://proj309-ad-08.misc.iastate.edu:8080/all/1";
 
     // JSON profile object keys
     public static final String PROFILE_USERNAME_KEY = "prof_username";
