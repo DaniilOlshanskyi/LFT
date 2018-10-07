@@ -13,8 +13,8 @@ import javax.persistence.Table;
 public class Profiles implements Serializable{
 	
 		
-		@Column(name="profId")
-	    private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer profId;
+		@Column(name="profID")
+	    private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer profID;
 		
 		@Column(name="profUsername")
 	    private String profUsername;
@@ -24,9 +24,6 @@ public class Profiles implements Serializable{
 		
 		@Column(name="profPeriod")
 	    private String profPeriod;
-		
-		@Column(name="profGamesID")
-	    private int profGamesID;
 		
 		@Column(name="profPhoto")
 	    private String profPhoto;
@@ -47,11 +44,11 @@ public class Profiles implements Serializable{
 	    private int profSuspend;
 	    
 
-		public Integer getId() {
-			return profId;
+		public Integer getID() {
+			return profID;
 		}
-		public void setId(Integer id) {
-			this.profId = id;
+		public void setID(Integer id) {
+			this.profID = id;
 		}
 
 		public String getprofUsername() {
@@ -73,13 +70,6 @@ public class Profiles implements Serializable{
 		}
 		public void setprofPeriod(String profPeriod) {
 			this.profPeriod = profPeriod;
-		}
-		
-		public int getprofGamesID() {
-			return profGamesID;
-		}
-		public void setprofGamesID(int profGamesID) {
-			this.profGamesID = profGamesID;
 		}
 		
 		public String getprofPhoto() {
