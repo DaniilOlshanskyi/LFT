@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,12 +12,12 @@ import javax.persistence.Table;
 @Table(name="profiles")
 public class Profiles implements Serializable{
 	
-		@Id
+		
 		@Column(name="prof_id")
-	    private Integer prof_id;
+	    private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer prof_id;
 		
 		@Column(name="prof_username")
-	    private String prof_username;
+	    private String profusername;
 		
 		@Column(name="prof_password")
 	    private String prof_password;
@@ -54,10 +55,10 @@ public class Profiles implements Serializable{
 		}
 
 		public String getprof_username() {
-			return prof_username;
+			return profusername;
 		}
 		public void setgetprof_username(String prof_username) {
-			this.prof_username = prof_username;
+			this.profusername = prof_username;
 		}
 
 		public String getprof_password() {
@@ -105,7 +106,7 @@ public class Profiles implements Serializable{
 		public int getprof_rep() {
 			return prof_rep;
 		}
-		public void setprof_period(int prof_rep) {
+		public void setprof_rep(int prof_rep) {
 			this.prof_rep = prof_rep;
 		}
 		
