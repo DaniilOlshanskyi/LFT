@@ -36,7 +36,7 @@ public class HelloController {
     
     @GetMapping(path="/all/username/{username}")
     public @ResponseBody Profiles getUserByUsername(@PathVariable(value="username") String username){
-    	return userRepository.findByprofusername(username);
+    	return userRepository.findByprofUsername(username);
     }
     
     @PostMapping("/post_profile")
