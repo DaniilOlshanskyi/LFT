@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AccountRegistrationScreen" />
-
-        <activity android:name=".AccountViewScreen">
+        <activity android:name=".AccountViewScreen" />
+        <activity android:name=".AccountRegistrationScreen">
             <intent-filter>
                 <action android:name = "android.intent.action.MAIN" />
                 <category android:name = "android.intent.category.LAUNCHER" />

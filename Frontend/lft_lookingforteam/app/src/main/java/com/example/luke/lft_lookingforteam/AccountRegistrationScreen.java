@@ -14,15 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.luke.lft_lookingforteam.app.AppController;
 import com.example.luke.lft_lookingforteam.net_utils.Const;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +48,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                 // get strings from text typed into "username" and "password" fields
                 // both text fields are limited to 45 characters in the layout,
                 // which is the max size of our database variables for username and password
+                // TODO find a better limit for username and password lengths (maybe 15 for username?)
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
 
@@ -74,21 +69,20 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
                         // TODO send account creation request to server (done?)
                         // not really sure what's going on here right now
-                        StringRequest postReq = new StringRequest(Request.Method.POST, Const.URL_POST_REQUEST,
+                        StringRequest postReq = new StringRequest(Request.Method.POST, Const.URL_POST_PROFILE,
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Toast.makeText(getApplicationContext(), "Server received request", Toast.LENGTH_LONG).show();
                                     }
                                 },
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                                        Log.d("Prof_POST_Req", error.toString());
                                     }
                                 }) {
                             protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
+                                Map<String, String> params = new HashMap<>();
                                 params.put(Const.PROFILE_USERNAME_KEY, username);
                                 params.put(Const.PROFILE_PASSWORD_KEY, password);
                                 params.put(Const.PROFILE_PERIOD_KEY, "availability not set");
@@ -109,10 +103,11 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                         queue.add(postReq);
 
                         // notify user that their account has been created :]
-                        //Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
 
                         // TODO pass id of user account to accountview
                         Intent i = new Intent(AccountRegistrationScreen.this, AccountViewScreen.class);
+                        i.putExtra("PROFILE_USERNAME", username);
                         startActivity(i);
                     }
                 }
@@ -127,7 +122,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        // clear errorMsg to prepare for appensionus
+        // clear errorMsg to prepare for appension
         errorMsg.delete(0, errorMsg.length());
 
         // check password length, notify user and return false if less than 8 characters
@@ -181,6 +176,13 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
     // username availability method
     private boolean usernameAvailable(String username) {
+
+        // limit username length to 15 characters
+        if (username.length() > 15){
+            return false;
+        }
+
+        // TODO make other username validity checks
 
         // TODO make database query request to spring with username
 

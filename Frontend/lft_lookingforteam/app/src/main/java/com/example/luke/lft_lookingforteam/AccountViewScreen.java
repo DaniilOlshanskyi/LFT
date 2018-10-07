@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,10 +20,13 @@ import org.json.JSONObject;
 
 public class AccountViewScreen extends AppCompatActivity {
 
-    Button editButton;
+    Button editButton;  // allows user to edit their profile content
     TextView username, availability;
     ImageView profilePic;
-    JSONObject userProfile = null;
+    JSONObject userProfile = null;  // holds user profile obtained from server
+
+    // username of logged-in profile (passed from previous activity)
+    String profileUsername = getIntent().getStringExtra("PROFILE_USERNAME");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +39,13 @@ public class AccountViewScreen extends AppCompatActivity {
         availability = findViewById(R.id.accountView_availability);
         profilePic = findViewById(R.id.accountView_profilePic);
 
-        // TODO get profile from server and fill the layout
-        JsonObjectRequest testrequest = new JsonObjectRequest(Request.Method.GET, Const.TEST_URL_GET_PROFILE_REQUEST, null,
+        // create a GET request for user profile
+        JsonObjectRequest testrequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + profileUsername, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(getApplicationContext(), "Request received", Toast.LENGTH_LONG).show();
+                        // when server sends back profile object
                         userProfile = response;
-
-
                         try{
                             // display username
                             username.setText(userProfile.getString(Const.PROFILE_USERNAME_KEY));
@@ -53,6 +53,7 @@ public class AccountViewScreen extends AppCompatActivity {
                             // display availability
                             availability.setText(userProfile.getString(Const.PROFILE_PERIOD_KEY));
                         } catch (JSONException jse){
+                            // if an error occurs with the JSON, log it
                             Log.d("Prof_Info_Fill", jse.toString());
                         }
                     }
@@ -60,14 +61,13 @@ public class AccountViewScreen extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                        // if a volley error occurs, log it
+                        Log.d("Prof_GET_Req", error.toString());
                     }
                 });
 
-        // TODO de-spaghettify
-        // make request
+        // make GET request
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(testrequest);
-        Toast.makeText(getApplicationContext(), "GET request made", Toast.LENGTH_LONG).show();
     }
 }
