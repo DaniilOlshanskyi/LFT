@@ -35,7 +35,7 @@ public class HelloController {
     }
     
     @GetMapping(path="/all/username/{username}")
-    public @ResponseBody List<Profiles> getUserByUsername(@PathVariable(value="username") String username){
+    public @ResponseBody Profiles getUserByUsername(@PathVariable(value="username") String username){
     	return userRepository.findByprofusername(username);
     }
     
