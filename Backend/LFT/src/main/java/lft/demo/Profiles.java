@@ -35,13 +35,13 @@ public class Profiles implements Serializable{
 	    private int profModFlag;
 		
 		@Column(name="profRep")
-	    private int profRep;
+	    private float profRep;
 		
 		@Column(name="profRecentlogin")
 	    private String profRecentlogin;
 		
 		@Column(name="profSuspend")
-	    private int profSuspend;
+	    private float profSuspend;
 	    
 
 		public Integer getID() {
@@ -93,10 +93,10 @@ public class Profiles implements Serializable{
 			this.profModFlag = profModFlag;
 		}
 		
-		public int getprofRep() {
+		public float getprofRep() {
 			return profRep;
 		}
-		public void setprofRep(int profRep) {
+		public void setprofRep(float profRep) {
 			this.profRep = profRep;
 		}
 		
@@ -107,10 +107,10 @@ public class Profiles implements Serializable{
 			this.profRecentlogin = profRecentlogin;
 		}
 		
-		public int getprofSuspend() {
+		public float getprofSuspend() {
 			return profSuspend;
 		}
-		public void setprofSuspend(int profSuspend) {
+		public void setprofSuspend(float profSuspend) {
 			this.profSuspend = profSuspend;
 		}
 }
