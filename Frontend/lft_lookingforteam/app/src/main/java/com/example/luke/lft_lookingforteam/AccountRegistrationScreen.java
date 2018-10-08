@@ -3,6 +3,7 @@ package com.example.luke.lft_lookingforteam;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,16 +12,12 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.luke.lft_lookingforteam.app.AppController;
+import com.android.volley.toolbox.Volley;
 import com.example.luke.lft_lookingforteam.net_utils.Const;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +29,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
     Button submitButton;
     EditText usernameField, passwordField;
     String username, password;
-    StringBuilder pwdErrorMsg = new StringBuilder();     // used to tell user what's wrong with their password
+    StringBuilder unpwdErrorMsg = new StringBuilder();     // used to tell user what's wrong with their username/password
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,71 +41,78 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         usernameField = findViewById(R.id.accountCreation_username);
         passwordField = findViewById(R.id.accountCreation_password);
 
+        // enforce character limit on username field
+        InputFilter[] unFilterArray = new InputFilter[1];
+        unFilterArray[0] = new InputFilter.LengthFilter(Const.USERNAME_CHARACTER_LIMIT);
+        usernameField.setFilters(unFilterArray);
+
+        // enforce character limit on password field
+        InputFilter[] pwdFilterArray = new InputFilter[1];
+        pwdFilterArray[0] = new InputFilter.LengthFilter(Const.PASSWORD_CHARACTER_LIMIT);
+        passwordField.setFilters(pwdFilterArray);
+
         // when the "submit" button is pressed
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 // get strings from text typed into "username" and "password" fields
-                // both text fields are limited to 45 characters in the layout,
-                // which is the max size of our database variables for username and password
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
 
                 // check to make sure username isn't already in use
-                if (!usernameAvailable(username)) {
-                    // if username is unavailable, tell user
-                    Toast.makeText(getApplicationContext(), "Username unavailable", Toast.LENGTH_LONG).show();
+                if (!usernameValidation(username, unpwdErrorMsg)) {
+                    // if username is invalid/unavailable, tell user
+                    Toast.makeText(getApplicationContext(), unpwdErrorMsg, Toast.LENGTH_LONG).show();
                 }
                 // if it's available, continue
                 else {
                     // check whether password is valid
-                    if (!passwordValidation(password, pwdErrorMsg)) {
-                        // if password is invalid, tell user why
-                        Toast.makeText(getApplicationContext(), pwdErrorMsg, Toast.LENGTH_LONG).show();
+                    if (!passwordValidation(password, unpwdErrorMsg)) {
+                        // if password is invalid, tell user
+                        Toast.makeText(getApplicationContext(), unpwdErrorMsg, Toast.LENGTH_LONG).show();
                     }
                     // if it's valid, continue
                     else {
 
-                        // TODO send account creation request to server (done?)
-                        // not really sure what's going on here right now
-                        StringRequest postReq = new StringRequest(Request.Method.POST, Const.URL_POST_REQUEST, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(getApplicationContext(), "Server received request", Toast.LENGTH_LONG).show();
-                                Log.d("POSTreq", response);
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                VolleyLog.d("POSTreq", "Error: " + error.getMessage());
-                            }
-                        }) {
+                        // create POST request to send to server
+                        StringRequest postReq = new StringRequest(Request.Method.POST, Const.URL_POST_PROFILE,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        // notify user that their account has been created :]
+                                        Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
+
+                                        // switch to Account Viewing Screen, passing username
+                                        Intent i = new Intent(AccountRegistrationScreen.this, AccountViewScreen.class);
+                                        i.putExtra("PROFILE_USERNAME", username);
+                                        startActivity(i);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("Prof_POST_Req", error.toString());
+                                    }
+                                }) {
                             protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
+                                Map<String, String> params = new HashMap<>();
                                 params.put(Const.PROFILE_USERNAME_KEY, username);
                                 params.put(Const.PROFILE_PASSWORD_KEY, password);
                                 params.put(Const.PROFILE_PERIOD_KEY, "availability not set");
-                                params.put(Const.PROFILE_GAMES_KEY, "");
                                 params.put(Const.PROFILE_PHOTO_KEY, "");
                                 params.put(Const.PROFILE_REPORT_FLAG_KEY, "0");
                                 params.put(Const.PROFILE_MOD_FLAG_KEY, "0");
-                                params.put(Const.PROFILE_REPUTATION_KEY, "0");
-                                params.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, "");
-                                params.put(Const.PROFILE_SUSPENDED_KEY, "0");
+                                params.put(Const.PROFILE_REPUTATION_KEY, "0.0");
+                                params.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, new java.sql.Date(System.currentTimeMillis()).toString());
+                                params.put(Const.PROFILE_SUSPENDED_KEY, "0.0");
                                 return params;
                             }
                         };
 
-                        // make request
-                        AppController.getInstance().addToRequestQueue(postReq, "POST request");
-
-                        // notify user that their account has been created :]
-                        //Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
-
-                        // TODO pass id of user account to accountview
-                        //Intent i = new Intent(AccountRegistrationScreen.this, AccountViewScreen.class);
-                        //startActivity(i);
+                        // make POST request
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        queue.add(postReq);
                     }
                 }
             }
@@ -122,7 +126,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        // clear errorMsg to prepare for appensionus
+        // clear errorMsg to prepare for appension
         errorMsg.delete(0, errorMsg.length());
 
         // check password length, notify user and return false if less than 8 characters
@@ -132,7 +136,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         }
 
         // check whether password contains a letter
-        // this pattern defines a regular statement where there is: 0 or more characters,
+        // this pattern defines a regular expression where there is: 0 or more characters,
         // then at least one letter (capital or lowercase), then 0 or more characters
         final String letterPattern = ".*(?=[a-zA-Z]+).*";
         pattern = Pattern.compile(letterPattern);
@@ -145,7 +149,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         }
 
         // check whether password contains a number
-        // this pattern defines a regular statement where there is: 0 or more characters,
+        // this pattern defines a regular expression where there is: 0 or more characters,
         // then at least one number, then 0 or more characters
         final String numPattern = ".*(?=[0-9]+).*";
         pattern = Pattern.compile(numPattern);
@@ -158,7 +162,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         }
 
         // check whether password contains a special character
-        // this pattern defines a regular statement where there is: 0 or more characters,
+        // this pattern defines a regular expression where there is: 0 or more characters,
         // then at least one special character, then 0 or more characters
         final String specCharPattern = ".*(?=[@$!%*#?&]+).*";
         pattern = Pattern.compile(specCharPattern);
@@ -170,12 +174,51 @@ public class AccountRegistrationScreen extends AppCompatActivity {
             return false;
         }
 
+        // check whether password contains any restricted characters
+        // this pattern defines a regular expression where there is: 0 or more characters,
+        // then at least one restricted character, then 0 or more characters
+        final String restrCharPattern = ".*(?=[=<>+,.]+).*";
+        pattern = Pattern.compile(restrCharPattern);
+        matcher = pattern.matcher(pwd);
+        // if the matcher created from this pattern finds a match in the password,
+        // then we know it contains a restricted character, so notify the user and return false
+        if (matcher.matches()){
+            errorMsg.append("Password cannot contain restricted characters (=<>+,.)");
+            return false;
+        }
+
         // if no issues are found with the password, return true
         return true;
     }
 
     // username availability method
-    private boolean usernameAvailable(String username) {
+    private boolean usernameValidation(String username, StringBuilder errorMsg) {
+
+        // pattern and matcher objects used to check for validity
+        Pattern pattern;
+        Matcher matcher;
+
+        // clear errorMsg to prepare for appension
+        errorMsg.delete(0, errorMsg.length());
+
+        // check username length, notify user and return false if somehow longer than the limit
+        if (username.length() > Const.USERNAME_CHARACTER_LIMIT){
+            errorMsg.append("Usernames cannot be longer than " + Const.USERNAME_CHARACTER_LIMIT + " characters");
+            return false;
+        }
+
+        // make sure username doesn't contain any restricted characters (&=<>+,)
+        // this pattern defines a regular expression where there is: 0 or more characters,
+        // then at least one of the restricted characters, then 0 or more characters
+        final String restrCharPattern = ".*(?=[&=<>+,.]+).*";
+        pattern = Pattern.compile(restrCharPattern);
+        matcher = pattern.matcher(username);
+        // if the matcher created from this pattern finds a match in the username,
+        // then we know it contains a restricted character, so notify the user and return false
+        if (matcher.matches()) {
+            errorMsg.append("Username cannot contain restricted characters (&=<>+,.)");
+            return false;
+        }
 
         // TODO make database query request to spring with username
 
