@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,64 +12,63 @@ import javax.persistence.Table;
 @Table(name="reports")
 public class Reports implements Serializable{
 
-	@Id
-	@Column(name="report_id")
-	private Integer report_id;
+	@Column(name="reportId")
+	private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer reportID;
 	
-	@Column(name="prof_id")
-	private Integer prof_id;
+	@Column(name="profId")
+	private Integer profId;
 	
-	@Column(name="report_chatlog")
-	private Long report_chatlog;
+	@Column(name="reportChatlog")
+	private Long reportChatlog;
 	
-	@Column(name="report_resolveFlag")
-	private Integer report_resolveFlag;
+	@Column(name="reportResolveFlag")
+	private Integer reportResolveFlag;
 	
-	@Column(name="report_resolveDate")
-	private String report_resolveDate;
+	@Column(name="reportResolveDate")
+	private String reportResolveDate;
 	
-	@Column(name="report_message")
-	private String report_message;
+	@Column(name="reportMessage")
+	private String reportMessage;
 	
 	public Integer getId() {
-		return report_id;
+		return reportID;
 	}
 	public void setId(Integer id) {
-		report_id = id;
+		reportID = id;
 	}
 	
-	public Integer getProf_id() {
-		return prof_id;
+	public Integer getProfId() {
+		return profId;
 	}
-	public void setProf_id(Integer id) {
-		prof_id = id;
+	public void setProfId(Integer id) {
+		profId = id;
 	}
 	
 	public Long getChatlog() {
-		return report_chatlog;
+		return reportChatlog;
 	}
 	public void setChatlog(Long chatlog) {
-		report_chatlog = chatlog;
+		reportChatlog = chatlog;
 	}
 	
 	public Integer getResolveFlag() {
-		return report_resolveFlag;
+		return reportResolveFlag;
 	}
 	public void setResolveFlag(Integer resolveFlag) {
-		report_resolveFlag = resolveFlag;
+		reportResolveFlag = resolveFlag;
 	}
 	
 	public String getResolveDate() {
-		return report_resolveDate;
+		return reportResolveDate;
 	}
 	public void setResolveDate(String resolveDate) {
-		report_resolveDate = resolveDate;
+		reportResolveDate = resolveDate;
 	}
 	
 	public String getMessage() {
-		return report_message;
+		return reportMessage;
 	}
 	public void setMessage(String message) {
-		report_message = message;
+		reportMessage = message;
 	}
 }
