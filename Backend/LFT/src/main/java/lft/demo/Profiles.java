@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,115 +12,105 @@ import javax.persistence.Table;
 @Table(name="profiles")
 public class Profiles implements Serializable{
 	
-		@Id
-		@Column(name="prof_id")
-	    private Integer prof_id;
 		
-		@Column(name="prof_username")
-	    private String prof_username;
+		@Column(name="profID")
+	    private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer profID;
 		
-		@Column(name="prof_password")
-	    private String prof_password;
+		@Column(name="profUsername")
+	    private String profUsername;
 		
-		@Column(name="prof_period")
-	    private String prof_period;
+		@Column(name="profPassword")
+	    private String profPassword;
 		
-		@Column(name="prof_gamesID")
-	    private int prof_gamesID;
+		@Column(name="profPeriod")
+	    private String profPeriod;
 		
-		@Column(name="prof_photo")
-	    private String prof_photo;
+		@Column(name="profPhoto")
+	    private String profPhoto;
 		
-		@Column(name="prof_reportFlag")
-	    private int prof_reportFlag;
+		@Column(name="profReportFlag")
+	    private int profReportFlag;
 		
-		@Column(name="prof_modFlag")
-	    private int prof_modFlag;
+		@Column(name="profModFlag")
+	    private int profModFlag;
 		
-		@Column(name="prof_rep")
-	    private int prof_rep;
+		@Column(name="profRep")
+	    private int profRep;
 		
-		@Column(name="prof_recentlogin")
-	    private String prof_recentlogin;
+		@Column(name="profRecentlogin")
+	    private String profRecentlogin;
 		
-		@Column(name="prof_suspend")
-	    private int prof_suspend;
+		@Column(name="profSuspend")
+	    private int profSuspend;
 	    
 
-		public Integer getId() {
-			return prof_id;
+		public Integer getID() {
+			return profID;
 		}
-		public void setId(Integer id) {
-			this.prof_id = id;
-		}
-
-		public String getprof_username() {
-			return prof_username;
-		}
-		public void setgetprof_username(String prof_username) {
-			this.prof_username = prof_username;
+		public void setID(Integer id) {
+			this.profID = id;
 		}
 
-		public String getprof_password() {
-			return prof_password;
+		public String getprofUsername() {
+			return profUsername;
 		}
-		public void setprof_password(String prof_password) {
-			this.prof_password = prof_password;
+		public void setgetprofusername(String profUsername) {
+			this.profUsername = profUsername;
 		}
-		
-		public String getprof_period() {
-			return prof_period;
+
+		public String getprofPassword() {
+			return profPassword;
 		}
-		public void setprof_period(String prof_period) {
-			this.prof_period = prof_period;
-		}
-		
-		public int getprof_gamesID() {
-			return prof_gamesID;
-		}
-		public void setprof_gamesID(int prof_gamesID) {
-			this.prof_gamesID = prof_gamesID;
+		public void setprofPassword(String profPassword) {
+			this.profPassword = profPassword;
 		}
 		
-		public String getprof_photo() {
-			return prof_photo;
+		public String getprofPeriod() {
+			return profPeriod;
 		}
-		public void setprof_photo(String prof_photo) {
-			this.prof_photo = prof_photo;
-		}
-		
-		public int getprof_reportFlag() {
-			return prof_reportFlag;
-		}
-		public void setprof_reportFlag(int prof_reportFlag) {
-			this.prof_reportFlag = prof_reportFlag;
+		public void setprofPeriod(String profPeriod) {
+			this.profPeriod = profPeriod;
 		}
 		
-		public int getprof_modFlag() {
-			return prof_modFlag;
+		public String getprofPhoto() {
+			return profPhoto;
 		}
-		public void setprof_modFlag(int prof_modFlag) {
-			this.prof_modFlag = prof_modFlag;
-		}
-		
-		public int getprof_rep() {
-			return prof_rep;
-		}
-		public void setprof_period(int prof_rep) {
-			this.prof_rep = prof_rep;
+		public void setprof_photo(String profPhoto) {
+			this.profPhoto = profPhoto;
 		}
 		
-		public String getprof_recentlogin() {
-			return prof_recentlogin;
+		public int getprofReportFlag() {
+			return profReportFlag;
 		}
-		public void setprof_recentlogin(String prof_recentlogin) {
-			this.prof_recentlogin = prof_recentlogin;
+		public void setprofReportFlag(int profReportFlag) {
+			this.profReportFlag = profReportFlag;
 		}
 		
-		public int getprof_suspend() {
-			return prof_suspend;
+		public int getprofModFlag() {
+			return profModFlag;
 		}
-		public void setprof_suspend(int prof_suspend) {
-			this.prof_suspend = prof_suspend;
+		public void setprofModFlag(int profModFlag) {
+			this.profModFlag = profModFlag;
+		}
+		
+		public int getprofRep() {
+			return profRep;
+		}
+		public void setprofRep(int profRep) {
+			this.profRep = profRep;
+		}
+		
+		public String getprofRecentlogin() {
+			return profRecentlogin;
+		}
+		public void setprofRecentlogin(String profRecentlogin) {
+			this.profRecentlogin = profRecentlogin;
+		}
+		
+		public int getprofSuspend() {
+			return profSuspend;
+		}
+		public void setprofSuspend(int profSuspend) {
+			this.profSuspend = profSuspend;
 		}
 }
