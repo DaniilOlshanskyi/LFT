@@ -15,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Users with offensive usernames will be banned."
+        android:text="Users with offensive usernames will be banned. Usernames cannot contain any of these characters: &amp;=<>+,."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accountCreation_username" />
@@ -119,7 +119,7 @@
         android:ellipsize="none"
         android:maxLines="100"
         android:scrollHorizontally="false"
-        android:text="Password must be at least 8 characters, and contain at least 1 letter, 1 nubmer, and 1 special character ($@$!%*#?&amp;)"
+        android:text="Passwords must be at least 8 characters, and contain at least 1 letter, 1 number, and 1 special character ($@$!%*#?&amp;)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accountCreation_password" />

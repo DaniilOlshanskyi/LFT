@@ -5,15 +5,18 @@ public class Const {
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
     public static final String URL_GET_PROFILE_BY_USERNAME = "http://proj309-ad-08.misc.iastate.edu:8080/all/username/";
 
-    // JSON profile object keys
-    public static final String PROFILE_USERNAME_KEY = "prof_username";
-    public static final String PROFILE_PASSWORD_KEY = "prof_password";
-    public static final String PROFILE_PERIOD_KEY = "prof_period";
-    public static final String PROFILE_GAMES_KEY = "prof_gamesID";
-    public static final String PROFILE_PHOTO_KEY = "prof_photo";
-    public static final String PROFILE_REPORT_FLAG_KEY = "prof_reportFlag";
-    public static final String PROFILE_MOD_FLAG_KEY = "prof_modFlag";
-    public static final String PROFILE_REPUTATION_KEY = "prof_rep";
-    public static final String PROFILE_LATEST_LOGIN_DATE_KEY = "prof_recentlogin";
-    public static final String PROFILE_SUSPENDED_KEY = "prof_suspend";
+    // profile JSON object key names
+    public static final String PROFILE_USERNAME_KEY = "profUsername";
+    public static final String PROFILE_PASSWORD_KEY = "profPassword";
+    public static final String PROFILE_PERIOD_KEY = "profPeriod";
+    public static final String PROFILE_PHOTO_KEY = "profPhoto";
+    public static final String PROFILE_REPORT_FLAG_KEY = "profReportFlag";
+    public static final String PROFILE_MOD_FLAG_KEY = "profModFlag";
+    public static final String PROFILE_REPUTATION_KEY = "profRep";
+    public static final String PROFILE_LATEST_LOGIN_DATE_KEY = "profRecentlogin";
+    public static final String PROFILE_SUSPENDED_KEY = "profSuspend";
+
+    // EditText field character limits
+    public static final int USERNAME_CHARACTER_LIMIT = 15;
+    public static final int PASSWORD_CHARACTER_LIMIT = 30;
 }
