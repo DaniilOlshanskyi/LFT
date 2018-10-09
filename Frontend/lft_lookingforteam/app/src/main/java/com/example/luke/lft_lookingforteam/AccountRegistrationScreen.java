@@ -15,9 +15,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.luke.lft_lookingforteam.net_utils.Const;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +28,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AccountRegistrationScreen extends AppCompatActivity {
+
+    private RequestQueue reqQueue;
 
     Button submitButton;
     EditText usernameField, passwordField;
@@ -75,11 +80,29 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                     // if it's valid, continue
                     else {
 
+                        // create JSON object to POST
+                        JSONObject newAcct = new JSONObject();
+                        try {
+                            newAcct.put(Const.PROFILE_USERNAME_KEY, username);
+                            newAcct.put(Const.PROFILE_PASSWORD_KEY, password);
+                            newAcct.put(Const.PROFILE_PERIOD_KEY, "availability not set");
+                            newAcct.put(Const.PROFILE_PHOTO_KEY, "");
+                            newAcct.put(Const.PROFILE_REPORT_FLAG_KEY, 0);
+                            newAcct.put(Const.PROFILE_MOD_FLAG_KEY, 0);
+                            newAcct.put(Const.PROFILE_REPUTATION_KEY, 0.0);
+                            newAcct.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, new java.sql.Date(System.currentTimeMillis()).toString());
+                            newAcct.put(Const.PROFILE_SUSPENDED_KEY, 0.0);
+                        } catch (JSONException jse) {
+                            Log.e("Creating JSON", jse.toString());
+                        }
+
                         // create POST request to send to server
-                        StringRequest postReq = new StringRequest(Request.Method.POST, Const.URL_POST_PROFILE,
-                                new Response.Listener<String>() {
+
+                        // gives volley.ClientError
+                        JsonObjectRequest postReq = new JsonObjectRequest(Request.Method.POST, Const.URL_POST_PROFILE, newAcct,
+                                new Response.Listener<JSONObject>() {
                                     @Override
-                                    public void onResponse(String response) {
+                                    public void onResponse(JSONObject response) {
                                         // notify user that their account has been created :]
                                         Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
 
@@ -93,26 +116,20 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
                                         Log.d("Prof_POST_Req", error.toString());
+                                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                                     }
                                 }) {
-                            protected Map<String, String> getParams() throws AuthFailureError {
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<>();
-                                params.put(Const.PROFILE_USERNAME_KEY, username);
-                                params.put(Const.PROFILE_PASSWORD_KEY, password);
-                                params.put(Const.PROFILE_PERIOD_KEY, "availability not set");
-                                params.put(Const.PROFILE_PHOTO_KEY, "");
-                                params.put(Const.PROFILE_REPORT_FLAG_KEY, "0");
-                                params.put(Const.PROFILE_MOD_FLAG_KEY, "0");
-                                params.put(Const.PROFILE_REPUTATION_KEY, "0.0");
-                                params.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, new java.sql.Date(System.currentTimeMillis()).toString());
-                                params.put(Const.PROFILE_SUSPENDED_KEY, "0.0");
+                                params.put("Content-Type", "application/json");
                                 return params;
                             }
                         };
 
                         // make POST request
-                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                        queue.add(postReq);
+                        reqQueue = Volley.newRequestQueue(getApplicationContext());
+                        reqQueue.add(postReq);
                     }
                 }
             }
@@ -182,7 +199,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         matcher = pattern.matcher(pwd);
         // if the matcher created from this pattern finds a match in the password,
         // then we know it contains a restricted character, so notify the user and return false
-        if (matcher.matches()){
+        if (matcher.matches()) {
             errorMsg.append("Password cannot contain restricted characters (=<>+,.)");
             return false;
         }
@@ -202,7 +219,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         errorMsg.delete(0, errorMsg.length());
 
         // check username length, notify user and return false if somehow longer than the limit
-        if (username.length() > Const.USERNAME_CHARACTER_LIMIT){
+        if (username.length() > Const.USERNAME_CHARACTER_LIMIT) {
             errorMsg.append("Usernames cannot be longer than " + Const.USERNAME_CHARACTER_LIMIT + " characters");
             return false;
         }
