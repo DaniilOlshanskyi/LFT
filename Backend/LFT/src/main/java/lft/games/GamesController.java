@@ -23,7 +23,7 @@ public class GamesController {
     private GamesRepository gamesRepository;
 	
 	@GetMapping(path="/all")
-    public @ResponseBody Iterable<Profiles> getAllUsers(){
+    public @ResponseBody Iterable<Games> getAllUsers(){
     	return gamesRepository.findAll();
     }
 }
