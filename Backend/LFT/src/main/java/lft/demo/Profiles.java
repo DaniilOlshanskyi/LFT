@@ -54,7 +54,7 @@ public class Profiles implements Serializable{
 		public String getprofUsername() {
 			return profUsername;
 		}
-		public void setgetprofusername(String profUsername) {
+		public void setprofusername(String profUsername) {
 			this.profUsername = profUsername;
 		}
 

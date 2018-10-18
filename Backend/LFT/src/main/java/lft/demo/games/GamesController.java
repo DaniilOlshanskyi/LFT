@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GamesController {
 
 	@Autowired
-    private GamesRepository gamesRepository;
-	
-	@GetMapping(path="/games")
-    public @ResponseBody Iterable<Games> getAllGames(){
-    	return gamesRepository.findAll();
-    }
-	
-	 @PostMapping("/post_game")
-	    Games newGame(@RequestBody Games game) {
-	    	return gamesRepository.save(game);
-	    }
+	private GamesRepository gamesRepository;
+
+	@GetMapping(path = "/games")
+	public @ResponseBody Iterable<Games> getAllGames() {
+		return gamesRepository.findAll();
+	}
+
+	@PostMapping("/post_game")
+	Games newGame(@RequestBody Games game) {
+		return gamesRepository.save(game);
+	}
 }
