@@ -25,13 +25,13 @@ public class AccountViewScreen extends AppCompatActivity {
     ImageView profilePic;
     JSONObject userProfile = null;  // holds user profile obtained from server
 
-    // username of logged-in profile (passed from previous activity)
-    String profileUsername = getIntent().getStringExtra("PROFILE_USERNAME");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_view_screen);
+
+        // get username of logged-in profile (passed from previous activity)
+        String profileUsername = getIntent().getStringExtra("PROFILE_USERNAME");
 
         // reference layout objects
         editButton = findViewById(R.id.accountView_EditProfileButton);
