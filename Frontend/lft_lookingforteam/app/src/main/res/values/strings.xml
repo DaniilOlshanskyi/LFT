@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LFT - Looking for Team</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_report_create_screen">ReportCreateScreen</string>
 </resources>

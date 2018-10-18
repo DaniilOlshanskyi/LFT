@@ -16,10 +16,15 @@
         <activity android:name=".AccountViewScreen" />
         <activity android:name=".AccountRegistrationScreen">
             <intent-filter>
-                <action android:name = "android.intent.action.MAIN" />
-                <category android:name = "android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ReportCreateScreen"
+            android:label="@string/title_activity_report_create_screen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

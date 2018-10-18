@@ -1,8 +1,10 @@
 package com.example.luke.lft_lookingforteam;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
 
 public class AccountViewScreen extends AppCompatActivity {
 
+    Button reportButton; //leads user to post report page
     Button editButton;  // allows user to edit their profile content
     TextView username, availability;
     ImageView profilePic;
@@ -31,9 +34,10 @@ public class AccountViewScreen extends AppCompatActivity {
         setContentView(R.layout.account_view_screen);
 
         // get username of logged-in profile (passed from previous activity)
-        String profileUsername = getIntent().getStringExtra("PROFILE_USERNAME");
+        final String profileUsername = getIntent().getStringExtra("PROFILE_USERNAME");
 
         // reference layout objects
+        reportButton = findViewById(R.id.accountView_reportButton);
         editButton = findViewById(R.id.accountView_EditProfileButton);
         username = findViewById(R.id.accountView_username);
         availability = findViewById(R.id.accountView_availability);
@@ -65,6 +69,15 @@ public class AccountViewScreen extends AppCompatActivity {
                         Log.d("Prof_GET_Req", error.toString());
                     }
                 });
+
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AccountViewScreen.this, ReportCreateScreen.class);
+                i.putExtra("REPORT_USERNAME", profileUsername);
+                startActivity(i);
+            }
+        });
 
         // make GET request
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
