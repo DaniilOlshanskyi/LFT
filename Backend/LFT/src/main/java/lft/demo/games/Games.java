@@ -1,4 +1,4 @@
-package lft.games;
+package lft.demo.games;
 
 import java.io.Serializable;
 

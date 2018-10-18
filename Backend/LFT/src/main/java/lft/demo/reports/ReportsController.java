@@ -1,4 +1,4 @@
-package lft.reports;
+package lft.demo.reports;
 import org.springframework.web.bind.annotation.RestController;
 
 import lft.demo.Profiles;

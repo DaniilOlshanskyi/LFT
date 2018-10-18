@@ -1,4 +1,4 @@
-package lft.games;
+package lft.demo.games;
 
 import org.springframework.web.bind.annotation.RestController;
 

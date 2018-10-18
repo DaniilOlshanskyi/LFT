@@ -1,4 +1,4 @@
-package lft.reports;
+package lft.demo.reports;
 
 import java.io.Serializable;
 
