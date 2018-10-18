@@ -45,7 +45,7 @@ public class Games implements Serializable{
 	}
 	
 	public String getgameLogo() {
-		return gameName;
+		return gameLogo;
 	}
 	public void setgameLogo(String gameLogo) {
 		this.gameLogo = gameLogo;
