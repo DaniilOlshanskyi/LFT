@@ -26,4 +26,9 @@ public class GamesController {
     public @ResponseBody Iterable<Games> getAllGames(){
     	return gamesRepository.findAll();
     }
+	
+	 @PostMapping("/post_game")
+	    Games newGame(@RequestBody Games game) {
+	    	return gamesRepository.save(game);
+	    }
 }
