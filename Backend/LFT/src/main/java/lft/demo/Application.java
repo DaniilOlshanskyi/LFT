@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"lft.games","lft.reports"})
+@ComponentScan(basePackages = {"lft.demo","lft.games","lft.reports"})
 public class Application {
 
     public static void main(String[] args) {
