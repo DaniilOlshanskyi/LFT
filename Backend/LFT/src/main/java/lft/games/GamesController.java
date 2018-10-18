@@ -22,8 +22,8 @@ public class GamesController {
 	@Autowired
     private GamesRepository gamesRepository;
 	
-	@GetMapping(path="/all")
-    public @ResponseBody Iterable<Games> getAllUsers(){
+	@GetMapping(path="/games")
+    public @ResponseBody Iterable<Games> getAllGames(){
     	return gamesRepository.findAll();
     }
 }
