@@ -2,13 +2,11 @@ package lft.demo.games;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import lft.demo.Profiles;
-import lft.demo.UserRepository;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,5 +28,11 @@ public class GamesController {
 	@PostMapping("/post_game")
 	Games newGame(@RequestBody Games game) {
 		return gamesRepository.save(game);
+	}
+	
+	@DeleteMapping("/del_game/{id}")
+	public String delGame(@PathVariable(value="id") int id) {
+		gamesRepository.deleteById(id);
+		return "Sucess!";
 	}
 }
