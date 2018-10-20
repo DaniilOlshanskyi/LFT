@@ -41,6 +41,8 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_registration_screen);
 
+        //TODO figure out how to prevent users from pressing "back" to get back to this screen from the MyProfileViewScreen
+
         // referencing layout objects
         submitButton = findViewById(R.id.acctRegSubmitButton);
         usernameField = findViewById(R.id.accountCreation_username);
@@ -107,7 +109,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
 
                                         // switch to Account Viewing Screen, passing username
-                                        Intent i = new Intent(AccountRegistrationScreen.this, AccountViewScreen.class);
+                                        Intent i = new Intent(AccountRegistrationScreen.this, MyProfileViewScreen.class);
                                         i.putExtra("PROFILE_USERNAME", username);
                                         startActivity(i);
                                     }
