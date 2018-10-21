@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSwipeScreen">
+    tools:context=".ModSwipeScreen">
 
     <TextView
         android:id="@+id/textView7"
@@ -33,40 +33,47 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/userSwipeScreen_myProfileButton"
+            android:id="@+id/modSwipeScreen_myProfileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="My Profile" />
 
         <Button
-            android:id="@+id/userSwipeScreen_swipeScreenButton"
+            android:id="@+id/modSwipeScreen_swipeScreenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Swiping" />
 
         <Button
-            android:id="@+id/userSwipeScreen_messagingButton"
+            android:id="@+id/modSwipeScreen_messagingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Messages" />
+
+        <Button
+            android:id="@+id/modSwipeScreen_reportsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Reports" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/userSwipeScreen_viewProfileButton"
+        android:id="@+id/modSwipeScreen_viewProfileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="View &quot;username's&quot; Profile"
-        app:layout_constraintBottom_toTopOf="@+id/userSwipeScreen_passButton"
+        app:layout_constraintBottom_toTopOf="@+id/modSwipeScreen_passButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/userSwipeScreen_passButton"
+        android:id="@+id/modSwipeScreen_passButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -77,23 +84,24 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/userSwipeScreen_connectButton"
+        android:id="@+id/modSwipeScreen_connectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connect"
-        app:layout_constraintBottom_toBottomOf="@+id/userSwipeScreen_passButton"
+        app:layout_constraintBottom_toBottomOf="@+id/modSwipeScreen_passButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/userSwipeScreen_swipeSettingsButton"
+        android:id="@+id/modSwipeScreen_swipeSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Button to change swipe settings"
         android:src="@drawable/settings_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/userSwipeScreen_passButton"
+        app:layout_constraintBottom_toBottomOf="@+id/modSwipeScreen_passButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/userSwipeScreen_passButton" />
+        app:layout_constraintTop_toTopOf="@+id/modSwipeScreen_passButton" />
+
 </android.support.constraint.ConstraintLayout>

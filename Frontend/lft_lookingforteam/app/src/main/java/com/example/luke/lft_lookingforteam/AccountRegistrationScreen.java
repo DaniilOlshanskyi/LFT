@@ -99,8 +99,6 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                         }
 
                         // create POST request to send to server
-
-                        // gives volley.ClientError
                         JsonObjectRequest postReq = new JsonObjectRequest(Request.Method.POST, Const.URL_POST_PROFILE, newAcct,
                                 new Response.Listener<JSONObject>() {
                                     @Override
@@ -108,7 +106,8 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                         // notify user that their account has been created :]
                                         Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
 
-                                        // switch to Account Viewing Screen, passing username
+                                        //TODO change to account editing screen after it's been created
+                                        // switch to Account Editing Screen, passing username
                                         Intent i = new Intent(AccountRegistrationScreen.this, MyProfileViewScreen.class);
                                         i.putExtra("PROFILE_USERNAME", username);
                                         startActivity(i);
@@ -240,7 +239,6 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         }
 
         // TODO make database query request to spring with username
-
 
         // if username is available, return true
         return true;

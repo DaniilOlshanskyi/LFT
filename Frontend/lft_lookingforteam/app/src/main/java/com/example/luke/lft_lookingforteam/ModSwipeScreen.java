@@ -7,23 +7,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class UserSwipeScreen extends AppCompatActivity {
+public class ModSwipeScreen extends AppCompatActivity {
 
-    Button myProfileButton, swipeScreenButton, messagingButton, viewProfileButton, connectButton, passButton;
+    Button myProfileButton, swipeScreenButton, messagingButton, viewProfileButton, connectButton, passButton, reportsButton;
     ImageButton swipeSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_swipe_screen);
+        setContentView(R.layout.mod_swipe_screen);
 
-        myProfileButton = findViewById(R.id.userSwipeScreen_myProfileButton);
-        swipeScreenButton = findViewById(R.id.userSwipeScreen_swipeScreenButton);
-        messagingButton = findViewById(R.id.userSwipeScreen_messagingButton);
-        viewProfileButton = findViewById(R.id.userSwipeScreen_viewProfileButton);
-        connectButton = findViewById(R.id.userSwipeScreen_connectButton);
+        myProfileButton = findViewById(R.id.modSwipeScreen_myProfileButton);
+        swipeScreenButton = findViewById(R.id.modSwipeScreen_swipeScreenButton);
+        messagingButton = findViewById(R.id.modSwipeScreen_messagingButton);
+        viewProfileButton = findViewById(R.id.modSwipeScreen_viewProfileButton);
+        connectButton = findViewById(R.id.modSwipeScreen_connectButton);
         passButton = findViewById(R.id.modSwipeScreen_passButton);
-        swipeSettingsButton = findViewById(R.id.userSwipeScreen_swipeSettingsButton);
+        swipeSettingsButton = findViewById(R.id.modSwipeScreen_swipeSettingsButton);
+        reportsButton = findViewById(R.id.modSwipeScreen_reportsButton);
 
         //TODO highlight swipeScreenButton to show that it's the active screen. Also disable it from being clickable if possible
 
@@ -32,7 +33,7 @@ public class UserSwipeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // switch to account view screen
-                Intent i = new Intent(UserSwipeScreen.this, MyProfileViewScreen.class);
+                Intent i = new Intent(ModSwipeScreen.this, MyProfileViewScreen.class);
                 startActivity(i);
             }
         });
@@ -42,7 +43,7 @@ public class UserSwipeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // switch to messaging screen
-                Intent i = new Intent(UserSwipeScreen.this, MessagingScreen.class);
+                Intent i = new Intent(ModSwipeScreen.this, MessagingScreen.class);
                 startActivity(i);
             }
         });
@@ -52,7 +53,7 @@ public class UserSwipeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // switch to profile view screen
-                Intent i = new Intent(UserSwipeScreen.this, ProfileViewScreen.class);
+                Intent i = new Intent(ModSwipeScreen.this, ProfileViewScreen.class);
                 //TODO pass username of account being viewed
                 startActivity(i);
             }
@@ -81,6 +82,14 @@ public class UserSwipeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO pop-up layout with swipe settings
+            }
+        });
+
+        // when the reports button is pressed
+        reportsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO go to reports page
             }
         });
     }

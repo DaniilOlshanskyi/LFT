@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".MyProfileViewScreen" />
-        <activity android:name=".AccountRegistrationScreen"/>
+        <activity android:name=".AccountRegistrationScreen" />
         <activity android:name=".LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,9 @@
         </activity>
         <activity android:name=".UserSwipeScreen" />
         <activity android:name=".MessagingScreen" />
-        <activity android:name=".ProfileViewScreen"></activity>
+        <activity android:name=".ProfileViewScreen" />
+        <activity android:name=".ModSwipeScreen" />
+        <activity android:name=".AdminSwipeScreen"></activity>
     </application>
 
 </manifest>

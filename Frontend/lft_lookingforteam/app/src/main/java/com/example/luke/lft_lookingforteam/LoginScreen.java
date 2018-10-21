@@ -26,7 +26,10 @@ public class LoginScreen extends AppCompatActivity {
             public void onClick(View view) {
                 //TODO attempt to log user in
 
-                // upon successful login, switch to swipe screen
+                // upon successful login, switch to swipe screen based on class of user
+                //TODO implement user/mod/admin checking
+
+                // if basic user, switch to user swipe screen
                 Intent i = new Intent(LoginScreen.this, UserSwipeScreen.class);
                 //TODO pass username
                 startActivity(i);
@@ -43,4 +46,10 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
     }
+
+    //TODO implement login function
+    private void login(String username, String password){
+
+    }
+
 }
