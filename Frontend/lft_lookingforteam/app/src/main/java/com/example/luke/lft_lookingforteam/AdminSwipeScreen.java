@@ -29,6 +29,8 @@ public class AdminSwipeScreen extends AppCompatActivity {
 
         //TODO highlight swipeScreenButton to show that it's the active screen. Also disable it from being clickable if possible
 
+        //TODO start showing profile swipe cards
+
         // when the "My Profile" button is pressed
         myProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +46,7 @@ public class AdminSwipeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // switch to messaging screen
-                Intent i = new Intent(AdminSwipeScreen.this, MessagingScreen.class);
+                Intent i = new Intent(AdminSwipeScreen.this, ConversationListScreen.class);
                 startActivity(i);
             }
         });

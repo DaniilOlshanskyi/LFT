@@ -23,10 +23,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserSwipeScreen" />
-        <activity android:name=".MessagingScreen" />
+        <activity android:name=".ConversationListScreen" />
         <activity android:name=".ProfileViewScreen" />
         <activity android:name=".ModSwipeScreen" />
-        <activity android:name=".AdminSwipeScreen"></activity>
+        <activity android:name=".AdminSwipeScreen" />
+        <activity android:name=".ConversationScreen"></activity>
     </application>
 
 </manifest>

@@ -28,6 +28,8 @@ public class ModSwipeScreen extends AppCompatActivity {
 
         //TODO highlight swipeScreenButton to show that it's the active screen. Also disable it from being clickable if possible
 
+        //TODO start showing profile swipe cards
+
         // when the "My Profile" button is pressed
         myProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +45,7 @@ public class ModSwipeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // switch to messaging screen
-                Intent i = new Intent(ModSwipeScreen.this, MessagingScreen.class);
+                Intent i = new Intent(ModSwipeScreen.this, ConversationListScreen.class);
                 startActivity(i);
             }
         });
