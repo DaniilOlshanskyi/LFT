@@ -83,6 +83,6 @@ public class HelloController {
     	catch (Exception e) {
     		return e.toString();
     	}
-    	return "User " + user.getprofUsername() + " is now a moderator!";
+    	return "User " + user.getprofUsername() + " is no longer a moderator!";
     }
 } 
