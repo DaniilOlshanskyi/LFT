@@ -46,14 +46,9 @@ public class HelloController {
     	return userRepository.save(profile);
     }
     
-    @GetMapping(path="/makeMod/{id}")
+    @PutMapping(path="/make_mod/{id}")
     public @ResponseBody String makeMod(@PathVariable(value="id") int id) {
     	Profiles user;
-    	System.out.println();
-    	System.out.println();
-    	System.out.println("!");
-    	System.out.println();
-    	System.out.println();
     	try {
     		 user = userRepository.findById(id).get();
     		 System.out.println(user);
@@ -63,6 +58,26 @@ public class HelloController {
     	}
     	try {
     		user.setprofModFlag(1);
+        	userRepository.save(user);
+    	}
+    	catch (Exception e) {
+    		return e.toString();
+    	}
+    	return "User " + user.getprofUsername() + " is now a moderator!";
+    }
+    
+    @PutMapping(path="/make_not_mod/{id}")
+    public @ResponseBody String makeNotMod(@PathVariable(value="id") int id) {
+    	Profiles user;
+    	try {
+    		 user = userRepository.findById(id).get();
+    		 System.out.println(user);
+    	} 
+    	catch(NoSuchElementException e) {
+    		return "No such user found!";
+    	}
+    	try {
+    		user.setprofModFlag(0);
         	userRepository.save(user);
     	}
     	catch (Exception e) {
