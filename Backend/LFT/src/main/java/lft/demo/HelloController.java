@@ -3,12 +3,14 @@ package lft.demo;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,5 +44,19 @@ public class HelloController {
     @PostMapping("/post_profile")
     Profiles newProfile(@RequestBody Profiles profile) {
     	return userRepository.save(profile);
+    }
+    
+    @PutMapping("/make_mod/{id}")
+    public String makeMod(@PathVariable(value="id") int id) {
+    	Profiles user;
+    	try {
+    		 user = userRepository.findById(id).get();
+    	} 
+    	catch(NoSuchElementException e) {
+    		return "No such user found!";
+    	}
+    	user.setprofModFlag(1);
+    	userRepository.save(user);
+    	return "User " + user.getprofUsername() + " is now a moderator!";
     }
 } 
