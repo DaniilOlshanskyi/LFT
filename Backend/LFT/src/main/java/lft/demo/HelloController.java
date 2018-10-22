@@ -46,7 +46,7 @@ public class HelloController {
     	return userRepository.save(profile);
     }
     
-    @GetMapping("/make_mod/{id}")
+    @GetMapping(path="/make_mod/{id}")
     public @ResponseBody String makeMod(@PathVariable(value="id") int id) {
     	Profiles user;
     	try {
