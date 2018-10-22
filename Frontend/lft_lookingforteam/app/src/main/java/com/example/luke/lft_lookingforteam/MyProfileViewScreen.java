@@ -18,7 +18,7 @@ import com.example.luke.lft_lookingforteam.net_utils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AccountViewScreen extends AppCompatActivity {
+public class MyProfileViewScreen extends AppCompatActivity {
 
     Button editButton;  // allows user to edit their profile content
     TextView username, availability;
@@ -28,7 +28,7 @@ public class AccountViewScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.account_view_screen);
+        setContentView(R.layout.my_profile_view_screen);
 
         // get username of logged-in profile (passed from previous activity)
         String profileUsername = getIntent().getStringExtra("PROFILE_USERNAME");
