@@ -55,8 +55,13 @@ public class HelloController {
     	catch(NoSuchElementException e) {
     		return "No such user found!";
     	}
-    	user.setprofModFlag(1);
-    	userRepository.save(user);
+    	try {
+    		user.setprofModFlag(1);
+        	userRepository.save(user);
+    	}
+    	catch (Exception e) {
+    		return e.toString();
+    	}
     	return "User " + user.getprofUsername() + " is now a moderator!";
     }
 } 
