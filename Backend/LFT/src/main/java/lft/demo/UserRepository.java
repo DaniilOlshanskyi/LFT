@@ -7,4 +7,5 @@ import lft.demo.Profiles;
 
 public interface UserRepository extends CrudRepository<Profiles, Integer> {
 	Profiles findByprofUsername(String profname);
+
 }

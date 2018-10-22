@@ -51,6 +51,7 @@ public class HelloController {
     	Profiles user;
     	try {
     		 user = userRepository.findById(id).get();
+    		 System.out.println(user);
     	} 
     	catch(NoSuchElementException e) {
     		return "No such user found!";
