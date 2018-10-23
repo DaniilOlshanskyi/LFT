@@ -32,14 +32,6 @@ public class LoginScreen extends AppCompatActivity {
                 // if basic user, switch to user swipe screen
                 Intent i = new Intent(LoginScreen.this, UserSwipeScreen.class);
                 startActivity(i);
-
-                // if moderator, switch to mod swipe screen
-                i = new Intent(LoginScreen.this, ModSwipeScreen.class);
-                startActivity(i);
-
-                // if admin, switch to admin swipe screen
-                i = new Intent(LoginScreen.this, AdminSwipeScreen.class);
-                startActivity(i);
             }
         });
 
@@ -58,5 +50,4 @@ public class LoginScreen extends AppCompatActivity {
     private void login(String username, String password){
 
     }
-
 }
