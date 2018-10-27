@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@ServerEndpoint("websocket/{username}")
+@ServerEndpoint("/websocket/{username}/{username2}")
 @Component
 public class WebSocketServer {
 	private Session session;
@@ -37,7 +37,6 @@ public class WebSocketServer {
 		this.session = session;
 		chatEndpoints.add(this);
 		users.put(session.getId(), username);
-
 	}
 
 	@OnMessage
@@ -61,7 +60,8 @@ public class WebSocketServer {
 			BufferedWriter writer = null;
 			try {
 				//Open chat from this user to that user
-				File file = new File("chats/"+users.get(session.getId())+"to"+ message.substring(2,message.indexOf("@")));
+				String receiver = message.substring(2,message.indexOf("@"));
+				File file = new File("chats/"+users.get(session.getId())+"to"+ receiver);
 				//If file exists - append, if not - create and write to it
 				if (file.exists()) {
 					writer = new BufferedWriter(new FileWriter(file,true));
@@ -69,6 +69,20 @@ public class WebSocketServer {
 					writer = new BufferedWriter(new FileWriter(file));
 				}
 				writer.write(message.substring(message.indexOf("@")+1));
+				//Check if the receiver is currently connected
+				WebSocketServer[] arr = (WebSocketServer[]) chatEndpoints.toArray();
+				boolean sent = false;
+				for (int i = 0; i<arr.length;i++) {
+					Session secondSession = arr[i].isSocket(receiver);
+					if (secondSession!=null) {
+						sendMessageToParticularUser(secondSession,receiver);
+						sent = true;
+					}
+				}
+				if (!sent) {
+					file.delete();
+				}
+				
 			} 
 			catch (Exception e) {
 				logger.info("Exception in onMessage!");
@@ -126,6 +140,14 @@ public class WebSocketServer {
 			//Delete the file since it's not needed anymore
 			file.delete();
 		} catch (FileNotFoundException e) {
+		}
+	}
+	
+	public Session isSocket(String s) {
+		if (this.users.get(session.getId()).equals(s)) {
+			return this.session;
+		} else {
+			return null;
 		}
 	}
 
