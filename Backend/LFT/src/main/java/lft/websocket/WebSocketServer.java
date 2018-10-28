@@ -37,56 +37,69 @@ public class WebSocketServer {
 		this.session = session;
 		chatEndpoints.add(this);
 		users.put(session.getId(), username);
+		
+		//Get all old messages
+		File folder = new File("chats/");
+		File[] listOfFiles = folder.listFiles();
+		for (int i = 0; i < listOfFiles.length; i++) {
+			String fileName = listOfFiles[i].getName();
+			String receiver = fileName.substring(fileName.indexOf("|")+1); 
+			if (receiver.equals(username)) {
+				newMessages(session,fileName.substring(0, fileName.indexOf("|")),username);
+			}
+		}
 	}
 
 	@OnMessage
 	/**
-	 * Messages format:
-	 * Request for new messages: "g:{username}"
-	 * New message "m:{username}@message"
+	 * Messages format: Request for new messages: "g:{username}" New message
+	 * "m:{username}@message"
+	 * 
 	 * @param session
 	 * @param message
 	 * 
 	 */
 	public void onMessage(Session session, String message) {
 		logger.info("Entered into Mesage. Got Message:" + message);
-		
+
 		String code = message.substring(0, 2);
-		//If it is a request to check for new messages:
+		// If it is a request to check for new messages:
 		if (code.equals("g:")) {
 			newMessages(session, message.substring(2), users.get(session.getId()));
-		}  //Else, if it is a new message sent
+		} // Else, if it is a new message sent
 		else if (code.equals("m:")) {
 			BufferedWriter writer = null;
 			try {
-				//Open chat from this user to that user
-				String receiver = message.substring(2,message.indexOf("@"));
-				File file = new File("chats/"+users.get(session.getId())+"to"+ receiver);
-				//If file exists - append, if not - create and write to it
+				// Open chat from this user to that user
+				String receiver = message.substring(2, message.indexOf("@"));
+				File file = new File("chats/" + users.get(session.getId()) + "|" + receiver);
+				// If file exists - append, if not - create and write to it
 				if (file.exists()) {
-					writer = new BufferedWriter(new FileWriter(file,true));
+					writer = new BufferedWriter(new FileWriter(file, true));
 				} else {
 					writer = new BufferedWriter(new FileWriter(file));
 				}
-				writer.write(message.substring(message.indexOf("@")+1));
-				//Check if the receiver is currently connected
+				//Get the real message
+				String realMessage = message.substring(message.indexOf("@") + 1);
+				writer.write(realMessage);
+				// Check if the receiver is currently connected
 				WebSocketServer[] arr = (WebSocketServer[]) chatEndpoints.toArray();
 				boolean sent = false;
-				for (int i = 0; i<arr.length;i++) {
+				for (int i = 0; i < arr.length; i++) {
 					Session secondSession = arr[i].isSocket(receiver);
-					if (secondSession!=null) {
-						sendMessageToParticularUser(secondSession,receiver);
+					//If he is, send message directly to him
+					if (secondSession != null) {
+						sendMessageToParticularUser(secondSession, realMessage);
 						sent = true;
 					}
 				}
 				if (!sent) {
 					file.delete();
 				}
-				
-			} 
-			catch (Exception e) {
+
+			} catch (Exception e) {
 				logger.info("Exception in onMessage!");
-			} //Close writer anyway
+			} // Close writer anyway
 			finally {
 				try {
 					writer.close();
@@ -110,7 +123,7 @@ public class WebSocketServer {
 
 	private void sendMessageToParticularUser(Session session, String message) {
 		try {
-			session.getBasicRemote().sendText(message);
+			session.getBasicRemote().sendText("m:" + message);
 		} catch (IOException e) {
 			logger.info("Exception: " + e.getMessage().toString());
 			e.printStackTrace();
@@ -126,23 +139,23 @@ public class WebSocketServer {
 	 */
 	private void newMessages(Session session, String username, String username2) {
 		String message = "";
-		//Open cached message file
-		File file = new File("chats/" + username + "to" + username2);
+		// Open cached message file
+		File file = new File("chats/" + username + "|" + username2);
 		try {
 			Scanner sc = new Scanner(file);
-			//Get lines of messages
+			// Get lines of messages
 			while (sc.hasNextLine()) {
 				message += sc.nextLine() + "\n";
 			}
 			sc.close();
-			//Send retrieved chat to user who sent the request
+			// Send retrieved chat to user who sent the request
 			sendMessageToParticularUser(session, message);
-			//Delete the file since it's not needed anymore
+			// Delete the file since it's not needed anymore
 			file.delete();
 		} catch (FileNotFoundException e) {
 		}
 	}
-	
+
 	public Session isSocket(String s) {
 		if (this.users.get(session.getId()).equals(s)) {
 			return this.session;
