@@ -27,7 +27,8 @@
         <activity android:name=".ProfileViewScreen" />
         <activity android:name=".ModSwipeScreen" />
         <activity android:name=".AdminSwipeScreen" />
-        <activity android:name=".ConversationScreen"></activity>
+        <activity android:name=".ConversationScreen" />
+        <activity android:name=".ReportCreateScreen"></activity>
     </application>
 
 </manifest>
