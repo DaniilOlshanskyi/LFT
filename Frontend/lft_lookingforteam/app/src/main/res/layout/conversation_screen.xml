@@ -7,7 +7,7 @@
     tools:context=".ConversationScreen">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/conversationScreen_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -56,15 +56,58 @@
     </android.support.constraint.ConstraintLayout>
 
     <ScrollView
+        android:id="@+id/conversationScreen_conversationScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintBottom_toTopOf="@+id/conversationScreen_editSendContainer"
+        app:layout_constraintTop_toBottomOf="@+id/conversationScreen_header">
 
         <LinearLayout
+            android:id="@+id/conversationScreen_conversationContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/conversationScreen_webSocketTest_MessageContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
     </ScrollView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/conversationScreen_editSendContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/conversationScreen_messageBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/conversationScreen_sendButton"
+            app:layout_constraintEnd_toStartOf="@+id/conversationScreen_sendButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/conversationScreen_sendButton" />
+
+        <Button
+            android:id="@+id/conversationScreen_sendButton"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Send"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
