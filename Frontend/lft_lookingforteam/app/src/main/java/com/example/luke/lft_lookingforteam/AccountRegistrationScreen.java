@@ -85,7 +85,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                         // create JSON object to POST
                         JSONObject newAcct = new JSONObject();
                         try {
-                            newAcct.put(Const.PROFILE_USERNAME_KEY, username);
+                            JSONObject put = newAcct.put(Const.PROFILE_USERNAME_KEY, username);
                             newAcct.put(Const.PROFILE_PASSWORD_KEY, password);
                             newAcct.put(Const.PROFILE_PERIOD_KEY, "availability not set");
                             newAcct.put(Const.PROFILE_PHOTO_KEY, "");

@@ -107,31 +107,31 @@ public class UserSwipeScreen extends AppCompatActivity {
         swipeSettingsWindow = new PopupWindow(layout, 1000, 1800, true);
         swipeSettingsWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
-        closeSettingsButton = findViewById(R.id.swipeSettings_closeButton);
-        applySettingsButton = findViewById(R.id.swipeSettings_applyChangesButton);
+        closeSettingsButton = layout.findViewById(R.id.swipeSettings_closeButton);
+        applySettingsButton = layout.findViewById(R.id.swipeSettings_applyChangesButton);
 
         // when "X" button is pressed
-//        closeSettingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // close settings page, discarding changes
-//                swipeSettingsWindow.dismiss();
-//            }
-//        });
-//
+        closeSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // close settings page, discarding changes
+                swipeSettingsWindow.dismiss();
+            }
+        });
+
         // when "Apply Settings" button is pressed
-//        applySettingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // apply settings
-//                //TODO change settings based on new values
-//
-//                // fetch new candidate profiles
-//                //TODO get new candidate profiles based on new settings
-//
-//                // close settings page
-//                swipeSettingsWindow.dismiss();
-//            }
-//        });
+        applySettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // apply settings
+                //TODO change settings based on new values
+
+                // fetch new candidate profiles
+                //TODO get new candidate profiles based on new settings
+
+                // close settings page
+                swipeSettingsWindow.dismiss();
+            }
+        });
     }
 }
