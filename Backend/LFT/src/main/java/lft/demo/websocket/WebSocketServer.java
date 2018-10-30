@@ -1,4 +1,4 @@
-package lft.websocket;
+package lft.demo.websocket;
 
 import java.io.BufferedWriter;
 import java.io.File;
