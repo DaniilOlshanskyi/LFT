@@ -7,17 +7,17 @@
     tools:context=".LoginScreen">
 
     <Button
-        android:id="@+id/loginLoginButton"
+        android:id="@+id/loginScreen_loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        app:layout_constraintBottom_toBottomOf="@+id/loginRegisterButton"
+        app:layout_constraintBottom_toBottomOf="@+id/loginScreen_registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/loginRegisterButton"
+        android:id="@+id/loginScreen_registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
