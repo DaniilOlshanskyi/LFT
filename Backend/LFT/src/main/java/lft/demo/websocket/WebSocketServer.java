@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@ServerEndpoint(value="/websocket/{username}")
+@ServerEndpoint("/websocket/{username}")
 @Component
 public class WebSocketServer {
 	private Session session;
@@ -50,7 +50,7 @@ public class WebSocketServer {
 		}
 	}
 
-	@OnMessage
+	
 	/**
 	 * Messages format: Request for new messages: "g:{username}" New message
 	 * "m:{username}@message"
@@ -59,6 +59,7 @@ public class WebSocketServer {
 	 * @param message
 	 * 
 	 */
+	@OnMessage
 	public void onMessage(Session session, String message) {
 		logger.info("Entered into Mesage. Got Message:" + message);
 
