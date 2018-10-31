@@ -9,6 +9,7 @@ public class Const {
     public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/post_report";
 
     // profile JSON object key names
+    public static final String PROFILE_ID_KEY= "profId";
     public static final String PROFILE_USERNAME_KEY = "profUsername";
     public static final String PROFILE_PASSWORD_KEY = "profPassword";
     public static final String PROFILE_PERIOD_KEY = "profPeriod";
@@ -20,6 +21,7 @@ public class Const {
     public static final String PROFILE_SUSPENDED_KEY = "profSuspend";
 
     //report JSON object key names
+    public static final String REPORT_USER_ID = "profId";
     public static final String REPORT_CHATLOG = "reportChatlog";
     public static final String REPORT_RESOLVE_FLAG = "reportResolveFlag";
     public static final String REPORT_RESOLVE_DATE = "reportResolveDate";

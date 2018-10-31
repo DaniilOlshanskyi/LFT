@@ -38,6 +38,8 @@ public class ReportCreateScreen extends AppCompatActivity {
     String message, chatlog, profile;
     Boolean chat, prof;
     Date date = Calendar.getInstance().getTime();
+    JSONObject violatorProfile;
+    int violatorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,25 @@ public class ReportCreateScreen extends AppCompatActivity {
                 message = messageEdit.getText().toString();
                 chat = messageCheck.isChecked();
                 prof = profileCheck.isChecked();
+                String violatorUsername = getIntent().getStringExtra("username");
+
+                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + violatorUsername,
+                        null, Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //when server sends back profile object
+                        violatorProfile = response;
+                        try {
+                                violatorId = violatorProfile.getInt(Const.PROFILE_ID_KEY); //Gives profId
+                            } catch (JSONException jse) {
+                            // if an error occurs with the JSON, log it
+                            Log.d("Prof_Info_Fill", jse.toString());
+//                        }
+                })
+
+                if(messageCheck.isChecked()){
+                    chatlog = getIntent().getStringExtra("chatlog");
+                }
 
                 //TODO Create link between profile and report
 
@@ -72,6 +93,7 @@ public class ReportCreateScreen extends AppCompatActivity {
                     }else{
                         newReport.put(Const.REPORT_CHATLOG, "");
                     }
+                    newReport.put(Const.REPORT_USER_ID, violatorId);
                     newReport.put(Const.REPORT_RESOLVE_FLAG, false);
                     newReport.put(Const.REPORT_RESOLVE_DATE, date.getTime());
                     newReport.put(Const.REPORT_MESSAGE, message);
@@ -84,7 +106,7 @@ public class ReportCreateScreen extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 // notify user that their account has been created :]
-                                Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Report sent", Toast.LENGTH_LONG).show();
                                 finish();
                             }
                         },
