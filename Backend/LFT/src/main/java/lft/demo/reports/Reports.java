@@ -20,7 +20,7 @@ public class Reports implements Serializable{
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="profId")
-	private int profId;
+	private Profiles profId;
 
 	@Column(name="reportId")
 	private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer reportID;
@@ -47,10 +47,10 @@ public class Reports implements Serializable{
 		reportID = id;
 	}
 	
-	public int getProfId() {
+	public Profiles getProfId() {
 		return profId;
 	}
-	public void setProfId(int profId) {
+	public void setProfId(Profiles profId) {
 		this.profId = profId;
 	}
 //	public void setProfId(Integer id) {
