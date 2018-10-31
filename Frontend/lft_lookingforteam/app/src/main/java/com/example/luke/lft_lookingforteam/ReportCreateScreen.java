@@ -67,18 +67,27 @@ public class ReportCreateScreen extends AppCompatActivity {
                 String violatorUsername = getIntent().getStringExtra("username");
 
                 JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + violatorUsername,
-                        null, Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //when server sends back profile object
-                        violatorProfile = response;
-                        try {
-                                violatorId = violatorProfile.getInt(Const.PROFILE_ID_KEY); //Gives profId
-                            } catch (JSONException jse) {
-                            // if an error occurs with the JSON, log it
-                            Log.d("Prof_Info_Fill", jse.toString());
-//                        }
-                })
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                //when server sends back profile object
+                                violatorProfile = response;
+                                try {
+                                    violatorId = violatorProfile.getInt(Const.PROFILE_ID_KEY); //Gives profId
+                                } catch (JSONException jse) {
+                                    // if an error occurs with the JSON, log it
+                                    Log.d("Prof_Info_Fill", jse.toString());
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Prof_GET_Req", error.toString());
+
+                            }
+                        });
 
                 if(messageCheck.isChecked()){
                     chatlog = getIntent().getStringExtra("chatlog");
