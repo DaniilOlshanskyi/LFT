@@ -1,13 +1,14 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,21 +21,19 @@ import com.example.luke.lft_lookingforteam.net_utils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//TODO finish layout design and implement login code
-
 public class LoginScreen extends AppCompatActivity {
 
     Button loginButton, registerButton;
     EditText usernameField, passwordField;
-    String username, password;
+    String username, password;  // extracted from EditText objects
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
-        loginButton = findViewById(R.id.loginLoginButton);
-        registerButton = findViewById(R.id.loginRegisterButton);
+        loginButton = findViewById(R.id.loginScreen_loginButton);
+        registerButton = findViewById(R.id.loginScreen_registerButton);
         usernameField = findViewById(R.id.loginScreen_username);
         passwordField = findViewById(R.id.loginScreen_password);
 
@@ -43,25 +42,13 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO show "in progress" loading icon
-                //TODO attempt to log user in
 
-                // upon successful login:
-                //if(successful login){
-                    //TODO store username so it can be accessed across all activities
-                    //TODO open websocket with server
+                // extract username and password from fields
+                username = usernameField.getText().toString();
+                password = passwordField.getText().toString();
 
-                    // switch to swipe screen based on class of user
-                    //TODO implement user/mod/admin checking
-
-                    // if basic user, switch to user swipe screen
-                    Intent i = new Intent(LoginScreen.this, UserSwipeScreen.class);
-                    startActivity(i);
-                //}
-                // if login credentials are incorrect, let user know
-                //else{
-                //do something
-                //}
-
+                // attempt to log user in with given username and password
+                login(username, password);
             }
         });
 
@@ -76,35 +63,63 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
 
-    //TODO implement login function
-    private void login(String username, String password){
+    // attempts to log user in, letting them know if their credentials are incorrect
+    private void login(final String username, final String password) {
 
         // create a GET request for user profile
-        JsonObjectRequest testrequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + usernameField.getText(), null,
+        JsonObjectRequest loginrequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + usernameField.getText(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // when server sends back profile object
-                        try{
-                            if(response.getString(Const.PROFILE_PASSWORD_KEY).equals(passwordField.getText())){
+                        // if server response is null, username is invalid, so let user know and don't continue
+                        if (response == null) {
+                            Toast.makeText(getApplicationContext(), "Invalid Username", Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
+                        try {
+                            // if given password is incorrect, let user know and don't continue
+                            if (!password.equals(response.getString(Const.PROFILE_PASSWORD_KEY))) {
+                                Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+                                return;
                             }
-                        } catch (JSONException jse){
-                            // if an error occurs with the JSON, log it
-                            Log.d("Login", jse.toString());
+                            // if password is correct...
+                            // store profile information in SharedPrefs
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor prefEditor = prefs.edit();
+                            prefEditor.putString(Const.SHAREDPREFS_USERNAME_KEY, username); // store username in SharedPrefs
+                            int usertype = response.getInt(Const.PROFILE_MOD_FLAG_KEY); // get usertype from response
+                            prefEditor.putInt(Const.SHAREDPREFS_USERTYPE_KEY, usertype); // store usertype in SharedPrefs
+                            //TODO store more profile information as needed
+                            prefEditor.apply(); // apply changes to SharedPrefs
+
+                            //TODO open websockets and update conversation files
+
+                            // open swipe screen based on usertype
+                            if (usertype == Const.USERTYPE_BASIC_USER) {
+                                Intent i = new Intent(LoginScreen.this, UserSwipeScreen.class);
+                                startActivity(i);
+                            } else if (usertype == Const.USERTYPE_MODERATOR) {
+                                Intent i = new Intent(LoginScreen.this, ModSwipeScreen.class);
+                                startActivity(i);
+                            } else if (usertype == Const.USERTYPE_ADMIN) {
+                                Intent i = new Intent(LoginScreen.this, AdminSwipeScreen.class);
+                                startActivity(i);
+                            }
+                        } catch (JSONException jse) {
+                            Toast.makeText(getApplicationContext(), jse.toString(), Toast.LENGTH_LONG).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // if a volley error occurs, log it
-                        Log.d("Prof_GET_Req", error.toString());
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
 
         // make GET request
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(testrequest);
+        queue.add(loginrequest);
     }
 }

@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".MyProfileViewScreen" />
         <activity android:name=".AccountRegistrationScreen" />
-        <activity android:name=".LoginScreen">
+        <activity android:name=".AppOpeningScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,8 @@
         <activity android:name=".ModSwipeScreen" />
         <activity android:name=".AdminSwipeScreen" />
         <activity android:name=".ConversationScreen" />
-        <activity android:name=".ReportCreateScreen"></activity>
+        <activity android:name=".ReportCreateScreen" />
+        <activity android:name=".LoginScreen"></activity>
     </application>
 
 </manifest>

@@ -31,6 +31,7 @@ public class ReportsController {
     	return reportsRepository.findById(id);
     }
 	
+	
 //	@GetMapping(path="/reports/reportId/{reportId}")
 //    public @ResponseBody Optional<Reports> getReportsByReportId(@PathVariable(value="reportId") int reportId){
 //    	return reportsRepository.findByReportId(reportId);
