@@ -2,21 +2,31 @@ package lft.demo.reports;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import lft.demo.Profiles;
 
 @Entity
 @Table(name="reports")
 public class Reports implements Serializable{
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="profId")
+	private int profId;
 
 	@Column(name="reportId")
 	private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer reportID;
 	
-	@Column(name="profId")
-	private Integer profId;
+//	@Column(name="profId")
+//	private Integer profId;
 	
 	@Column(name="reportChatlog")
 	private Long reportChatlog;
@@ -37,12 +47,15 @@ public class Reports implements Serializable{
 		reportID = id;
 	}
 	
-	public Integer getProfId() {
+	public int getProfId() {
 		return profId;
 	}
-	public void setProfId(Integer id) {
-		profId = id;
+	public void setProfId(int profId) {
+		this.profId = profId;
 	}
+//	public void setProfId(Integer id) {
+//		profId = id;
+//	}
 	
 	public Long getChatlog() {
 		return reportChatlog;
