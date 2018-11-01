@@ -45,7 +45,7 @@ public class WebSocketServer {
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String fileName = listOfFiles[i].getName();
-			String receiver = fileName.substring(fileName.indexOf("|") + 1);
+			String receiver = fileName.substring(fileName.indexOf("|") + 1, fileName.indexOf(".txt"));
 			if (receiver.equals(username)) {
 				newMessages(session, fileName.substring(0, fileName.indexOf("|")), username);
 			}
@@ -69,7 +69,7 @@ public class WebSocketServer {
 			try {
 				// Open chat from this user to that user
 				String receiver = message.substring(2, message.indexOf("@"));
-				File file = new File("chats/" + username + "|" + receiver);
+				File file = new File("chats/" + username + "|" + receiver + ".txt");
 				// If file exists - append, if not - create and write to it
 				if (file.exists()) {
 					writer = new BufferedWriter(new FileWriter(file, true));
