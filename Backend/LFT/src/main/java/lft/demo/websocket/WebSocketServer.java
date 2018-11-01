@@ -45,7 +45,7 @@ public class WebSocketServer {
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException {
 		// Handle new messages
-		logger.info("Entered into Message: Got Message:" + message);
+		logger.info("Entered into Message: Got Message: " + message);
 		String username = sessionUsernameMap.get(session);
 
 		String code = message.substring(0, 2);
@@ -139,10 +139,10 @@ public class WebSocketServer {
 	 * @param username2
 	 */
 	private void newMessages(Session session, String username, String username2) {
-		logger.info("Chacking for old messages from " + username + " to " + username2);
+		logger.info("Chacking for old messages from " + username + " to " + username2 + ".txt");
 		String message = "";
 		// Open cached message file
-		File file = new File("/home/LFT/chats/" + username + "|" + username2);
+		File file = new File("/home/LFT/chats/" + username + "|" + username2 + ".txt");
 		try {
 			Scanner sc = new Scanner(file);
 			// Get lines of messages
@@ -154,7 +154,8 @@ public class WebSocketServer {
 			sendMessageToPArticularUser(username2, message);
 			// Delete the file since it's not needed anymore
 			file.delete();
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
 		}
 	}
 }
