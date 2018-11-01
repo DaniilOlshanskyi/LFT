@@ -29,7 +29,8 @@
         <activity android:name=".AdminSwipeScreen" />
         <activity android:name=".ConversationScreen" />
         <activity android:name=".ReportCreateScreen" />
-        <activity android:name=".LoginScreen"></activity>
+        <activity android:name=".LoginScreen" />
+        <activity android:name=".ReportViewingScreen"></activity>
     </application>
 
 </manifest>

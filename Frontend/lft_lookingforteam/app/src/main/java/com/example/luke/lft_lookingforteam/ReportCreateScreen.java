@@ -47,7 +47,7 @@ public class ReportCreateScreen extends AppCompatActivity {
         setContentView(R.layout.activity_report_create_screen2);
 
         submitButton = findViewById(R.id.submitButton);
-        cancelButton = findViewById(R.id.cancelButton);
+        cancelButton = findViewById(R.id.cancelButton2);
         profileCheck = findViewById(R.id.profileCheck);
         messageCheck = findViewById(R.id.messageCheck);
         messageEdit = findViewById(R.id.messageEdit);
@@ -88,6 +88,8 @@ public class ReportCreateScreen extends AppCompatActivity {
 
                             }
                         });
+                reqQueue = Volley.newRequestQueue(getApplicationContext());
+                reqQueue.add(userRequest);
 
                 if(messageCheck.isChecked()){
                     chatlog = getIntent().getStringExtra("chatlog");
@@ -135,7 +137,6 @@ public class ReportCreateScreen extends AppCompatActivity {
                 };
 
                 // make POST request
-                reqQueue = Volley.newRequestQueue(getApplicationContext());
                 reqQueue.add(postReq);
 
             }
