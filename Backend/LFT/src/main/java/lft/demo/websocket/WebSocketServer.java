@@ -40,17 +40,6 @@ public class WebSocketServer {
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
 
-		// Get all old messages
-		File folder = new File("/home/LFT/chats/");
-		File[] listOfFiles = folder.listFiles();
-		for (int i = 0; i < listOfFiles.length; i++) {
-			String fileName = listOfFiles[i].getName();
-			String receiver = fileName.substring(fileName.indexOf("|") + 1, fileName.indexOf(".txt"));
-			if (receiver.equals(username)) {
-				newMessages(session, fileName.substring(0, fileName.indexOf("|")), username);
-			}
-		}
-
 	}
 
 	@OnMessage
@@ -62,7 +51,16 @@ public class WebSocketServer {
 		String code = message.substring(0, 2);
 		// If it is a request to check for new messages:
 		if (code.equals("g:")) {
-			newMessages(session, message.substring(2), username);
+			// Get all old messages
+			File folder = new File("/home/LFT/chats/");
+			File[] listOfFiles = folder.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				String fileName = listOfFiles[i].getName();
+				String receiver = fileName.substring(fileName.indexOf("|") + 1, fileName.indexOf(".txt"));
+				if (receiver.equals(username)) {
+					newMessages(session, fileName.substring(0, fileName.indexOf("|")), username);
+				}
+			}
 		} // Else, if it is a new message sent
 		else if (code.equals("m:")) {
 			BufferedWriter writer = null;
@@ -141,6 +139,7 @@ public class WebSocketServer {
 	 * @param username2
 	 */
 	private void newMessages(Session session, String username, String username2) {
+		logger.info("Chacking for old messages from " + username + " to " + username2);
 		String message = "";
 		// Open cached message file
 		File file = new File("/home/LFT/chats/" + username + "|" + username2);
