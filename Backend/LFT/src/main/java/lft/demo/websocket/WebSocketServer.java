@@ -75,7 +75,7 @@ public class WebSocketServer {
 					writer = new BufferedWriter(new FileWriter(file));
 				}
 				//Get the real message
-				String realMessage = message.substring(message.indexOf("@") + 1);
+				String realMessage = username+"@"+message.substring(message.indexOf("@") + 1);
 				writer.write(realMessage);
 				// Check if the receiver is currently connected
 				if (usernameSessionMap.containsKey(receiver)) {
@@ -140,7 +140,7 @@ public class WebSocketServer {
 	 */
 	private void newMessages(Session session, String username, String username2) {
 		logger.info("Chacking for old messages from " + username + " to " + username2 + ".txt");
-		String message = "";
+		String message = username2 + "@";
 		// Open cached message file
 		File file = new File("/home/LFT/chats/" + username + "|" + username2 + ".txt");
 		try {
