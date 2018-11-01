@@ -41,7 +41,7 @@ public class WebSocketServer {
 		usernameSessionMap.put(username, session);
 
 		// Get all old messages
-		File folder = new File("chats/");
+		File folder = new File("/home/LFT/chats/");
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String fileName = listOfFiles[i].getName();
@@ -109,6 +109,7 @@ public class WebSocketServer {
 	public void onError(Session session, Throwable throwable) {
 		// Do error handling here
 		logger.info("Entered into Error" + throwable.toString());
+		throwable.printStackTrace(System.out);
 	}
 
 	private void sendMessageToPArticularUser(String username, String message) {
@@ -142,7 +143,7 @@ public class WebSocketServer {
 	private void newMessages(Session session, String username, String username2) {
 		String message = "";
 		// Open cached message file
-		File file = new File("chats/" + username + "|" + username2);
+		File file = new File("/home/LFT/chats/" + username + "|" + username2);
 		try {
 			Scanner sc = new Scanner(file);
 			// Get lines of messages
