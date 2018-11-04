@@ -1,6 +1,7 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class MyProfileViewScreen extends AppCompatActivity {
     Button editButton, logoutButton;
     TextView username, availability;
     ImageView profilePic;
-    JSONObject userProfile = null;  // holds user profile obtained from server
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,38 @@ public class MyProfileViewScreen extends AppCompatActivity {
         availability = findViewById(R.id.accountView_availability);
         profilePic = findViewById(R.id.accountView_profilePic);
 
+        // get SharedPrefs
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // create a GET request for user profile
+        JsonObjectRequest profileReq = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + prefs.getString(Const.SHAREDPREFS_USERNAME_KEY, ""), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // when server sends back profile object, fill in user information
+                        try {
+                            username.setText(response.getString(Const.PROFILE_USERNAME_KEY));    // display username
+                            availability.setText(response.getString(Const.PROFILE_PERIOD_KEY));  // display availability
+                            //TODO display more stuff
+                        } catch (JSONException jse) {
+                            // if an error occurs with the JSON, log it
+                            Log.d("Prof_Info_Fill", jse.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // if a volley error occurs, log it
+                        Log.d("Prof_GET_Req", error.toString());
+                    }
+                });
+
+        // make GET request
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(profileReq);
+
+        // when "Logout" button is pressed:
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,34 +84,5 @@ public class MyProfileViewScreen extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-//        // create a GET request for user profile
-//        JsonObjectRequest testrequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + profileUsername, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        // when server sends back profile object
-//                        userProfile = response;
-//                        try {
-//                            username.setText(userProfile.getString(Const.PROFILE_USERNAME_KEY));    // display username
-//                            availability.setText(userProfile.getString(Const.PROFILE_PERIOD_KEY));  // display availability
-//                            //TODO display more stuff
-//                        } catch (JSONException jse) {
-//                            // if an error occurs with the JSON, log it
-//                            Log.d("Prof_Info_Fill", jse.toString());
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // if a volley error occurs, log it
-//                        Log.d("Prof_GET_Req", error.toString());
-//                    }
-//                });
-//
-//        // make GET request
-//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//        queue.add(testrequest);
     }
 }

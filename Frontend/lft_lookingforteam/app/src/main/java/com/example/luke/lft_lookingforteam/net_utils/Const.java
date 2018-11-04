@@ -3,12 +3,15 @@ package com.example.luke.lft_lookingforteam.net_utils;
 public class Const {
     // profile URLs
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
-    public static final String URL_GET_PROFILE_BY_USERNAME = "http://proj309-ad-08.misc.iastate.edu:8080/all/username/";
-    public static final String URL_GET_PROFILE_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/all/id/";
+    public static final String URL_GET_PROFILE_BY_USERNAME = "http://proj309-ad-08.misc.iastate.edu:8080/all/username/";    // append username of desired profile at end of URL
+    public static final String URL_GET_PROFILE_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/all/id/";    // append user ID of desired profile at end of URL
 
     //report URLs
-    public static final String URL_GET_REPORT_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/reports/";
-    public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/post_report/";
+    public static final String URL_GET_REPORT_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/reports/";    // append user ID of desired profile at end of URL
+    public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/post_report";
+
+    //websocket URL
+    public static final String URL_OPEN_WEBSOCKET = "ws://proj309-ad-08.misc.iastate.edu:8080/websocket/";   // append username of current user at end of URL
 
     // profile JSON object key names
     public static final String PROFILE_ID_KEY= "profId";
