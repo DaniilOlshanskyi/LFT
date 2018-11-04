@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,9 +34,10 @@ public class LoginScreen extends AppCompatActivity {
     SharedPreferences prefs;
     SharedPreferences.Editor prefEditor;
     URI webSocketURI;
-    public WebSocketClient chatSocket;
+    WebSocketClient chatSocket;
     Intent changeScreen;
     RequestQueue reqQueue;
+    GlobalState appState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,6 @@ public class LoginScreen extends AppCompatActivity {
     // attempts to log user in, letting them know if their credentials are incorrect
     private void login(final String username, final String password) {
 
-        //temporary testing stuff
-        final Button sendButton = findViewById(R.id.websocketTest_sendButton);
-        final EditText msgBox = findViewById(R.id.websocketTest_msgBox);
-        final TextView conversation = findViewById(R.id.websocketTest_conversation);
-        //end of testing stuff
-
         // create a GET request for user profile
         JsonObjectRequest loginrequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + usernameField.getText(), null,
                 new Response.Listener<JSONObject>() {
@@ -114,21 +108,14 @@ public class LoginScreen extends AppCompatActivity {
                             //TODO store more profile information as needed
                             prefEditor.apply(); // apply changes to SharedPrefs
 
-                            conversation.append("login successful" + "\n");
-
-                            // 2: establish websocket with server and request cached messages
+                            // 2: establish websocket with server, set global messaging websocket, and request cached messages
                             try {
                                 webSocketURI = new URI(Const.URL_OPEN_WEBSOCKET + username);
                             } catch (URISyntaxException uriSE) {
-                                conversation.append(uriSE.toString() + "/n");
                             }
-
-                            conversation.append(webSocketURI.toString() + "\n");
-
                             chatSocket = new WebSocketClient(webSocketURI) {
                                 @Override
                                 public void onOpen(ServerHandshake serverHandshake) {
-                                    conversation.append("connection established" + "\n");
                                     // request cached messages
                                     chatSocket.send("g:");
                                 }
@@ -136,9 +123,7 @@ public class LoginScreen extends AppCompatActivity {
                                 @Override
                                 public void onMessage(String s) {
                                     //TODO update/create relevant conversation file
-
-                                    //temporary testing function
-                                    conversation.append(s + "\n");
+                                    String senderUsername;
                                 }
 
                                 @Override
@@ -149,35 +134,26 @@ public class LoginScreen extends AppCompatActivity {
                                 @Override
                                 public void onError(Exception e) {
                                     //TODO log error
-                                    conversation.append(e.toString() + "\n");
                                 }
                             };
+                            chatSocket.connect();
+                            // set global websocket for chat
+                            appState = (GlobalState) getApplicationContext();
+                            appState.setChatClient(chatSocket);
 
-                            //TODO delete testing stuff and uncomment step 3 after testing websockets
-                            // testing stuff
-                            sendButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    String message = msgBox.getText().toString();
-                                    conversation.append(message + "\n");
-                                    chatSocket.send("m:socketTest@" + message);
-                                }
-                            });
+                            // 3: open swipe screen based on usertype
+                            if (usertype == Const.USERTYPE_BASIC_USER) {
+                                changeScreen = new Intent(LoginScreen.this, UserSwipeScreen.class);
+                            } else if (usertype == Const.USERTYPE_MODERATOR) {
+                                changeScreen = new Intent(LoginScreen.this, ModSwipeScreen.class);
+                            } else if (usertype == Const.USERTYPE_ADMIN) {
+                                changeScreen = new Intent(LoginScreen.this, AdminSwipeScreen.class);
+                            } else {
+                                // if something goes wrong and usertype doesn't match any defined types, default to basic user
+                                changeScreen = new Intent(LoginScreen.this, UserSwipeScreen.class);
+                            }
+                            startActivity(changeScreen);
 
-                            // end of testing stuff
-
-//                            // 3: open swipe screen based on usertype
-//                            if (usertype == Const.USERTYPE_BASIC_USER) {
-//                                changeScreen = new Intent(LoginScreen.this, UserSwipeScreen.class);
-//                            } else if (usertype == Const.USERTYPE_MODERATOR) {
-//                                changeScreen = new Intent(LoginScreen.this, ModSwipeScreen.class);
-//                            } else if (usertype == Const.USERTYPE_ADMIN) {
-//                                changeScreen = new Intent(LoginScreen.this, AdminSwipeScreen.class);
-//                            } else {
-//                                // if something goes wrong and usertype doesn't match any defined types, default to basic user
-//                                changeScreen = new Intent(LoginScreen.this, UserSwipeScreen.class);
-//                            }
-//                            startActivity(changeScreen);
                         } catch (JSONException jse) {
                             Toast.makeText(getApplicationContext(), jse.toString(), Toast.LENGTH_LONG).show();
                         }
