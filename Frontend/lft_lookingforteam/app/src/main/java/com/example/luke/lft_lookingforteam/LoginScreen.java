@@ -1,11 +1,16 @@
 package com.example.luke.lft_lookingforteam;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,8 +28,15 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+
+import static com.example.luke.lft_lookingforteam.R.layout.conversation_list_screen;
 
 public class LoginScreen extends AppCompatActivity {
 
@@ -122,13 +134,60 @@ public class LoginScreen extends AppCompatActivity {
 
                                 @Override
                                 public void onMessage(String s) {
-                                    //TODO update/create relevant conversation file
                                     String senderUsername;
+                                    String message;
+
+                                    // 1: parse message for contents
+                                    String[] messageElements = s.split("@");
+                                    senderUsername = messageElements[0];
+                                    message = messageElements[1];
+
+                                    // 2: update conversation file and conversation card
+                                    File fileDir = getDir("conversation_files", MODE_PRIVATE);   // get file directory for conversation files
+                                    File[] fileList = fileDir.listFiles();  // get list of conversation files
+
+                                    // iterate over existing conversation files
+                                    for (File f : fileList) {
+                                        // if conversation file already exists for sender,
+                                        if (f.getName().equals(senderUsername)) {
+                                            // add received message to it...
+                                            try {
+                                                FileWriter fw = new FileWriter(f, true);
+                                                fw.append(s + "\n");
+                                                fw.close();
+                                            } catch (IOException ioe) {
+                                                //TODO log error
+                                            }
+
+                                            // and update conversation card in ConversationListScreen:
+
+                                            //TODO make sure this questionable code will work
+                                            // get constraint parent view of conversation buttons
+                                            LayoutInflater inf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                                            View convoList = inf.inflate(R.layout.conversation_list_screen, (ViewGroup) findViewById(R.id.conversationListScreen_conversationList));
+
+                                            // get id of convo card for sender
+                                            Resources res = convoList.getResources();
+                                            int id = res.getIdentifier(senderUsername, "id", getApplicationContext().getPackageName());
+
+                                            // get convo card button
+                                            Button convoCard = (Button) convoList.findViewById(id);
+
+                                            // update card text with message
+                                            if (message.length() < 20) {
+                                                convoCard.setText(senderUsername + "\n" + message);
+                                            } else {
+                                                convoCard.setText(senderUsername + "\n" + message.substring(0, 16) + "...");
+                                            }
+
+                                            //TODO turn on new message icon for this card
+                                        }
+                                    }
                                 }
 
                                 @Override
                                 public void onClose(int i, String s, boolean b) {
-
+                                    //TODO figure out if we need to do anything with this
                                 }
 
                                 @Override
