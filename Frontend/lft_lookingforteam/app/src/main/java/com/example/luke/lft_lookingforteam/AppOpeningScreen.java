@@ -6,8 +6,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.luke.lft_lookingforteam.net_utils.Const;
-
 public class AppOpeningScreen extends AppCompatActivity {
 
     @Override

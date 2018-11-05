@@ -1,4 +1,4 @@
-package com.example.luke.lft_lookingforteam.net_utils;
+package com.example.luke.lft_lookingforteam;
 
 public class Const {
     // profile URLs

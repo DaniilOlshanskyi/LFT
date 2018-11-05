@@ -2,16 +2,12 @@ package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.example.luke.lft_lookingforteam.net_utils.Const;
 
 public class ConversationListScreen extends AppCompatActivity {
 
@@ -72,6 +68,12 @@ public class ConversationListScreen extends AppCompatActivity {
         conversationCardContainer = findViewById(R.id.conversationListScreen_conversationList);
         for (int i = 0; i < conversationCardContainer.getChildCount(); i++) {
             conversationCard = (Button) conversationCardContainer.getChildAt(i);
+
+            //TODO delete this testing code
+            conversationCard.setText("test" + i);
+            conversationCard.setContentDescription("test" + i);
+            //end of testing code
+
             conversationCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

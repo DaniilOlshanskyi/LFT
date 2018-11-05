@@ -11,14 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.luke.lft_lookingforteam.net_utils.Const;
-
 import org.java_websocket.client.WebSocketClient;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -28,7 +23,7 @@ public class ConversationScreen extends AppCompatActivity {
     ImageButton backButton;
     Button sendButton;
     EditText msgBox;
-    TextView convoContent;
+    TextView otherUserUsername, convoContent;
     WebSocketClient chatSocket;
     GlobalState appState;
     String recipientUsername, myUsername;
@@ -46,6 +41,10 @@ public class ConversationScreen extends AppCompatActivity {
         // get recipient's username from intent
         Intent i = getIntent();
         recipientUsername = i.getStringExtra(Const.INTENT_CONVERSATION_USERNAME);
+
+        // set username textView to recipient's username
+        otherUserUsername = findViewById(R.id.conversationScreen_username);
+        otherUserUsername.setText(recipientUsername);
 
         final File conversation = getConversationFile(recipientUsername);
 

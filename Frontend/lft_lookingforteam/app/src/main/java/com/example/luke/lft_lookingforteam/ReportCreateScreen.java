@@ -21,8 +21,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.luke.lft_lookingforteam.net_utils.Const;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
