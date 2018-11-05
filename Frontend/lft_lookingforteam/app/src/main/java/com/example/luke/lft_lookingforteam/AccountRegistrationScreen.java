@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import com.example.luke.lft_lookingforteam.net_utils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
@@ -41,7 +44,8 @@ public class AccountRegistrationScreen extends AppCompatActivity {
     EditText usernameField, passwordField;
     String username, password;
     StringBuilder unpwdErrorMsg = new StringBuilder();     // used to tell user what's wrong with their username/password
-    private Uri filePath;
+    String filePath;
+    File imageToUpload = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +150,9 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                         // make POST request
                         reqQueue = Volley.newRequestQueue(getApplicationContext());
                         reqQueue.add(postReq);
+
+                        //create FTPConnection
+
                     }
                 }
             }
@@ -260,6 +267,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
     }
 
     private void getImage(){
+        //create new intent and set to get images with request code 22
         Intent imageUpload = new Intent();
         imageUpload.setType("image/*");
         imageUpload.setAction(Intent.ACTION_GET_CONTENT);
@@ -269,13 +277,13 @@ public class AccountRegistrationScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageGet){
         super.onActivityResult(requestCode, resultCode, imageGet);
+        //override onActivity and create URI and create File object to upload it
         if((requestCode == IMAGE_PICK_REQCODE) && (resultCode == RESULT_OK) && (imageGet != null) && (imageGet.getData() != null)){
-            filePath = imageGet.getData();
-            try{
-                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Uri imageSelected = imageGet.getData();
+            imageToUpload = new File(imageSelected.getPath());
+            final String[] split = imageToUpload.getPath().split(":");
+            filePath = split[1];
+
         }
     }
 }
