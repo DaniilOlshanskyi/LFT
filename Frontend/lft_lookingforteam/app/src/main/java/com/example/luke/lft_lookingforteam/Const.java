@@ -8,7 +8,7 @@ public class Const {
 
     //report URLs
     public static final String URL_GET_REPORT_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/reports/";    // append user ID of desired profile at end of URL
-    public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/post_report";
+    public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/post_report/";     //add profId of violator
 
     //websocket URL
     public static final String URL_OPEN_WEBSOCKET = "ws://proj309-ad-08.misc.iastate.edu:8080/websocket/";   // append username of current user at end of URL

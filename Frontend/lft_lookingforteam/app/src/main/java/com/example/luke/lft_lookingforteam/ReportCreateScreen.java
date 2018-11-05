@@ -110,7 +110,7 @@ public class ReportCreateScreen extends AppCompatActivity {
                 } catch (JSONException jse) {
                     Log.e("Creating JSON", jse.toString());
                 }
-                JsonObjectRequest postReq = new JsonObjectRequest(Request.Method.POST, Const.URL_POST_PROFILE, newReport,
+                JsonObjectRequest postReq = new JsonObjectRequest(Request.Method.POST, Const.URL_POST_PROFILE + violatorId, newReport,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {

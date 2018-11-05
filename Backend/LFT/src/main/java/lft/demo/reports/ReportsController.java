@@ -3,6 +3,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lft.demo.Profiles;
 import lft.demo.UserRepository;
+import lft.demo.user_has_report.UserHasReport;
+import lft.demo.user_has_report.UserHasReportRepository;
 
 import java.util.Optional;
 
@@ -20,6 +22,9 @@ public class ReportsController {
 	
 	@Autowired
     private ReportsRepository reportsRepository;
+	
+	@Autowired
+	private UserHasReportRepository userHasReportsRepository;
 	
 	@GetMapping(path="/reports")
     public @ResponseBody Iterable<Reports> getAllreports(){
@@ -47,8 +52,10 @@ public class ReportsController {
     	return reportsRepository.findAllByreportResolveFlag(resolveFlag);
     }
 	
-	@PostMapping("/postReport")
-	Reports newReport(@RequestBody Reports report) {
+	@PostMapping(path="/postReport/{profId}")
+	Reports newReport(@RequestBody Reports report, @PathVariable(value="profId") int profId) {
+		UserHasReport link = new UserHasReport(report.getId(), profId);
+		userHasReportsRepository.save(link);
 		return reportsRepository.save(report);
 	}
 }
