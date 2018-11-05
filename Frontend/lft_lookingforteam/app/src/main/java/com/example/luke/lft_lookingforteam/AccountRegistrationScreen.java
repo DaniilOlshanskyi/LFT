@@ -1,6 +1,9 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -22,6 +25,9 @@ import com.example.luke.lft_lookingforteam.net_utils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -30,11 +36,12 @@ import java.util.regex.Pattern;
 public class AccountRegistrationScreen extends AppCompatActivity {
 
     private RequestQueue reqQueue;
-
-    Button submitButton;
+    private final static int IMAGE_PICK_REQCODE = 22;
+    Button submitButton, imageUpload;
     EditText usernameField, passwordField;
     String username, password;
     StringBuilder unpwdErrorMsg = new StringBuilder();     // used to tell user what's wrong with their username/password
+    private Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         submitButton = findViewById(R.id.acctRegSubmitButton);
         usernameField = findViewById(R.id.accountCreation_username);
         passwordField = findViewById(R.id.accountCreation_password);
+        imageUpload = findViewById(R.id.acctRegImageUpload);
 
         // enforce character limit on username field
         InputFilter[] unFilterArray = new InputFilter[1];
@@ -57,6 +65,13 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         InputFilter[] pwdFilterArray = new InputFilter[1];
         pwdFilterArray[0] = new InputFilter.LengthFilter(Const.PASSWORD_CHARACTER_LIMIT);
         passwordField.setFilters(pwdFilterArray);
+
+        imageUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImage();
+            }
+        });
 
         // when the "submit" button is pressed
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -242,5 +257,25 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
         // if username is available, return true
         return true;
+    }
+
+    private void getImage(){
+        Intent imageUpload = new Intent();
+        imageUpload.setType("image/*");
+        imageUpload.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(imageUpload, "Select a Picture for you profile"), IMAGE_PICK_REQCODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageGet){
+        super.onActivityResult(requestCode, resultCode, imageGet);
+        if((requestCode == IMAGE_PICK_REQCODE) && (resultCode == RESULT_OK) && (imageGet != null) && (imageGet.getData() != null)){
+            filePath = imageGet.getData();
+            try{
+                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
