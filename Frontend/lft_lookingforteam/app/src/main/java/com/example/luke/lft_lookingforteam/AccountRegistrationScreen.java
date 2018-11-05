@@ -2,10 +2,10 @@ package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
@@ -28,9 +28,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -45,7 +42,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
     String username, password;
     StringBuilder unpwdErrorMsg = new StringBuilder();     // used to tell user what's wrong with their username/password
     String filePath;
-    File imageToUpload = null;
+    String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +120,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject response) {
                                         // notify user that their account has been created :]
-                                        Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), filePath, Toast.LENGTH_LONG).show();
 
                                         //TODO change to account editing screen after it's been created
                                         // switch to Account Editing Screen, passing username
@@ -271,7 +268,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         Intent imageUpload = new Intent();
         imageUpload.setType("image/*");
         imageUpload.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(imageUpload, "Select a Picture for you profile"), IMAGE_PICK_REQCODE);
+        startActivityForResult(Intent.createChooser(imageUpload, "Select a Picture for your profile"), IMAGE_PICK_REQCODE);
     }
 
     @Override
@@ -280,9 +277,12 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         //override onActivity and create URI and create File object to upload it
         if((requestCode == IMAGE_PICK_REQCODE) && (resultCode == RESULT_OK) && (imageGet != null) && (imageGet.getData() != null)){
             Uri imageSelected = imageGet.getData();
-            imageToUpload = new File(imageSelected.getPath());
-            final String[] split = imageToUpload.getPath().split(":");
-            filePath = split[1];
+            File imageToUpload = new File(imageSelected.getPath());
+            Bitmap image = BitmapFactory.decodeFile(imageToUpload.getPath());
+            ByteArrayOutputStream imageInByte = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, imageInByte);
+            byte[] userImage = imageInByte.toByteArray();
+            encodedImage = Base64.encodeToString(userImage, Base64.DEFAULT);
 
         }
     }
