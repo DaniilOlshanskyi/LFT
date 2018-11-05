@@ -18,9 +18,9 @@ import lft.demo.Profiles;
 @Table(name="reports")
 public class Reports implements Serializable{
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="profId")
-	private Profiles profId;
+//	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name="profId")
+//	private Profiles profId;
 
 	@Column(name="reportId")
 	private @Id @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY ) Integer reportID;
@@ -32,7 +32,7 @@ public class Reports implements Serializable{
 	private Long reportChatlog;
 	
 	@Column(name="reportResolveFlag")
-	private Integer reportResolveFlag;
+	private Integer reportResolveFlag = 0;
 	
 	@Column(name="reportResolveDate")
 	private String reportResolveDate;
