@@ -32,6 +32,9 @@ public class Const {
     public static final String REPORT_RESOLVE_DATE = "reportResolveDate";
     public static final String REPORT_MESSAGE = "reportMessage";
 
+    //Intent object key names
+    public static final String INTENT_CONVERSATION_USERNAME = "convoUsername";
+
     //Registration Screen EditText field character limits
     public static final int USERNAME_CHARACTER_LIMIT = 15;
     public static final int PASSWORD_CHARACTER_LIMIT = 30;

@@ -57,19 +57,25 @@
 
     <ScrollView
         android:id="@+id/conversationScreen_conversationScrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         app:layout_constraintBottom_toTopOf="@+id/conversationScreen_editSendContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/conversationScreen_header">
 
         <LinearLayout
             android:id="@+id/conversationScreen_conversationContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/conversationScreen_webSocketTest_MessageContent"
+                android:id="@+id/conversationScreen_conversationContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -82,32 +88,32 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
+        <EditText
             android:id="@+id/conversationScreen_messageBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/conversationScreen_sendButton"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Write a message"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/conversationScreen_sendButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/conversationScreen_sendButton" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/conversationScreen_sendButton"
             style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
             android:text="Send"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

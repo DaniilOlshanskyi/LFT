@@ -76,8 +76,12 @@ public class MyProfileViewScreen extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // reset SharedPrefs to effectively log user out
+                // reset SharedPrefs to get rid of stored username
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().clear().commit();
+
+                // reset chatSocket
+                GlobalState appState = (GlobalState) getApplicationContext();
+                appState.setChatClient(null);
 
                 // go to login screen
                 Intent i = new Intent(MyProfileViewScreen.this, LoginScreen.class);
