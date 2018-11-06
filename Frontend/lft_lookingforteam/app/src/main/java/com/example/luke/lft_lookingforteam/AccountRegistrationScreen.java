@@ -239,6 +239,9 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
         // TODO make database query request to spring with username
 
+
+
+
         // if username is available, return true
         return true;
     }
