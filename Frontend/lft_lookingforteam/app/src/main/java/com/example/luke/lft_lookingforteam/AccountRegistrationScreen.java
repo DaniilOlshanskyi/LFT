@@ -1,9 +1,13 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +25,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -29,11 +35,13 @@ import java.util.regex.Pattern;
 public class AccountRegistrationScreen extends AppCompatActivity {
 
     private RequestQueue reqQueue;
-
-    Button submitButton;
+    private final static int IMAGE_PICK_REQCODE = 22;
+    Button submitButton, imageUpload;
     EditText usernameField, passwordField;
     String username, password;
     StringBuilder unpwdErrorMsg = new StringBuilder();     // used to tell user what's wrong with their username/password
+    String filePath;
+    String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         submitButton = findViewById(R.id.acctRegSubmitButton);
         usernameField = findViewById(R.id.accountCreation_username);
         passwordField = findViewById(R.id.accountCreation_password);
+        imageUpload = findViewById(R.id.acctRegImageUpload);
 
         // enforce character limit on username field
         InputFilter[] unFilterArray = new InputFilter[1];
@@ -56,6 +65,13 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         InputFilter[] pwdFilterArray = new InputFilter[1];
         pwdFilterArray[0] = new InputFilter.LengthFilter(Const.PASSWORD_CHARACTER_LIMIT);
         passwordField.setFilters(pwdFilterArray);
+
+        imageUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImage();
+            }
+        });
 
         // when the "submit" button is pressed
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +103,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                             JSONObject put = newAcct.put(Const.PROFILE_USERNAME_KEY, username);
                             newAcct.put(Const.PROFILE_PASSWORD_KEY, password);
                             newAcct.put(Const.PROFILE_PERIOD_KEY, "availability not set");
-                            newAcct.put(Const.PROFILE_PHOTO_KEY, "");
+                            newAcct.put(Const.PROFILE_PHOTO_KEY, encodedImage);
                             newAcct.put(Const.PROFILE_REPORT_FLAG_KEY, 0);
                             newAcct.put(Const.PROFILE_MOD_FLAG_KEY, 0);
                             newAcct.put(Const.PROFILE_REPUTATION_KEY, 0.0);
@@ -103,7 +119,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject response) {
                                         // notify user that their account has been created :]
-                                        Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), filePath, Toast.LENGTH_LONG).show();
 
                                         //TODO change to account editing screen after it's been created
                                         // switch to Account Editing Screen, passing username
@@ -130,6 +146,9 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                         // make POST request
                         reqQueue = Volley.newRequestQueue(getApplicationContext());
                         reqQueue.add(postReq);
+
+                        //create FTPConnection
+
                     }
                 }
             }
@@ -244,5 +263,29 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
         // if username is available, return true
         return true;
+    }
+
+    private void getImage(){
+        //create new intent and set to get images with request code 22
+        Intent imageUpload = new Intent();
+        imageUpload.setType("image/*");
+        imageUpload.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(imageUpload, "Select a Picture for your profile"), IMAGE_PICK_REQCODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageGet){
+        super.onActivityResult(requestCode, resultCode, imageGet);
+        //override onActivity and create URI and create File object to upload it
+        if((requestCode == IMAGE_PICK_REQCODE) && (resultCode == RESULT_OK) && (imageGet != null) && (imageGet.getData() != null)){
+            Uri imageSelected = imageGet.getData();
+            File imageToUpload = new File(imageSelected.getPath());
+            Bitmap image = BitmapFactory.decodeFile(imageToUpload.getPath());
+            ByteArrayOutputStream imageInByte = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, imageInByte);
+            byte[] userImage = imageInByte.toByteArray();
+            encodedImage = Base64.encodeToString(userImage, Base64.DEFAULT);
+
+        }
     }
 }
