@@ -41,6 +41,7 @@ public class HelloController {
     	return userRepository.findByprofUsername(username);
     }
 
+    //basically runs the previous class but returns 1 if available and 0 if not
     @GetMapping(path="/all/username/checkavail/{username}")
 	public @ResponseBody Profiles checkUsernameAvail(@PathVariable(value="username") String username){
 		if(userRepository.findByprofUsername(username) != null){
