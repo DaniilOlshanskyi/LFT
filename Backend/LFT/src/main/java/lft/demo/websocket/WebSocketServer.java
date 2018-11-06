@@ -35,18 +35,18 @@ public class WebSocketServer {
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) throws IOException {
-		logger.info("Entered into Open");
+		logger.info("Entered into Open. User: " + username + " connected");
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
-
+		
 	}
 
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException {
 		// Handle new messages
-		logger.info("Entered into Message: Got Message: " + message);
 		String username = sessionUsernameMap.get(session);
+		logger.info("Entered into Message: Got Message from: " + username + message);
 
 		String code = message.substring(0, 2);
 		// If it is a request to check for new messages:
