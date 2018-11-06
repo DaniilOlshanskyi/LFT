@@ -40,7 +40,17 @@ public class HelloController {
     public @ResponseBody Profiles getUserByUsername(@PathVariable(value="username") String username){
     	return userRepository.findByprofUsername(username);
     }
-    
+
+    @GetMapping(path="/all/username/checkavail/{username}")
+	public @ResponseBody Profiles checkUsernameAvail(@PathVariable(value="username") String username){
+		if(userRepository.findByprofUsername(username) != null){
+			return 0;
+		}
+		else{
+			return 1;
+		}
+	}
+
     @PostMapping("/post_profile")
     Profiles newProfile(@RequestBody Profiles profile) {
     	return userRepository.save(profile);
