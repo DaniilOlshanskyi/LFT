@@ -282,7 +282,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
             File imageToUpload = new File(imageSelected.getPath());
             Bitmap image = BitmapFactory.decodeFile(imageToUpload.getPath());
             ByteArrayOutputStream imageInByte = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG, 100, imageInByte);
+            //image.compress(Bitmap.CompressFormat.JPEG, 100, imageInByte);
             byte[] userImage = imageInByte.toByteArray();
             encodedImage = Base64.encodeToString(userImage, Base64.DEFAULT);
 
