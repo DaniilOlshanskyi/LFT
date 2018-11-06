@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,8 +17,6 @@ import java.io.IOException;
 
 public class ConversationListScreen extends AppCompatActivity {
 
-    Button testConversationCard;
-
     Button myProfileButton, swipeScreenButton, messagingButton;
     LinearLayout conversationCardList;
     Intent changeScreen;
@@ -28,19 +27,6 @@ public class ConversationListScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation_list_screen);
-
-
-        testConversationCard = findViewById(R.id.conversationListScreen_testButton);
-        testConversationCard.setContentDescription("test1");
-        testConversationCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeScreen = new Intent(ConversationListScreen.this, ConversationScreen.class);
-                changeScreen.putExtra(Const.INTENT_CONVERSATION_USERNAME, testConversationCard.getContentDescription().toString());
-                startActivity(changeScreen);
-            }
-        });
-
 
         // get usertype
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -126,9 +112,11 @@ public class ConversationListScreen extends AppCompatActivity {
             newConvoCard.setText(toSet);
             newConvoCard.setContentDescription(recipientUsername);
             newConvoCard.setId(f);
+            newConvoCard.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+            newConvoCard.setPadding(16, 0, 0, 0);
             newConvoCard.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    80
+                    200
             ));
             //TODO add more attributes
 
@@ -145,14 +133,5 @@ public class ConversationListScreen extends AppCompatActivity {
             // 6: add convo card to LinearLayout
             conversationCardList.addView(newConvoCard);
         }
-    }
-
-    // sets params for a conversation card being created
-    // uses "parent" parameter to set width and horizontal constraints
-    // uses "topConstraint" parameter to set vertical constraint
-    private Button setConversationCardParams(Button convoCard, View parent, View topConstraint) {
-        //TODO modify convoCard params
-
-        return convoCard;
     }
 }

@@ -1,6 +1,11 @@
 package com.example.luke.lft_lookingforteam;
 
 public class Const {
+    // Logcat Tags
+    public static final String LOGTAG_FILE_READ = "File read";
+    public static final String LOGTAG_FILE_WRITE = "File write";
+    public static final String LOGTAG_CHAT_WEBSOCKET = "Chat websocket";
+
     // profile URLs
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
     public static final String URL_GET_PROFILE_BY_USERNAME = "http://proj309-ad-08.misc.iastate.edu:8080/all/username/";    // append username of desired profile at end of URL

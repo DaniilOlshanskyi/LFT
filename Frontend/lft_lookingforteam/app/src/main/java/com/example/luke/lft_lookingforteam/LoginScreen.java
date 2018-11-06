@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -111,7 +112,8 @@ public class LoginScreen extends AppCompatActivity {
 
                         // 2: start websocket as user
                         appState = (GlobalState) getApplicationContext();
-                        appState.startChatClient(username);
+                        Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Starting websocket with username: " + username); // log websocket start
+                        appState.startChatClient(username); // start websocket
 
                         // 3: open swipe screen based on usertype
                         if (usertype == Const.USERTYPE_BASIC_USER) {
