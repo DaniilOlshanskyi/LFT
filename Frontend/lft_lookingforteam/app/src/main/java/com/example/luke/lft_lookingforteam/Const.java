@@ -10,6 +10,7 @@ public class Const {
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
     public static final String URL_GET_PROFILE_BY_USERNAME = "http://proj309-ad-08.misc.iastate.edu:8080/all/username/";    // append username of desired profile at end of URL
     public static final String URL_GET_PROFILE_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/all/id/";    // append user ID of desired profile at end of URL
+    public static final String URL_GET_PROFILE_AVAIL = "http//proj309-ad-08.misc.iastate.edu:8080/all/username/checkavail/"; //append username at end, returns 1 if used, 0 if not
 
     //report URLs
     public static final String URL_GET_REPORT_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/reports/";    // append user ID of desired profile at end of URL
