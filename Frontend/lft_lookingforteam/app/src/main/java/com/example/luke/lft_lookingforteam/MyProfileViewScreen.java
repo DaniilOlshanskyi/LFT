@@ -80,7 +80,7 @@ public class MyProfileViewScreen extends AppCompatActivity {
 
                 // reset chatSocket
                 GlobalState appState = (GlobalState) getApplicationContext();
-                appState.setChatClient(null);
+                appState.closeChatClient();
 
                 // go to login screen
                 Intent i = new Intent(MyProfileViewScreen.this, LoginScreen.class);

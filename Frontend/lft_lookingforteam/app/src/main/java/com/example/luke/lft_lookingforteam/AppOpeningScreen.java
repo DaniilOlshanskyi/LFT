@@ -3,10 +3,13 @@ package com.example.luke.lft_lookingforteam;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class AppOpeningScreen extends AppCompatActivity {
+
+    GlobalState appState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +25,14 @@ public class AppOpeningScreen extends AppCompatActivity {
             Intent i = new Intent(AppOpeningScreen.this, LoginScreen.class);
             startActivity(i);
         } else {
-            // if a non-null value is found for username, there must be a user logged-in, so go to the swiping page based on usertype
-            int usertype = prefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);
+            // if a non-null value is found for username, there must be a user logged-in:
+            // 1: start websocket with username
+            String username = prefs.getString(Const.SHAREDPREFS_USERNAME_KEY, "");
+            appState = (GlobalState) getApplicationContext();
+            appState.startChatClient(username);
 
+            // 2: go to the swiping page based on usertype
+            int usertype = prefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);
             if (usertype == Const.USERTYPE_BASIC_USER) {
                 Intent i = new Intent(AppOpeningScreen.this, UserSwipeScreen.class);
                 startActivity(i);

@@ -224,7 +224,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
             return false;
         }
 
-        // make sure username doesn't contain any restricted characters (&=<>+,)
+        // make sure username doesn't contain any restricted characters (&=<>+,.)
         // this pattern defines a regular expression where there is: 0 or more characters,
         // then at least one of the restricted characters, then 0 or more characters
         final String restrCharPattern = ".*(?=[&=<>+,.]+).*";

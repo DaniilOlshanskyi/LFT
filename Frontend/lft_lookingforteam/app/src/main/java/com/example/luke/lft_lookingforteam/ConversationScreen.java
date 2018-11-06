@@ -24,15 +24,25 @@ public class ConversationScreen extends AppCompatActivity {
     Button sendButton;
     EditText msgBox;
     TextView otherUserUsername, convoContent;
-    WebSocketClient chatSocket;
     GlobalState appState;
     String recipientUsername, myUsername;
     SharedPreferences prefs;
+    Intent changeScreen;
+    FileWriter convoWriter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation_screen);
+
+        // reference layout items
+        backButton = findViewById(R.id.conversationScreen_backButton);
+        sendButton = findViewById(R.id.conversationScreen_sendButton);
+        msgBox = findViewById(R.id.conversationScreen_messageBox);
+        convoContent = findViewById(R.id.conversationScreen_conversationContent);
+
+        // get Global State for application
+        appState = (GlobalState) getApplicationContext();
 
         // get user's username from shared prefs
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -46,57 +56,52 @@ public class ConversationScreen extends AppCompatActivity {
         otherUserUsername = findViewById(R.id.conversationScreen_username);
         otherUserUsername.setText(recipientUsername);
 
-        final File conversation = getConversationFile(recipientUsername);
-
-        backButton = findViewById(R.id.conversationScreen_backButton);
-        sendButton = findViewById(R.id.conversationScreen_sendButton);
-        msgBox = findViewById(R.id.conversationScreen_messageBox);
-        convoContent = findViewById(R.id.conversationScreen_conversationContent);
-
-        appState = (GlobalState) getApplicationContext();
-        chatSocket = appState.getChatClient();
-
-        // display contents of convo file
-        convoContent.setText("");
+        // get convo file for recipient and instantiate FileWriter
+        final File conversation = getConversationFile(recipientUsername + ".txt");
         try{
-            String fileLine;
-            String[] lineContents;
-            String sender;
-            String message;
+            convoWriter = new FileWriter(conversation);
+        } catch (IOException ioe) {
+            //TODO log it
+        }
+
+        // display contents of convo file, line by line
+        convoContent.setText("");
+        try {
             Scanner s = new Scanner(conversation);
             while (s.hasNextLine()) {
-                fileLine = s.nextLine();
-                lineContents = fileLine.split("@");
-                sender = lineContents[0];
-                message = lineContents[1];
-                convoContent.append(sender + ": " + message);
+                convoContent.append(s.nextLine());
             }
+            s.close();
         } catch (IOException ioe) {
             //TODO log error
         }
 
-        backButton.setOnClickListener(new View.OnClickListener(){
+        // when "Back" button is pressed
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // go back to conversation list screen
-                Intent i = new Intent(ConversationScreen.this, ConversationListScreen.class);
-                startActivity(i);
+                changeScreen = new Intent(ConversationScreen.this, ConversationListScreen.class);
+                startActivity(changeScreen);
             }
         });
 
+        // when "Send" button is pressed
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String toSend = msgBox.getText().toString();
-                chatSocket.send("m:" + recipientUsername + "@" + toSend);
+                appState.getChatClient().send("m:" + recipientUsername + "@" + toSend);
 
                 // add message to conversation file
                 try {
-                    FileWriter fw = new FileWriter(conversation);
-                    fw.append(myUsername + "@" + toSend + "\n");
+                    convoWriter.append("Me: " + toSend + "\n");
                 } catch (IOException ioe) {
                     //TODO log error
                 }
+
+                // add message to conversation box
+                convoContent.append("Me: " + toSend);
 
                 // clear message box
                 msgBox.setText("");
@@ -104,19 +109,19 @@ public class ConversationScreen extends AppCompatActivity {
         });
     }
 
-    private File getConversationFile(String filename){
-        File toReturn = new File("empty");
-        File fileDir = getDir("conversation_files", MODE_PRIVATE);   // get file directory for conversation files
-        File[] fileList = fileDir.listFiles();  // get list of conversation files
+    private File getConversationFile(String filename) {
+        // get all conversation files
+        File fileDir = getDir("conversation_files", MODE_PRIVATE);
+        File[] fileList = fileDir.listFiles();
 
-        // find desired conversation file
+        // get desired conversation file from list and return it
         for (File f : fileList) {
             if (f.getName().equals(filename)) {
-                toReturn = f;
-                break;
+                return f;
             }
         }
 
-        return toReturn;
+        // if file isn't found, create new empty file inside conversations directory and return it
+        return new File(fileDir, filename);
     }
 }

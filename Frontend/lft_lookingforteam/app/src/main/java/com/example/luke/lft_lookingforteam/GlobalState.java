@@ -16,11 +16,13 @@ public class GlobalState extends Application {
     private static WebSocketClient chatSocket;
 
     public void startChatClient(String currentUser) {
-        URI uri = null;
+        URI uri;
         try {
             uri = new URI(Const.URL_OPEN_WEBSOCKET + currentUser);
         } catch (URISyntaxException uriSE) {
+            // if, somehow, something goes wrong when creating this, return and...
             //TODO log it
+            return;
         }
 
         chatSocket = new WebSocketClient(uri) {
@@ -46,7 +48,7 @@ public class GlobalState extends Application {
                 File[] fileList = fileDir.listFiles();
                 for (File f : fileList) {
                     // find conversation file for sender,
-                    if (f.getName().equals(senderUsername)) {
+                    if (f.getName().equals(senderUsername + ".txt")) {
                         // and add received message to it
                         try {
                             FileWriter fw = new FileWriter(f, true);
@@ -74,6 +76,12 @@ public class GlobalState extends Application {
             }
         };
         chatSocket.connect();
+    }
+
+    public void closeChatClient(){
+        if (chatSocket != null){
+            chatSocket.close();
+        }
     }
 
     public WebSocketClient getChatClient() {

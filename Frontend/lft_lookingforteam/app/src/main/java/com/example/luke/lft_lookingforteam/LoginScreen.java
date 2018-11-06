@@ -83,6 +83,7 @@ public class LoginScreen extends AppCompatActivity {
                         int usertype = 0; // class of user (basic, mod, admin), default to basic
 
                         // if server response is empty, username is invalid, so let user know and don't continue
+                        //TODO this doesn't work, fix it
                         if (response.length() == 0) {
                             Toast.makeText(getApplicationContext(), "Invalid Username", Toast.LENGTH_LONG).show();
                             return;
