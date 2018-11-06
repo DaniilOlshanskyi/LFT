@@ -84,6 +84,7 @@ public class GlobalState extends Application {
                     try{
                         FileWriter fw = new FileWriter(newFile, true);
                         fw.write(senderUsername + ": " + message + "\n");
+                        fw.close();
                     } catch (IOException ioe) {
                         // log error
                         Log.d(Const.LOGTAG_FILE_WRITE, "Error writing message to file: " + newFile.toString() + "\n\t" + ioe.toString());
