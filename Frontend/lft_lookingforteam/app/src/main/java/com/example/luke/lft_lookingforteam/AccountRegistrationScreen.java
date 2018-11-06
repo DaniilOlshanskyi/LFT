@@ -103,7 +103,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                             JSONObject put = newAcct.put(Const.PROFILE_USERNAME_KEY, username);
                             newAcct.put(Const.PROFILE_PASSWORD_KEY, password);
                             newAcct.put(Const.PROFILE_PERIOD_KEY, "availability not set");
-                            newAcct.put(Const.PROFILE_PHOTO_KEY, encodedImage);
+                            newAcct.put(Const.PROFILE_PHOTO_KEY, "");
                             newAcct.put(Const.PROFILE_REPORT_FLAG_KEY, 0);
                             newAcct.put(Const.PROFILE_MOD_FLAG_KEY, 0);
                             newAcct.put(Const.PROFILE_REPUTATION_KEY, 0.0);
@@ -119,7 +119,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject response) {
                                         // notify user that their account has been created :]
-                                        Toast.makeText(getApplicationContext(), filePath, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Account Created :]", Toast.LENGTH_LONG).show();
 
                                         //TODO change to account editing screen after it's been created
                                         // switch to Account Editing Screen, passing username
