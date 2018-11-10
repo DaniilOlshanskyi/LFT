@@ -1,0 +1,67 @@
+#TODO: change tags to correspond to our runners' names
+#TODO: figure out what to replace "target" with in maventest & autodeploy
+#TODO: figure out what to put in "image" for android build/test
+stages:
+  - mavenbuild
+  - maventest
+  - autodeploy
+  - androidbuild
+  - androidtest
+
+maven-build:
+  stage: mavenbuild
+  tags:
+    - shell
+  script:
+    - cd Backend/LFT
+    #- mvn <something> -B
+
+maven-test:
+  stage: maventest
+  tags:
+    - shell
+  script:
+    - cd Backend/LFT
+    #- mvn <test file>
+  artifacts:
+    paths:
+      #- Backend/LFT/target/*.jar
+
+auto-deploy:
+  stage: autodeploy
+  tags:
+    - shell
+  script:
+    - cd Backend/LFT
+    #- mvn package
+    #- sudo mv target/*.jar /target/web-demo.jar 
+    #- sudo systemctl stop systemd-web-demo
+    #- sudo systemctl start systemd-web-demo
+
+android-build:
+  image: javiersantos/android-ci:latest
+  stage: androidbuild
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/lft_lookingforteam/gradlew
+  tags:
+    - android_tag1
+  script:
+    - cd Frontend/lft_lookingforteam
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - Frontend/lft_lookingforteam/app/build/outputs/
+
+android-test:
+  image: javiersantos/android-ci:latest
+  stage: androidtest
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/lft_lookingforteam/gradlew
+  tags:
+    - android_tag1
+  script:
+    - cd Frontend/lft_lookingforteam
+    #- ./gradlew test
+    #TODO: create Android unit tests
