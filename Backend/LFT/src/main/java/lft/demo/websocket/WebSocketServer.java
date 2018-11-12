@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.LinkedList;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -21,7 +22,11 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import lft.demo.Profiles;
+import lft.demo.UserRepository;
 
 @ServerEndpoint("/websocket/{username}")
 @Component
@@ -30,6 +35,9 @@ public class WebSocketServer {
 	// Store all socket session and their corresponding username.
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
 	private static Map<String, Session> usernameSessionMap = new HashMap<>();
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
@@ -158,78 +166,13 @@ public class WebSocketServer {
 			e.printStackTrace(System.out);
 		}
 	}
+	
+	private LinkedList<Profiles> getList(){
+		LinkedList<Profiles> list = new LinkedList<Profiles>();
+		
+		
+		
+		
+		return list;
+	}
 }
-
-//@ServerEndpoint("/websocket/{username}")
-//@Component
-//public class WebSocketServer {
-//	private Session session;
-//	private static Set<WebSocketServer> chatEndpoints = new CopyOnWriteArraySet<>();
-//	private static Map<String, String> users = new HashMap();
-//	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
-//
-//	@OnOpen
-//	public void onOpen(Session session, @PathParam("username") String username) {
-//		logger.info("Entered into Open");
-//		this.session = session;
-//		chatEndpoints.add(this);
-//		users.put(session.getId(), username);
-//		
-//		//Get all old messages
-//		File folder = new File("chats/");
-//		File[] listOfFiles = folder.listFiles();
-//		for (int i = 0; i < listOfFiles.length; i++) {
-//			String fileName = listOfFiles[i].getName();
-//			String receiver = fileName.substring(fileName.indexOf("|")+1); 
-//			if (receiver.equals(username)) {
-//				newMessages(session,fileName.substring(0, fileName.indexOf("|")),username);
-//			}
-//		}
-//	}
-//
-//	
-//	/**
-//	 * Messages format: Request for new messages: "g:{username}" New message
-//	 * "m:{username}@message"
-//	 * 
-//	 * @param session
-//	 * @param message
-//	 * 
-//	 */
-//	@OnMessage
-//	public void onMessage(Session session, String message) {
-//		logger.info("Entered into Mesage. Got Message:" + message);
-//
-//	}
-//
-//	@OnClose
-//	public void onClose() {
-//		logger.info("Entered into Close");
-//		chatEndpoints.remove(this);
-//		// String message="Disconnected";
-//	}
-//
-//	@OnError
-//	public void onEror() {
-//		logger.info("Entered into Error");
-//	}
-//
-//	private void sendMessageToParticularUser(Session session, String message) {
-//		try {
-//			session.getBasicRemote().sendText("m:" + message);
-//		} catch (IOException e) {
-//			logger.info("Exception: " + e.getMessage().toString());
-//			e.printStackTrace();
-//		}
-//	}
-//
-//
-//	public Session isSocket(String s) {
-//		if (this.users.get(session.getId()).equals(s)) {
-//			return this.session;
-//		} else {
-//			return null;
-//		}
-//	}
-//
-//}
