@@ -11,7 +11,7 @@ stages:
 maven-build:
   stage: mavenbuild
   tags:
-    - shell
+    - --LFT-backend
   script:
     - cd Backend/LFT
     #- mvn <something> -B
