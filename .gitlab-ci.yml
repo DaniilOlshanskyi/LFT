@@ -19,7 +19,7 @@ maven-build:
 maven-test:
   stage: maventest
   tags:
-    - shell
+    - --LFT-backend
   script:
     - cd Backend/LFT
     #- mvn <test file>
@@ -30,7 +30,7 @@ maven-test:
 auto-deploy:
   stage: autodeploy
   tags:
-    - shell
+    - --LFT-backend
   script:
     - cd Backend/LFT
     #- mvn package
@@ -45,7 +45,7 @@ android-build:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/lft_lookingforteam/gradlew
   tags:
-    - android_tag1
+    - --LFT-android
   script:
     - cd Frontend/lft_lookingforteam
     - ./gradlew assemble
@@ -60,7 +60,7 @@ android-test:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/lft_lookingforteam/gradlew
   tags:
-    - android_tag1
+    - --LFT-android
   script:
     - cd Frontend/lft_lookingforteam
     #- ./gradlew test
