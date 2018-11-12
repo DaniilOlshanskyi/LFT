@@ -47,12 +47,12 @@ public class Reports implements Serializable{
 		reportID = id;
 	}
 	
-	public Profiles getProfId() {
-		return profId;
-	}
-	public void setProfId(Profiles profId) {
-		this.profId = profId;
-	}
+//	public Profiles getProfId() {
+//		return profId;
+//	}
+//	public void setProfId(Profiles profId) {
+//		this.profId = profId;
+//	}
 //	public void setProfId(Integer id) {
 //		profId = id;
 //	}

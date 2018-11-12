@@ -39,14 +39,14 @@ public class WebSocketServer {
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
-		
+
 	}
 
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException {
 		// Handle new messages
 		String username = sessionUsernameMap.get(session);
-		logger.info("Entered into Message: Got Message from: " + username + message);
+		logger.info("Entered into Message: Got Message from: " + username + " " + message);
 
 		String code = message.substring(0, 2);
 		// If it is a request to check for new messages:
@@ -74,14 +74,14 @@ public class WebSocketServer {
 				} else {
 					writer = new BufferedWriter(new FileWriter(file));
 				}
-				//Get the real message
-				String realMessage = username+"@"+message.substring(message.indexOf("@") + 1);
+				// Get the real message
+				String realMessage = username + "@" + message.substring(message.indexOf("@") + 1);
 				writer.write(realMessage);
 				// Check if the receiver is currently connected
 				if (usernameSessionMap.containsKey(receiver)) {
 					sendMessageToPArticularUser(receiver, realMessage);
 					file.delete();
-				} 
+				}
 			} catch (Exception e) {
 				logger.info("Exception in onMessage!");
 			} // Close writer anyway
@@ -130,7 +130,7 @@ public class WebSocketServer {
 			}
 		});
 	}
-	
+
 	/**
 	 * Get new messages from username to username2
 	 * 
