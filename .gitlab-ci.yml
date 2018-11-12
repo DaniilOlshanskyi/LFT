@@ -1,4 +1,3 @@
-#TODO: change tags to correspond to our runners' names
 #TODO: figure out what to replace "target" with in maventest & autodeploy
 #TODO: figure out what to put in "image" for android build/test
 stages:
