@@ -1,14 +1,21 @@
 #TODO: figure out what to replace "target" with in maventest & autodeploy
 #TODO: figure out what to put in "image" for android build/test
 stages:
-  - mavenbuild
+  - update
   - maventest
   - autodeploy
   - androidbuild
   - androidtest
 
+updateBackend:
+  stage: update
+  tags: 
+    - --LFT-backend
+  script:
+    - cd Backend/LFT
+  
 maven-build:
-  stage: mavenbuild
+  stage: update
   tags:
     - --LFT-backend
   script:
@@ -39,7 +46,7 @@ auto-deploy:
 
 android-build:
   image: javiersantos/android-ci:latest
-  stage: androidbuild
+  stage: update
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/lft_lookingforteam/gradlew
