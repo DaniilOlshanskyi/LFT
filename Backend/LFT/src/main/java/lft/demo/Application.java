@@ -17,7 +17,9 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-    //TESTLINE for ci/cd
+    /*
+	TESTBLOCK SHOULD BE UPDATED
+	*/
     /*
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
