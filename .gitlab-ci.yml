@@ -2,17 +2,18 @@
 #TODO: figure out what to put in "image" for android build/test
 stages:
   - update
+  - mavenbuild
   - maventest
   - autodeploy
-  #- androidbuild
-  #- androidtest
+  - androidbuild
+  - androidtest
 
 updateBackend:
   stage: update
   tags: 
     - --LFT-backend
   script:
-    - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
+    # - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
     # eval $(ssh-agent -s)
     # echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     # mkdir -p ~/.ssh
@@ -23,7 +24,7 @@ updateBackend:
     - cd Backend/LFT
   
 maven-build:
-  stage: update
+  stage: mavenbuild
   tags:
     - --LFT-backend
   script:
