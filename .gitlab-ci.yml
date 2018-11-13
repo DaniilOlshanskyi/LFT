@@ -4,8 +4,8 @@ stages:
   - update
   - maventest
   - autodeploy
-  - androidbuild
-  - androidtest
+  #- androidbuild
+  #- androidtest
 
 updateBackend:
   stage: update
@@ -28,7 +28,7 @@ maven-build:
     - --LFT-backend
   script:
     - cd Backend/LFT
-    #- mvn <something> -B
+    - mvn package -B
 
 maven-test:
   stage: maventest
@@ -36,10 +36,10 @@ maven-test:
     - --LFT-backend
   script:
     - cd Backend/LFT
-    #- mvn <test file>
+    - mvn clean install
   artifacts:
     paths:
-      #- Backend/LFT/target/*.jar
+      - Backend/LFT/target/*.jar
 
 auto-deploy:
   stage: autodeploy
@@ -54,7 +54,7 @@ auto-deploy:
 
 android-build:
   image: javiersantos/android-ci:latest
-  stage: update
+  stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/lft_lookingforteam/gradlew
