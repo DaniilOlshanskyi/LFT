@@ -20,12 +20,7 @@ updateBackend:
     # chmod 700 ~/.ssh
     # echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     # chmod 644 ~/.ssh/known_hosts
-    - sudo wget http://www-us.apache.org/dist/maven/maven3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz
-    - sudo tar -xf apache-maven-3.5.4-bin.tar.gz
-    - sudo mv apache-maven-3.5.4/ apache-maven/
     - cd Backend/LFT
-    - cd /usr/local/src
-    - ls
   
 maven-build:
   stage: mavenbuild
@@ -33,10 +28,7 @@ maven-build:
     - --LFT-backend
   script:
     - cd Backend/LFT
-    - export M2_HOME=/usr/local/src/apache-maven
-    - export PATH=${M2_HOME}/bin:${PATH}
-    - echo $PATH
-    - $M2_HOME/bin/mvn package -B
+    - mvn package -B
 
 maven-test:
   stage: maventest
