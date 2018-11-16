@@ -20,6 +20,9 @@ updateBackend:
     # chmod 700 ~/.ssh
     # echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     # chmod 644 ~/.ssh/known_hosts
+    - sudo wget http://www-us.apache.org/dist/maven/maven3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz
+    - sudo tar -xf apache-maven-3.5.4-bin.tar.gz
+    - sudo mv apache-maven-3.5.4/ apache-maven/
     - cd Backend/LFT
     - cd /usr/local/src
     - ls
