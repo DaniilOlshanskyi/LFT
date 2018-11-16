@@ -30,6 +30,7 @@ maven-build:
     - cd Backend/LFT
     - export M2_HOME=/usr/local/src/apache-maven
     - export PATH=${M2_HOME}/bin:${PATH}
+    - echo $PATH
     - mvn package -B
 
 maven-test:
