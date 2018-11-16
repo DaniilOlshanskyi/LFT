@@ -20,8 +20,6 @@ updateBackend:
     # chmod 700 ~/.ssh
     # echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     # chmod 644 ~/.ssh/known_hosts
-    - echo $PATH
-    - echo $M2_HOME
     - cd Backend/LFT
   
 maven-build:
@@ -30,8 +28,9 @@ maven-build:
     - --LFT-backend
   script:
     - cd Backend/LFT
-    - pwd
-    - /usr/local/src/apache-maven/bin/mvn package -B
+    - export M2_HOME=/usr/local/src/apache-maven
+    - export PATH=${M2_HOME}/bin:${PATH}
+    - mvn package -B
 
 maven-test:
   stage: maventest
