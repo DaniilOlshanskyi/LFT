@@ -29,6 +29,7 @@ maven-build:
     - --LFT-backend
   script:
     - cd Backend/LFT
+    - pwd
     - /usr/local/src/apache-maven/bin/mvn package -B
 
 maven-test:
