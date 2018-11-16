@@ -31,7 +31,7 @@ maven-build:
     - export M2_HOME=/usr/local/src/apache-maven
     - export PATH=${M2_HOME}/bin:${PATH}
     - echo $PATH
-    - mvn package -B
+    - $M2_HOME/bin/mvn package -B
 
 maven-test:
   stage: maventest
