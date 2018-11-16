@@ -21,6 +21,7 @@ updateBackend:
     # echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     # chmod 644 ~/.ssh/known_hosts
     - cd Backend/LFT
+    - cd /usr/local/src/apache-maven/bin
   
 maven-build:
   stage: mavenbuild
