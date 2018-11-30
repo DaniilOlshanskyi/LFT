@@ -1,7 +1,7 @@
 #TODO: figure out what to replace "target" with in maventest & autodeploy
 #TODO: figure out what to put in "image" for android build/test
 stages:
-  - update
+  - before_script
   - mavenbuild
   - maventest
   - autodeploy
