@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import lft.demo.Profiles;
 import lft.demo.UserRepository;
 import lft.demo.user_has_games.*;
+import lft.demo.games.*;
 
 @ServerEndpoint("/websocket/{username}")
 @Component
@@ -44,6 +45,12 @@ public class WebSocketServer {
 	@Autowired
 	private HasGamesRepository hasGamesRepository;
 	
+	@Autowired
+	private GamesRepository gamesRepository;
+
+	//Counter to keep track of the list
+	int listCounter;
+	
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
 	@OnOpen
@@ -52,7 +59,23 @@ public class WebSocketServer {
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
-
+		
+		//Create lists to pre-generate swiping lists
+		Profiles user = userRepository.findByprofUsername(username);
+		List<HasGames> listGames =  hasGamesRepository.findByprofID(user.getID());
+		LinkedList<Profiles> list = new LinkedList<Profiles>();
+		
+		for (int k = 0; k< listGames.size(); k++) {
+			int gameid = listGames.get(k).getgameId();
+			List<HasGames> listProfilesWithGame = hasGamesRepository.findBygameId(gameid);
+			for (int i = 0; i < listProfilesWithGame.size(); i++) {
+				Profiles match = userRepository.findById(listProfilesWithGame.get(i).getprofID()).get();
+				if (!list.contains(match) && match.getprofSuspend()==0 && match.getprofUsername()!=username) {
+					list.add(match);
+				}
+			}
+		}
+		listCounter = 0;
 	}
 
 	@OnMessage
@@ -105,8 +128,7 @@ public class WebSocketServer {
 				}
 			}
 		} else if (code.equals("L:")) {
-			Profiles user = userRepository.findByprofUsername(username);
-			List<HasGames> list =  hasGamesRepository.findBygameId(user.getID());
+			
 		}
 	}
 

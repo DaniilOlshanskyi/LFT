@@ -113,4 +113,6 @@ public class Profiles implements Serializable{
 		public void setprofSuspend(float profSuspend) {
 			this.profSuspend = profSuspend;
 		}
+		
+		
 }
