@@ -9,7 +9,7 @@ stages:
   - androidtest
 
 before_script:
-    - $MAVEN_HOME/bin/mvn clean
+#    - $MAVEN_HOME/bin/mvn clean
   
 maven-build:
   stage: mavenbuild
