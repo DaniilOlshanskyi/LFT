@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import lft.demo.Profiles;
 import lft.demo.UserRepository;
+import lft.demo.user_has_games.*;
 
 @ServerEndpoint("/websocket/{username}")
 @Component
@@ -39,6 +41,9 @@ public class WebSocketServer {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private HasGamesRepository hasGamesRepository;
+	
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
 	@OnOpen
@@ -99,6 +104,9 @@ public class WebSocketServer {
 				} catch (Exception e) {
 				}
 			}
+		} else if (code.equals("L:")) {
+			Profiles user = userRepository.findByprofUsername(username);
+			List<HasGames> list =  hasGamesRepository.findBygameId(user.getID());
 		}
 	}
 
