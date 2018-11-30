@@ -22,31 +22,31 @@ public class UserHasReport implements Serializable{
 //	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //	@JoinColumn(name="profId")
 	@Column(name = "profiles_profID")
-	private int profId;
+	private int profiles_profID;
 	
 //	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //	@JoinColumn(name="reportId")
 	@Column(name = "profiles_reportId")
-	private int reportId;
+	private int profiles_reportId;
 	
 	public UserHasReport(int profId, int reportId) {
-		this.profId = profId;
-		this.reportId = reportId;
+		this.profiles_profID = profId;
+		this.profiles_reportId = reportId;
 	}
 	
-	public int getProfId() {
-		return profId;
+	public int getprofId() {
+		return profiles_profID;
 	}
 	
-	public int getReportId() {
-		return reportId;
+	public int getreportId() {
+		return profiles_reportId;
 	}
 	
 	public void setprofId(int profId) {
-		this.profId=profId;
+		this.profiles_profID=profId;
 	}
 	
 	public void setreportId(int reportId) {
-		this.reportId=reportId;
+		this.profiles_reportId=reportId;
 	}
 }
