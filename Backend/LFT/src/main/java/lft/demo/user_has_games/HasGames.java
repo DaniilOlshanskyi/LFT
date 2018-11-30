@@ -2,6 +2,7 @@ package lft.demo.user_has_games;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -9,7 +10,7 @@ import javax.persistence.Table;
 public class HasGames {
 	
 	@Column(name="profID")
-    private int profID;
+    private @Id int profID;
 	
 	@Column(name="gameId")
     private int gameId;

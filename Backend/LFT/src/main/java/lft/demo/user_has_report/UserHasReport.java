@@ -22,7 +22,7 @@ public class UserHasReport implements Serializable{
 //	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //	@JoinColumn(name="profId")
 	@Column(name = "profiles_profID")
-	private int profiles_profID;
+	private @Id int profiles_profID;
 	
 //	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //	@JoinColumn(name="reportId")
