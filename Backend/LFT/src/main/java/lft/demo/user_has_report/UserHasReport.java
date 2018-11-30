@@ -16,7 +16,7 @@ import lft.demo.Profiles;
 import lft.demo.reports.Reports;
 
 @Entity
-@Table(name="profiles_has_reports")
+@Table(name="profilesHasReports")
 public class UserHasReport implements Serializable{
 	
 //	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
