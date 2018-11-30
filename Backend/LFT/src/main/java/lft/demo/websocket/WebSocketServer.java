@@ -50,6 +50,8 @@ public class WebSocketServer {
 
 	//Counter to keep track of the list
 	int listCounter;
+	//List itself
+	LinkedList<Profiles> list;
 	
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
@@ -63,7 +65,7 @@ public class WebSocketServer {
 		//Create lists to pre-generate swiping lists
 		Profiles user = userRepository.findByprofUsername(username);
 		List<HasGames> listGames =  hasGamesRepository.findByprofID(user.getID());
-		LinkedList<Profiles> list = new LinkedList<Profiles>();
+		list = new LinkedList<Profiles>();
 		
 		for (int k = 0; k< listGames.size(); k++) {
 			int gameid = listGames.get(k).getgameId();
@@ -128,7 +130,8 @@ public class WebSocketServer {
 				}
 			}
 		} else if (code.equals("L:")) {
-			
+			sendMessageToPArticularUser(username, list.get(listCounter).toString());
+			listCounter++;
 		}
 	}
 
