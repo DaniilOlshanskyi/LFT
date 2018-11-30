@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -38,21 +39,21 @@ public class WebSocketServer {
 	// Store all socket session and their corresponding username.
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
 	private static Map<String, Session> usernameSessionMap = new HashMap<>();
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
 	private HasGamesRepository hasGamesRepository;
-	
+
 	@Autowired
 	private GamesRepository gamesRepository;
 
-	//Counter to keep track of the list
+	// Counter to keep track of the list
 	int listCounter;
-	//List itself
+	// List itself
 	LinkedList<Profiles> list;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
 	@OnOpen
@@ -61,18 +62,18 @@ public class WebSocketServer {
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
-		
-		//Create lists to pre-generate swiping lists
+
+		// Create lists to pre-generate swiping lists
 		Profiles user = userRepository.findByprofUsername(username);
-		List<HasGames> listGames =  hasGamesRepository.findByprofID(user.getID());
+		List<HasGames> listGames = hasGamesRepository.findByprofID(user.getID());
 		list = new LinkedList<Profiles>();
-		
-		for (int k = 0; k< listGames.size(); k++) {
+
+		for (int k = 0; k < listGames.size(); k++) {
 			int gameid = listGames.get(k).getgameId();
 			List<HasGames> listProfilesWithGame = hasGamesRepository.findBygameId(gameid);
 			for (int i = 0; i < listProfilesWithGame.size(); i++) {
 				Profiles match = userRepository.findById(listProfilesWithGame.get(i).getprofID()).get();
-				if (!list.contains(match) && match.getprofSuspend()==0 && match.getprofUsername()!=username) {
+				if (!list.contains(match) && match.getprofSuspend() == 0 && match.getprofUsername() != username) {
 					list.add(match);
 				}
 			}
@@ -118,6 +119,7 @@ public class WebSocketServer {
 				// Check if the receiver is currently connected
 				if (usernameSessionMap.containsKey(receiver)) {
 					sendMessageToPArticularUser(receiver, realMessage);
+					writer.close();
 					file.delete();
 				}
 			} catch (Exception e) {
@@ -130,8 +132,11 @@ public class WebSocketServer {
 				}
 			}
 		} else if (code.equals("L:")) {
-			sendMessageToPArticularUser(username, list.get(listCounter).toString());
+			sendMessageToPArticularUser(username, "L:" + list.get(listCounter).toString());
 			listCounter++;
+		} else if (code.equals("F:")) {
+			String match = message.substring(2);
+			matchTwoUsers(username, match);
 		}
 	}
 
@@ -199,13 +204,51 @@ public class WebSocketServer {
 			e.printStackTrace(System.out);
 		}
 	}
-	
-	private LinkedList<Profiles> getList(){
-		LinkedList<Profiles> list = new LinkedList<Profiles>();
+
+	private void matchTwoUsers(String username, String match) {
+		boolean written = false;
+		// Get list of files with matches
+		File folder = new File("/home/LFT/matches/");
+		File[] listOfFiles = folder.listFiles();
+		// Search for the file that is for the one who the person matched
+		for (int i = 0; i < listOfFiles.length; i++) {
+			String fileNameWithExt = listOfFiles[i].getName();
+			String fileName = fileNameWithExt.substring(0, fileNameWithExt.indexOf(".txt"));
+			if (fileName.equals(match)) {
+				String fileContents = "";
+				// Read people that "match" has chosen
+				try {
+					byte[] bytes = Files.readAllBytes(listOfFiles[i].toPath());
+					fileContents = new String(bytes, "UTF-8");
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				if (fileContents.contains(username)) {
+					sendMessageToPArticularUser(username, "F:" + match);
+				}
+			} else if (fileName.equals(username)) { // If the file for this user is found - append the new match to it
+				written = true;
+				try {
+					BufferedWriter writer = new BufferedWriter(new FileWriter(listOfFiles[i], true));
+					writer.write("|" + match);
+					writer.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
-		
-		
-		
-		return list;
+		if (!written) {
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(username+".txt"));
+				writer.write(match);
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
