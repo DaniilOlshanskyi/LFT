@@ -20,7 +20,7 @@ public class Application {
 //    	try {
 //            ctx.register(Application.class);
 //            ctx.refresh();
-//            System.out.println();
+//            System.out.princd tln();
 //            System.out.println();
 //            System.out.println();
 //            System.out.println("Spring component scant test");

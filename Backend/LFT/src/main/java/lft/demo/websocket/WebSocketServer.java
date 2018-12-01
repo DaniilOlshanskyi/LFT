@@ -27,10 +27,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lft.demo.Profiles;
-import lft.demo.UserRepository;
-import lft.demo.user_has_games.*;
+import lft.demo.*;
 import lft.demo.games.*;
+import lft.demo.user_has_games.*;
+//import lft.demo.Profiles;
+//import lft.demo.UserRepository;
+//import lft.demo.user_has_games.*;
+//import lft.demo.games.*;
 
 @ServerEndpoint("/websocket/{username}")
 @Component
@@ -105,7 +108,7 @@ public class WebSocketServer {
 			BufferedWriter writer = null;
 			try {
 				// Open chat from this user to that user
-				String receiver = message.substring(2, message.indexOf("@"));
+				String receiver = message.substring(2, message.indexOf("&"));
 				File file = new File("chats/" + username + "|" + receiver + ".txt");
 				// If file exists - append, if not - create and write to it
 				if (file.exists()) {
@@ -114,7 +117,7 @@ public class WebSocketServer {
 					writer = new BufferedWriter(new FileWriter(file));
 				}
 				// Get the real message
-				String realMessage = "m:" + username + "@" + message.substring(message.indexOf("@") + 1);
+				String realMessage = "m:" + username + "&" + message.substring(message.indexOf("&") + 1);
 				writer.write(realMessage);
 				// Check if the receiver is currently connected
 				if (usernameSessionMap.containsKey(receiver)) {
@@ -190,7 +193,7 @@ public class WebSocketServer {
 	 */
 	private void newMessages(Session session, String username, String username2) {
 		logger.info("Checking for old messages from " + username + " to " + username2 + ".txt");
-		String message = "m:" + username2 + "@";
+		String message = "m:" + username2 + "&";
 		// Open cached message file
 		File file = new File("/home/LFT/chats/" + username + "|" + username2 + ".txt");
 		try {
