@@ -23,7 +23,6 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -36,16 +35,21 @@ import lft.demo.user_has_games.*;
 //import lft.demo.games.*;
 
 @ServerEndpoint("/websocket/{username}")
-@Component
+@Service
 public class WebSocketServer {
 
 	// Store all socket session and their corresponding username.
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
 	private static Map<String, Session> usernameSessionMap = new HashMap<>();
 
-	@Autowired
+	//@Autowired
 	private UserRepository userRepository;
-
+	
+	@Autowired
+	public void wireUR(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
 	@Autowired
 	private HasGamesRepository hasGamesRepository;
 
