@@ -9,12 +9,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 @SpringBootApplication
 //@ComponentScan(basePackages={"WebSocket","games","reports","demo"})
 public class Application {
 
     public static void main(String[] args) {
+//    	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+//    	try {
+//            ctx.register(Application.class);
+//            ctx.refresh();
+//            System.out.println();
+//            System.out.println();
+//            System.out.println();
+//            System.out.println("Spring component scant test");
+//            System.out.println();
+//            System.out.println();
+//            System.out.println("Bean profiles: "
+//                    + ctx.getBean("Profiles"));
+//            System.out.println();
+//            System.out.println();
+//           
+//        } finally {
+//            ctx.close();
+//        }
         SpringApplication.run(Application.class, args);
     }
     /*

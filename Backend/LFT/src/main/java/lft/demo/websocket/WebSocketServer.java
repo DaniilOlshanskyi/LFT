@@ -189,8 +189,8 @@ public class WebSocketServer {
 	 * @param username2
 	 */
 	private void newMessages(Session session, String username, String username2) {
-		logger.info("Chacking for old messages from " + username + " to " + username2 + ".txt");
-		String message = "m:" +username2 + "@";
+		logger.info("Checking for old messages from " + username + " to " + username2 + ".txt");
+		String message = "m:" + username2 + "@";
 		// Open cached message file
 		File file = new File("/home/LFT/chats/" + username + "|" + username2 + ".txt");
 		try {

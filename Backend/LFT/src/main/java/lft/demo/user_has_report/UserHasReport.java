@@ -12,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 import lft.demo.Profiles;
 import lft.demo.reports.Reports;
-
+@Component
 @Entity
 @Table(name="profilesHasReports")
 public class UserHasReport implements Serializable{
