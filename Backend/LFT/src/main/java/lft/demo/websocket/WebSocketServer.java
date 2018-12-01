@@ -132,8 +132,12 @@ public class WebSocketServer {
 				}
 			}
 		} else if (code.equals("L:")) {
-			sendMessageToPArticularUser(username, "L:" + list.get(listCounter).toString());
-			listCounter++;
+			if (listCounter<list.size()) {
+				sendMessageToPArticularUser(username, "L:" + list.get(listCounter).toString());
+				listCounter++;
+			} else {
+				sendMessageToPArticularUser(username, "E:");
+			}
 		} else if (code.equals("F:")) {
 			String match = message.substring(2);
 			matchTwoUsers(username, match);
