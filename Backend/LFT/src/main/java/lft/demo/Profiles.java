@@ -123,7 +123,7 @@ public class Profiles implements Serializable {
 	}
 
 	public String toString() {
-		return profID + "|" + profUsername + "|" + profPassword + "|" + profPeriod + "|" + profPhoto + "|"
-				+ profReportFlag + "|" + profModFlag + "|" + profRep + "|" + profRecentlogin + "|" + profSuspend;
+		return profID + "&" + profUsername + "&" + profPassword + "&" + profPeriod + "&" + profPhoto + "&"
+				+ profReportFlag + "&" + profModFlag + "&" + profRep + "&" + profRecentlogin + "&" + profSuspend;
 	}
 }
