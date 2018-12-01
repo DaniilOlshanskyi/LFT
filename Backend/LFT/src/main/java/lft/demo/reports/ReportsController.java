@@ -54,7 +54,9 @@ public class ReportsController {
 	
 	@PostMapping(path="/postReport/{profId}")
 	Reports newReport(@RequestBody Reports report, @PathVariable(value="profId") int profId) {
-		UserHasReport link = new UserHasReport(report.getId(), profId);
+		UserHasReport link = new UserHasReport();
+		link.setreportId(report.getId());
+		link.setprofId(profId);
 		userHasReportsRepository.save(link);
 		return reportsRepository.save(report);
 	}

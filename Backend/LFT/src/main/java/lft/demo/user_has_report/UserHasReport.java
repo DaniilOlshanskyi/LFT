@@ -31,11 +31,11 @@ public class UserHasReport implements Serializable{
 	@Column(name = "profiles_reportId")
 	private int profiles_reportId;
 	
-	public UserHasReport(int profId, int reportId) {
-		this.profiles_profID = profId;
-		this.profiles_reportId = reportId;
-	}
-	
+//	public UserHasReport(int profId, int reportId) {
+//		this.profiles_profID = profId;
+//		this.profiles_reportId = reportId;
+//	}
+//	
 	public int getprofId() {
 		return profiles_profID;
 	}
