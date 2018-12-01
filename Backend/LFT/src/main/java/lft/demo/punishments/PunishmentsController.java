@@ -25,8 +25,7 @@ public class PunishmentsController {
 	private PunishmentsRepository punishmentsRepository;
 	
 	@GetMapping(path="/punishments/{reportId}")
-	public @ResponseBody Optional<Punishments> getReportsById(@PathVariable(value="reportId") int id){
+	public @ResponseBody Punishments getReportsById(@PathVariable(value="reportId") int id){
     	return punishmentsRepository.findByreportsReportId(id);
     }
-
 }
