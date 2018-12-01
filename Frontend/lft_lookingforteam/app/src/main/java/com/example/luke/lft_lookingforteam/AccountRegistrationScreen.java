@@ -181,7 +181,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         // check whether password contains a special character
         // this pattern defines a regular expression where there is: 0 or more characters,
         // then at least one special character, then 0 or more characters
-        final String specCharPattern = ".*(?=[@$!%*#?&]+).*";
+        final String specCharPattern = ".*(?=[@$!%*#?]+).*";
         pattern = Pattern.compile(specCharPattern);
         matcher = pattern.matcher(pwd);
         // if the matcher created from this pattern doesn't find a match in the password,
@@ -194,7 +194,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         // check whether password contains any restricted characters
         // this pattern defines a regular expression where there is: 0 or more characters,
         // then at least one restricted character, then 0 or more characters
-        final String restrCharPattern = ".*(?=[=<>+,.]+).*";
+        final String restrCharPattern = ".*(?=[&=<>+,.]+).*";
         pattern = Pattern.compile(restrCharPattern);
         matcher = pattern.matcher(pwd);
         // if the matcher created from this pattern finds a match in the password,

@@ -18,34 +18,39 @@ import java.net.URISyntaxException;
 
 public class GlobalState extends Application {
 
-    private static WebSocketClient chatSocket;
+    private static WebSocketClient websocket;
     private static JSONObject swipeProfileOnDeck;
 
     public static TextView chatWindow, user2;  // not ideal, work with ConversationScreen to update chatwindow
 
-    // creates and starts a new chatSocket
-    public void startChatClient(String currentUser) {
+    // creates and starts a new websocket
+    public void startWebsocket(String currentUser) {
         // create URI for websocket creation
         URI uri;
         try {
             uri = new URI(Const.URL_OPEN_WEBSOCKET + currentUser);
         } catch (URISyntaxException uriSE) {
-            // if, somehow, something goes wrong when creating this, return and...
-            //TODO log it
+            // if, somehow, something goes wrong when creating this, log error and return
+            Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Websocket URI error: " + uriSE.toString());
             return;
         }
 
         // instantiate websocket from URI
-        chatSocket = new WebSocketClient(uri) {
+        websocket = new WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                // log get request
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Requesting cached messages...");
-                // request cached messages
-                chatSocket.send("g:");
+                // log websocket created
+                Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Websocket opened");
 
+                // log cached messages request
+                Log.d(Const.LOGTAG_WEBSOCKET_CHAT, "Requesting cached messages...");
+                // request cached messages
+                websocket.send(Const.WEBSOCKET_CHAT_CACHE_TAG);
+
+                // log swipe profile request
+                Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");
                 // get initial swipe candidate
-                chatSocket.send("L:");
+                websocket.send(Const.WEBSOCKET_SWIPING_TAG);
             }
 
             @Override
@@ -55,23 +60,25 @@ public class GlobalState extends Application {
                 String[] contentElements;
 
                 // parse message for type and content
-                messageType = s.substring(0,0);
+                messageType = s.substring(0,1);
                 messageContent = s.substring(2, s.length());
 
                 // perform operations based on message type
 
-                // if chat message, type will be "m"
-                if (messageType.equals("m")){
+                // if chat message
+                if (messageType.equals(Const.WEBSOCKET_CHAT_TAG)){
                     String senderUsername;
                     String message;
 
+                    //TODO implement for multiple cached messages
+
                     // parse message for contents
-                    contentElements = messageContent.split("&");
+                    contentElements = messageContent.split(Const.WEBSOCKET_DATA_SEPARATOR);
                     senderUsername = contentElements[0];
                     message = contentElements[1];
 
                     // log message received
-                    Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Message Received: " + s + "\n\t" + "Sender: " + senderUsername + ", Message: " + message + "\n");
+                    Log.d(Const.LOGTAG_WEBSOCKET_CHAT, "Message Received: " + "Sender: " + senderUsername + ", Message: " + message);
 
                     // update conversation file
                     // iterate over conversation files
@@ -117,10 +124,15 @@ public class GlobalState extends Application {
                     //TODO set "new message" icon flag
                 }
 
-                // if swiping list message, type will be "L"
-                else if (messageType.equals("L")){
-                    // extract profile data from message and create JSONObject
-                    contentElements = messageContent.split("&");
+                // if swiping list message
+                else if (messageType.equals(Const.WEBSOCKET_SWIPING_TAG)){
+                    // extract profile data from message
+                    contentElements = messageContent.split(Const.WEBSOCKET_DATA_SEPARATOR);
+
+                    // log swipe candidate received
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Received swiping profile for: " + contentElements[1] + ", creating JSON object");
+
+                    // create JSON object
                     swipeProfileOnDeck = new JSONObject();
                     try{
                         swipeProfileOnDeck.put(Const.PROFILE_ID_KEY, contentElements[0]);
@@ -139,8 +151,11 @@ public class GlobalState extends Application {
                     }
                 }
 
-                // if match message, type will be "F"
-                else if (messageType.equals("M")){
+                // if match message
+                else if (messageType.equals(Const.WEBSOCKET_MATCHING_TAG)){
+                    // log match received
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_MATCH, "Matched with user: " + messageContent + ", creating conversation file");
+
                     // message content should be username of matched user,
                     // so start conversation with them
                     File fileDir = getDir("conversation_files", MODE_PRIVATE);
@@ -156,37 +171,49 @@ public class GlobalState extends Application {
                     Toast.makeText(getApplicationContext(), "You matched with " + messageContent + ", go to messaging screen to start chatting", Toast.LENGTH_LONG).show();
                 }
 
+                // if server swiping queue for user is empty
+                else if (messageType.equals(Const.WEBSOCKET_EMPTY_TAG)){
+                    // log empty swiping queue
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Swiping queue empty");
+
+                    // notify user
+                    Toast.makeText(getApplicationContext(), "No more profiles to display", Toast.LENGTH_LONG).show();
+                }
+
                 // insert more message type cases as needed
             }
 
             @Override
             public void onClose(int i, String s, boolean b) {
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Websocket closed");
+                Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Websocket closed");
             }
 
             @Override
             public void onError(Exception e) {
                 // log error
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Error: " + e.toString());
+                Log.d(Const.LOGTAG_WEBSOCKET_ERROR, e.toString());
             }
         };
-        chatSocket.connect();
+        websocket.connect();
     }
 
-    // closes chatSocket if not null
-    public void closeChatClient() {
-        if (chatSocket != null) {
-            chatSocket.close();
+    // closes websocket if not null
+    public void closeWebsocket() {
+        if (websocket != null) {
+            websocket.close();
         }
     }
 
-    // returns current chatSocket
-    public WebSocketClient getChatClient() {
-        return chatSocket;
+    // returns current websocket
+    public WebSocketClient getWebsocket() {
+        return websocket;
     }
 
     // returns the next swipe profile for displaying and asks the server for a new one
     public JSONObject getNextSwipeCandidate() {
+        // log swipe profile request
+        Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");
+        websocket.send(Const.WEBSOCKET_SWIPING_TAG);
         return swipeProfileOnDeck;
     }
 }

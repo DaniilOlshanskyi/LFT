@@ -30,7 +30,9 @@
         <activity android:name=".ConversationScreen" />
         <activity android:name=".ReportCreateScreen" />
         <activity android:name=".LoginScreen" />
-        <activity android:name=".ReportViewingScreen"></activity>
+        <activity android:name=".ReportViewingScreen" />
+        <activity android:name=".MainAppScreen" />
+        <activity android:name=".EditProfileScreen"></activity>
     </application>
 
 </manifest>

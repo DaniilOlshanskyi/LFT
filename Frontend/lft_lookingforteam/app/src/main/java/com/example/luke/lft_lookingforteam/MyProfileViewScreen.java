@@ -36,9 +36,9 @@ public class MyProfileViewScreen extends AppCompatActivity {
         // reference layout objects
         editButton = findViewById(R.id.myProfileViewScreen_editProfileButton);
         logoutButton = findViewById(R.id.myProfileViewScreen_logoutButton);
-        username = findViewById(R.id.accountView_username);
-        availability = findViewById(R.id.accountView_availability);
-        profilePic = findViewById(R.id.accountView_profilePic);
+        username = findViewById(R.id.myProfileViewScreen_username);
+        availability = findViewById(R.id.myProfileViewScreen_availability);
+        profilePic = findViewById(R.id.myProfileViewScreen_profilePic);
 
         // get SharedPrefs
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -80,7 +80,7 @@ public class MyProfileViewScreen extends AppCompatActivity {
 
                 // reset chatSocket
                 GlobalState appState = (GlobalState) getApplicationContext();
-                appState.closeChatClient();
+                appState.closeWebsocket();
 
                 // go to login screen
                 Intent i = new Intent(MyProfileViewScreen.this, LoginScreen.class);
