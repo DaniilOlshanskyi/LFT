@@ -9,8 +9,6 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +23,9 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import lft.demo.*;
 import lft.demo.games.*;
@@ -65,7 +65,8 @@ public class WebSocketServer {
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
-
+		
+		
 		// Create lists to pre-generate swiping lists
 		Profiles user = userRepository.findByprofUsername(username);
 		List<HasGames> listGames = hasGamesRepository.findByprofID(user.getID());

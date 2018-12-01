@@ -6,13 +6,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 @SpringBootApplication
-//@ComponentScan(basePackages={"WebSocket","games","reports","demo"})
+//@ComponentScan(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
+//@EntityScan(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
+//@EnableJpaRepositories(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
 public class Application {
 
     public static void main(String[] args) {
@@ -20,7 +24,7 @@ public class Application {
 //    	try {
 //            ctx.register(Application.class);
 //            ctx.refresh();
-//            System.out.princd tln();
+//            System.out.println();
 //            System.out.println();
 //            System.out.println();
 //            System.out.println("Spring component scant test");
