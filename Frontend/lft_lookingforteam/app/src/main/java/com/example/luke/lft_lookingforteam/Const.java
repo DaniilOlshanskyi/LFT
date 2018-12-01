@@ -2,9 +2,11 @@ package com.example.luke.lft_lookingforteam;
 
 public class Const {
     // Logcat Tags
+    public static final String LOGTAG_FILE_CREATE = "File creation";
     public static final String LOGTAG_FILE_READ = "File read";
     public static final String LOGTAG_FILE_WRITE = "File write";
     public static final String LOGTAG_CHAT_WEBSOCKET = "Chat websocket";
+    public static final String LOGTAG_JSONOBJECT_CREATION = "JSONObject creation";
 
     // profile URLs
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
