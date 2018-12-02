@@ -105,10 +105,10 @@ public class ConversationScreen extends AppCompatActivity {
                 String socketMsg = "m:" + recipientUsername + "@" + toSend;
 
                 // log message sent
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Message sent: " + socketMsg + "\n\t" + "Recipient: " + recipientUsername + ", Message: " + toSend + "\n");
+                Log.d(Const.LOGTAG_WEBSOCKET_CHAT, "Message sent: " + "Recipient: " + recipientUsername + ", Message: " + toSend);
 
                 // send message
-                appState.getChatClient().send(socketMsg);
+                appState.getWebsocket().send(socketMsg);
 
                 // add message to conversation file
                 try {

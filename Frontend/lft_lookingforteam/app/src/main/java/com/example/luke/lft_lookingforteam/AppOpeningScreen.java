@@ -29,8 +29,8 @@ public class AppOpeningScreen extends AppCompatActivity {
             // 1: start websocket with username
             String username = prefs.getString(Const.SHAREDPREFS_USERNAME_KEY, "");
             appState = (GlobalState) getApplicationContext();
-            Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Starting websocket with username: " + username); // log websocket start
-            appState.startChatClient(username); // start websocket
+            Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Starting websocket with username: " + username); // log websocket start
+            appState.startWebsocket(username); // start websocket
 
             // 2: go to the swiping page based on usertype
             int usertype = prefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);

@@ -51,7 +51,6 @@ public class LoginScreen extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO show "in progress" loading icon
 
                 // extract username and password from fields
                 username = usernameField.getText().toString();
@@ -112,20 +111,11 @@ public class LoginScreen extends AppCompatActivity {
 
                         // 2: start websocket as user
                         appState = (GlobalState) getApplicationContext();
-                        Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Starting websocket with username: " + username); // log websocket start
-                        appState.startChatClient(username); // start websocket
+                        Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Starting websocket with username: " + username); // log websocket start
+                        appState.startWebsocket(username); // start websocket
 
-                        // 3: open swipe screen based on usertype
-                        if (usertype == Const.USERTYPE_BASIC_USER) {
-                            changeScreen = new Intent(LoginScreen.this, UserSwipeScreen.class);
-                        } else if (usertype == Const.USERTYPE_MODERATOR) {
-                            changeScreen = new Intent(LoginScreen.this, ModSwipeScreen.class);
-                        } else if (usertype == Const.USERTYPE_ADMIN) {
-                            changeScreen = new Intent(LoginScreen.this, AdminSwipeScreen.class);
-                        } else {
-                            // if something went wrong and usertype doesn't match any defined types, default to basic user
-                            changeScreen = new Intent(LoginScreen.this, UserSwipeScreen.class);
-                        }
+                        // 3: open main screen
+                        changeScreen = new Intent(LoginScreen.this, MainAppScreen.class);
                         startActivity(changeScreen);
                     }
                 },

@@ -25,8 +25,6 @@ public class MainAppScreen extends AppCompatActivity {
 
     private SharedPreferences sharedPrefs;
     private int usertype;
-    private Button myProfileButton, swipeScreenButton, messagingButton; // header buttons common across all main layouts
-    private Intent activitySwitcher;
 
     private SectionsPageAdapter sPageAdapter;
     private ViewPager viewPager;
@@ -40,30 +38,28 @@ public class MainAppScreen extends AppCompatActivity {
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         usertype = sharedPrefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);
 
-        // set view layout based on usertype
+        // set view layout and set up tabs based on usertype
         if (usertype == Const.USERTYPE_ADMIN){
             setContentView(R.layout.admin_main_screen);
+            //TODO reference views
         }
         else if (usertype == Const.USERTYPE_MODERATOR){
             setContentView(R.layout.mod_main_screen);
+            //TODO reference views
         }
         else {
             setContentView(R.layout.user_main_screen);
+            viewPager = findViewById(R.id.userMainScreen_tabViewPager);
+            tabLayout = findViewById(R.id.userMainScreen_tabs);
         }
 
-        // set up tabs for switching between main screens
-
         // set up ViewPager with sections adapter
-        viewPager = findViewById(R.id.userMainScreen_tabViewPager);
         setupViewPager(viewPager);
 
         // set tab layout
-        tabLayout = findViewById(R.id.userMainScreen_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         //TODO default to display swipe screen when activity is opened
-
-        //TODO set click listeners for header buttons to inflate different layouts
     }
 
     // sets up view pager by adding fragments to a sections page adapter and using it to set the adapter of the view pager

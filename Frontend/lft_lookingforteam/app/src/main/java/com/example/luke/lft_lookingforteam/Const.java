@@ -11,6 +11,7 @@ public class Const {
     public static final String LOGTAG_JSONOBJECT_CREATION = "JSONObject creation";
     public static final String LOGTAG_WEBSOCKET_SWIPING_MATCH = "Swiping match";
     public static final String LOGTAG_WEBSOCKET_SWIPING_CARDS = "Swiping cards";
+    public static final String LOGTAG_JSONOBJECT_READ = "Reading JSON";
 
     // Websockets
     public static final String WEBSOCKET_CHAT_TAG = "m:";
@@ -53,6 +54,7 @@ public class Const {
 
     //Intent object key names
     public static final String INTENT_CONVERSATION_USERNAME = "convoUsername";
+    public static final String INTENT_PROFILE_VIEW_USERNAME = "profileUsername";
 
     //Registration Screen EditText field character limits
     public static final int USERNAME_CHARACTER_LIMIT = 15;

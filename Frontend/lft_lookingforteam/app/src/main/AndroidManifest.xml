@@ -32,7 +32,8 @@
         <activity android:name=".LoginScreen" />
         <activity android:name=".ReportViewingScreen" />
         <activity android:name=".MainAppScreen" />
-        <activity android:name=".EditProfileScreen"></activity>
+        <activity android:name=".EditProfileScreen" />
+        <activity android:name=".SwipingReference_NotPartOfProject"></activity>
     </application>
 
 </manifest>

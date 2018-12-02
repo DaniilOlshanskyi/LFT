@@ -1,27 +1,39 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GlobalState extends Application {
 
     private static WebSocketClient websocket;
-    private static JSONObject swipeProfileOnDeck;
+    private static List<SwipingCard> swipeCards;
+    private static Context appContext;
 
     public static TextView chatWindow, user2;  // not ideal, work with ConversationScreen to update chatwindow
+
+    public void onCreate() {
+        super.onCreate();
+        appContext = getApplicationContext();
+        swipeCards = new ArrayList<>();
+    }
+
+    public static Context getAppContext() {
+        return appContext;
+    }
 
     // creates and starts a new websocket
     public void startWebsocket(String currentUser) {
@@ -48,8 +60,10 @@ public class GlobalState extends Application {
                 websocket.send(Const.WEBSOCKET_CHAT_CACHE_TAG);
 
                 // log swipe profile request
-                Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");
-                // get initial swipe candidate
+                Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting 3 initial swiping candidates...");
+                // get initial swipe candidates (3)
+                websocket.send(Const.WEBSOCKET_SWIPING_TAG);
+                websocket.send(Const.WEBSOCKET_SWIPING_TAG);
                 websocket.send(Const.WEBSOCKET_SWIPING_TAG);
             }
 
@@ -130,25 +144,11 @@ public class GlobalState extends Application {
                     contentElements = messageContent.split(Const.WEBSOCKET_DATA_SEPARATOR);
 
                     // log swipe candidate received
-                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Received swiping profile for: " + contentElements[1] + ", creating JSON object");
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Received swiping profile for: " + contentElements[1] + ", creating swiping card");
 
-                    // create JSON object
-                    swipeProfileOnDeck = new JSONObject();
-                    try{
-                        swipeProfileOnDeck.put(Const.PROFILE_ID_KEY, contentElements[0]);
-                        swipeProfileOnDeck.put(Const.PROFILE_USERNAME_KEY, contentElements[1]);
-                        swipeProfileOnDeck.put(Const.PROFILE_PASSWORD_KEY, contentElements[2]);
-                        swipeProfileOnDeck.put(Const.PROFILE_PERIOD_KEY, contentElements[3]);
-                        swipeProfileOnDeck.put(Const.PROFILE_PHOTO_KEY, contentElements[4]);
-                        swipeProfileOnDeck.put(Const.PROFILE_REPORT_FLAG_KEY, Integer.parseInt(contentElements[5]));
-                        swipeProfileOnDeck.put(Const.PROFILE_MOD_FLAG_KEY, Integer.parseInt(contentElements[6]));
-                        swipeProfileOnDeck.put(Const.PROFILE_REPUTATION_KEY, Float.parseFloat(contentElements[7]));
-                        swipeProfileOnDeck.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, contentElements[8]);
-                        swipeProfileOnDeck.put(Const.PROFILE_SUSPENDED_KEY, Float.parseFloat(contentElements[9]));
-                    } catch (JSONException jsone){
-                        // log error
-                        Log.d(Const.LOGTAG_JSONOBJECT_CREATION, "Error creating JSONObject" + "\n\t" + jsone.toString());
-                    }
+                    // create swiping card object and add it to the list
+                    SwipingCard newCard = new SwipingCard (contentElements[1], contentElements[3], contentElements[4], new ArrayList<String>(), new ArrayList<String>());
+                    swipeCards.add(newCard);
                 }
 
                 // if match message
@@ -175,9 +175,6 @@ public class GlobalState extends Application {
                 else if (messageType.equals(Const.WEBSOCKET_EMPTY_TAG)){
                     // log empty swiping queue
                     Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Swiping queue empty");
-
-                    // notify user
-                    Toast.makeText(getApplicationContext(), "No more profiles to display", Toast.LENGTH_LONG).show();
                 }
 
                 // insert more message type cases as needed
@@ -205,15 +202,15 @@ public class GlobalState extends Application {
     }
 
     // returns current websocket
-    public WebSocketClient getWebsocket() {
+    public static WebSocketClient getWebsocket() {
         return websocket;
     }
 
-    // returns the next swipe profile for displaying and asks the server for a new one
-    public JSONObject getNextSwipeCandidate() {
+    // returns the next swiping card, removes it from the list, and requests a new one
+    public SwipingCard getSwipeCandidate() {
         // log swipe profile request
         Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");
         websocket.send(Const.WEBSOCKET_SWIPING_TAG);
-        return swipeProfileOnDeck;
+        return swipeCards.remove(0);
     }
 }
