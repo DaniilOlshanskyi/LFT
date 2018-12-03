@@ -7,6 +7,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 
 /**
+ * Web socket configuration class.
  * 
  * @author Vamsi Krishna Calpakkam
  *

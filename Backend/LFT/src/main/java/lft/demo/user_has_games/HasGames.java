@@ -1,11 +1,18 @@
 package lft.demo.user_has_games;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+/**
+ * Class that represents the database entry of corresponding to hasGames object.
+ * 
+ * @author Daniil Olshanskyi
+ *
+ */
 @Component
 @Entity
 @Table(name="profilesHasGames")

@@ -7,6 +7,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import lft.demo.reports.Reports;
+/**
+ * Repository to hold reports.
+ * 
+ * @author Mike Ostrow
+ *
+ */
 @Repository
 public interface ReportsRepository extends CrudRepository<Reports, Integer> {
 	

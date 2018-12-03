@@ -2,6 +2,7 @@ package lft.demo.games;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+/**
+ * Class that represents the database entry of corresponding to the particular game.
+ * 
+ * @author Daniil Olshanskyi
+ *
+ */
 @Component
 @Entity
 @Table(name="games")

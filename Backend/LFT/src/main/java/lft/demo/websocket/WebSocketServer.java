@@ -34,6 +34,12 @@ import lft.demo.user_has_games.*;
 //import lft.demo.user_has_games.*;
 //import lft.demo.games.*;
 
+/**
+ * A class instantiating a websocket connection. Handles chats and swiping list mechanics. 
+ * 
+ * @author Daniil Olshanskyi
+ *
+ */
 @ServerEndpoint("/websocket/{username}")
 @Service
 public class WebSocketServer {
@@ -42,14 +48,9 @@ public class WebSocketServer {
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
 	private static Map<String, Session> usernameSessionMap = new HashMap<>();
 
-	//@Autowired
-	private UserRepository userRepository;
-	
 	@Autowired
-	public void wireUR(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-	
+	private UserRepository userRepository;
+		
 	@Autowired
 	private HasGamesRepository hasGamesRepository;
 
@@ -62,7 +63,13 @@ public class WebSocketServer {
 	LinkedList<Profiles> list;
 
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
-
+	/**
+	 * Method that is called when the WebSocket connection is opened.
+	 * 
+	 * @param session user session, provided by Spring.
+	 * @param username username for user who opens the connection, path parameter.
+	 * @throws IOException for incorrect IO.
+	 */
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) throws IOException {
 		logger.info("Entered into Open. User: " + username + " connected");
@@ -71,11 +78,12 @@ public class WebSocketServer {
 		usernameSessionMap.put(username, session);
 		
 		
+		
 		// Create lists to pre-generate swiping lists
 		Profiles user = userRepository.findByprofUsername(username);
 		List<HasGames> listGames = hasGamesRepository.findByprofID(user.getID());
 		list = new LinkedList<Profiles>();
-
+   
 		for (int k = 0; k < listGames.size(); k++) {
 			int gameid = listGames.get(k).getgameId();
 			List<HasGames> listProfilesWithGame = hasGamesRepository.findBygameId(gameid);
@@ -88,7 +96,13 @@ public class WebSocketServer {
 		}
 		listCounter = 0;
 	}
-
+	/**
+	 * Method that is called when the new message is received. Handles all parsing the message and then acts accordingly. 
+	 * 
+	 * @param session session with current user.
+	 * @param message the message received from the current user.
+	 * @throws IOException for incorrect IO.
+	 */
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException {
 		// Handle new messages
@@ -152,6 +166,12 @@ public class WebSocketServer {
 		}
 	}
 
+	/**
+	 * Method that handles connetion closing. Removes current user and sessions from the map.
+	 * 
+	 * @param session current user session.
+	 * @throws IOException for incorrect IO.
+	 */
 	@OnClose
 	public void onClose(Session session) throws IOException {
 		logger.info("Entered into Close");
@@ -161,6 +181,12 @@ public class WebSocketServer {
 		usernameSessionMap.remove(username);
 	}
 
+	/**
+	 * Exception handler for any errors that can occur. 
+	 * 
+	 * @param session current user session.
+	 * @param throwable an exception that occurred in websocket.
+	 */
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		// Do error handling here

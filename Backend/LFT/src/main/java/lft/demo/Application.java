@@ -13,6 +13,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+/**
+ * The main application class for the SpringBoot.
+ * 
+ * @author Daniil Olshanskyi
+ *
+ */
 @SpringBootApplication
 //@ComponentScan(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
 //@EntityScan(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})

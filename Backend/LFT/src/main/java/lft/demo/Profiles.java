@@ -10,6 +10,12 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Class that represents the database entry corresponding to user profile.
+ * 
+ * @author Daniil Olshanskyi
+ *
+ */
 @Component
 @Entity
 @Table(name = "profiles")

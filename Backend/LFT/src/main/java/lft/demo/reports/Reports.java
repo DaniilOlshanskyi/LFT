@@ -2,6 +2,7 @@ package lft.demo.reports;
 
 import java.io.Serializable;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,12 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 import lft.demo.Profiles;
+/**
+ * Class that represents the database entry of corresponding to a report.
+ * 
+ * @author Mike Ostrow
+ *
+ */
 @Component
 @Entity
 @Table(name="reports")
