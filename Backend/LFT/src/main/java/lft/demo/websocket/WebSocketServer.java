@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -25,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.web.socket.server.standard.*;
+//import org.springframework.*;
 
 import lft.demo.*;
 import lft.demo.games.*;
@@ -40,10 +44,9 @@ import lft.demo.user_has_games.*;
  * @author Daniil Olshanskyi
  *
  */
-@ServerEndpoint("/websocket/{username}")
 @Service
-public class WebSocketServer {
-
+@ServerEndpoint(value="/websocket/{username}", configurator = CustomSpringConfigurator.class)
+public class WebSocketServer extends SpringBeanAutowiringSupport {
 	// Store all socket session and their corresponding username.
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
 	private static Map<String, Session> usernameSessionMap = new HashMap<>();
@@ -51,11 +54,11 @@ public class WebSocketServer {
 	@Autowired
 	private UserRepository userRepository;
 		
+//	@Autowired
+//	private TestClass testClass;
+	
 	@Autowired
 	private HasGamesRepository hasGamesRepository;
-
-	@Autowired
-	private GamesRepository gamesRepository;
 
 	// Counter to keep track of the list
 	int listCounter;
@@ -72,16 +75,15 @@ public class WebSocketServer {
 	 */
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) throws IOException {
-		logger.info("Entered into Open. User: " + username + " connected");
+		logger.info("Entered into Open. User: " + username);
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
 		
-		
-		
 		// Create lists to pre-generate swiping lists
 		Profiles user = userRepository.findByprofUsername(username);
-		List<HasGames> listGames = hasGamesRepository.findByprofID(user.getID());
+		logger.info("****!!!!****Got user profile. User ID: " + user.getID().intValue());
+		List<HasGames> listGames = hasGamesRepository.findByprofID(user.getID().intValue());
 		list = new LinkedList<Profiles>();
    
 		for (int k = 0; k < listGames.size(); k++) {
@@ -89,7 +91,8 @@ public class WebSocketServer {
 			List<HasGames> listProfilesWithGame = hasGamesRepository.findBygameId(gameid);
 			for (int i = 0; i < listProfilesWithGame.size(); i++) {
 				Profiles match = userRepository.findById(listProfilesWithGame.get(i).getprofID()).get();
-				if (!list.contains(match) && match.getprofSuspend() == 0 && match.getprofUsername() != username) {
+				if (!list.contains(match) && match.getprofSuspend() == 0 && (!match.getprofUsername().equals(username))) {
+					//logger.info("MATH AND USERNAME:" + match.getprofUsername() + ":::" + username);
 					list.add(match);
 				}
 			}

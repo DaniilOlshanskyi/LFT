@@ -2,6 +2,7 @@ package lft.demo;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,8 +24,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 //@ComponentScan(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
 //@EntityScan(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
 //@EnableJpaRepositories(basePackages={"lft.demo","lft.demo.games","lft.demo.reports","lft.demo.user_has_games","lft.demo.user_has_report","lft.demo.websocket"})
-public class Application {
-
+public class Application {// implements CommandLineRunner {
+	 @Autowired
+	    private ApplicationContext appContext;
+	 
     public static void main(String[] args) {
 //    	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 //    	try {
@@ -46,6 +49,24 @@ public class Application {
 //        }
         SpringApplication.run(Application.class, args);
     }
+    
+//    @Autowired
+//    private lft.demo.websocket.TestClass testClass;
+//    
+//    @Override
+//    public void run(String... args) throws Exception {
+//
+//        String[] beans = appContext.getBeanDefinitionNames();
+//        Arrays.sort(beans);
+//        
+//        for (String bean : beans) {
+//            System.out.println(bean);
+//        }
+//
+//        System.out.println(":::"+ testClass.userRepository);
+//    }
+//    
+    
     /*
 	TESTBLOCK SHOULD BE UPDATED
 	*/

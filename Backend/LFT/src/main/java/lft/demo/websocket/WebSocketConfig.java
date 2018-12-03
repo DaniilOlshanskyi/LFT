@@ -18,4 +18,8 @@ public class WebSocketConfig {
     public ServerEndpointExporter serverEndpointExporter(){  
         return new ServerEndpointExporter();  
     }  
+    @Bean
+    public CustomSpringConfigurator customSpringConfigurator() {
+        return new CustomSpringConfigurator(); // This is just to get context
+    }
 } 

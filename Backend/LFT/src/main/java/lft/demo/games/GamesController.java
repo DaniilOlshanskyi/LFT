@@ -2,6 +2,9 @@ package lft.demo.games;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import lft.demo.Profiles;
+import lft.demo.UserRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +29,8 @@ public class GamesController {
 	@Autowired
 	private GamesRepository gamesRepository;
 
+	@Autowired 
+	private UserRepository userRepository;
 	/**
      * Mapping to get all games.
      * 
@@ -36,6 +41,11 @@ public class GamesController {
 		return gamesRepository.findAll();
 	}
 
+	@GetMapping(path = "/temp")
+	public @ResponseBody Iterable<Profiles> getAllUsers(){
+    	return userRepository.findAll();
+    }
+	
 	/**
      * Mapping to post a new game object (create a new game).
      * 
