@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * Manages other user profile view interface and operations
+ */
 public class ProfileViewScreen extends AppCompatActivity {
 
     String profileUsername;

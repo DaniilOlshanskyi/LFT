@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Fragment class that manages the user's profile viewing interface and operations
+ */
 public class MyProfileFragment extends Fragment {
 
     private Button editProfileBtn, logoutBtn;

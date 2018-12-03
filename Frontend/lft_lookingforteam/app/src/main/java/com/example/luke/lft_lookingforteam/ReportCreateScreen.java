@@ -26,8 +26,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages the report creation interface and operations
+ */
 public class ReportCreateScreen extends AppCompatActivity {
-
 
     private RequestQueue reqQueue;
     Button submitButton, cancelButton;
@@ -146,7 +148,5 @@ public class ReportCreateScreen extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 }

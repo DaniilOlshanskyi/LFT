@@ -17,15 +17,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Manages the conversation interface and operations
+ */
 public class ConversationScreen extends AppCompatActivity {
 
     static boolean isActive;    // true when conversation screen is open, false when not
 
-    ImageButton backButton;
     Button sendButton;
     EditText msgBox;
-    TextView otherUserUsername;
-    TextView convoContent;
+    TextView otherUserUsername, convoContent;
     GlobalState appState;
     String recipientUsername, myUsername;
     SharedPreferences prefs;
@@ -44,7 +45,6 @@ public class ConversationScreen extends AppCompatActivity {
         setContentView(R.layout.conversation_screen);
 
         // reference layout items
-        backButton = findViewById(R.id.conversationScreen_backButton);
         sendButton = findViewById(R.id.conversationScreen_sendButton);
         msgBox = findViewById(R.id.conversationScreen_messageBox);
         convoContent = findViewById(R.id.conversationScreen_conversationContent);
@@ -86,16 +86,6 @@ public class ConversationScreen extends AppCompatActivity {
             //TODO log error
         }
 
-        // when "Back" button is pressed
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go back to conversation list screen
-                changeScreen = new Intent(ConversationScreen.this, ConversationListScreen.class);
-                startActivity(changeScreen);
-            }
-        });
-
         // when "Send" button is pressed
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +119,11 @@ public class ConversationScreen extends AppCompatActivity {
         });
     }
 
+    /**
+     * Helper method that retrieves a conversation file for a specific user
+     * @param filename name of the desired file, in the form: "{username}.txt"
+     * @return returns either the desired file, if it exists, or a newly created file with the desired name
+     */
     private File getConversationFile(String filename) {
         // get all conversation files
         File fileDir = getDir("conversation_files", MODE_PRIVATE);

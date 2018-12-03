@@ -17,6 +17,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Custom Application class used to provide access to data/services needed across multiple activities within the application
+ */
 public class GlobalState extends Application {
 
     private static WebSocketClient websocket;
@@ -31,11 +34,18 @@ public class GlobalState extends Application {
         swipeCards = new ArrayList<>();
     }
 
+    /**
+     * Allows for static access of the application context
+     * @return returns the application context
+     */
     public static Context getAppContext() {
         return appContext;
     }
 
-    // creates and starts a new websocket
+    /**
+     * Creates and connects a new websocket that handles messaging and swiping/matching services
+     * @param currentUser username of user currently logged in
+     */
     public void startWebsocket(String currentUser) {
         // create URI for websocket creation
         URI uri;
@@ -194,19 +204,27 @@ public class GlobalState extends Application {
         websocket.connect();
     }
 
-    // closes websocket if not null
+    /**
+     * Closes the current websocket, if one is open
+     */
     public void closeWebsocket() {
         if (websocket != null) {
             websocket.close();
         }
     }
 
-    // returns current websocket
+    /**
+     * Allows for static access of the websocket across the application
+     * @return returns the websocket
+     */
     public static WebSocketClient getWebsocket() {
         return websocket;
     }
 
-    // returns the next swiping card, removes it from the list, and requests a new one
+    /**
+     * Returns a SwipingCard object from the list, and requests a new swiping candidate from the server via websocket
+     * @return returns the SwipingCard at the bottom of the list
+     */
     public SwipingCard getSwipeCandidate() {
         // log swipe profile request
         Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");

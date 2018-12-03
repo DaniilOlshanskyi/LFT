@@ -1,5 +1,8 @@
 package com.example.luke.lft_lookingforteam;
 
+/**
+ * Helper class containing useful constant values for the application such as JSON object keys, URLs, etc.
+ */
 public class Const {
     // Logcat Tags
     public static final String LOGTAG_FILE_CREATE = "File creation";

@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Fragment class that manages the conversation list interface and operations
+ */
 public class ConversationListFragment extends Fragment {
     @Nullable
     @Override

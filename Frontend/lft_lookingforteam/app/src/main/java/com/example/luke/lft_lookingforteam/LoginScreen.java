@@ -21,6 +21,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Manages the login interface and operations
+ */
 public class LoginScreen extends AppCompatActivity {
 
     Button loginButton, registerButton;
@@ -72,7 +75,13 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
 
-    // attempts to log user in, letting them know if their credentials are incorrect
+    /**
+     * Helper method that attempts to log-in a user with the given username and password
+     * Upon a successful login, their information will be stored in SharedPrefs to keep them logged in, a websocket will be opened, and they will be taken to the main screen of the app.
+     * Upon an unsuccessful login, the user will be notified whether their username or password was invalid
+     * @param username user-supplied username
+     * @param password user-supplies password
+     */
     private void login(final String username, final String password) {
 
         // create a GET request for user profile

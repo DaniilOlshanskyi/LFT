@@ -17,6 +17,9 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.util.ArrayList;
 
+/**
+ * Fragment used to manage the swiping/matching interface and operations
+ */
 public class SwipingScreenFragment extends Fragment {
 
     private ArrayList<SwipingCard> cards;
@@ -136,12 +139,16 @@ public class SwipingScreenFragment extends Fragment {
         return view;
     }
 
-    // emulates swiping right
+    /**
+     * Helper method that emulates a swipe right
+     */
     public void right() {
         flingAdapterView.getTopCardListener().selectRight();
     }
 
-    // emulates swiping left
+    /**
+     * Helper method that emulates a swipe left
+     */
     public void left() {
         flingAdapterView.getTopCardListener().selectLeft();
     }

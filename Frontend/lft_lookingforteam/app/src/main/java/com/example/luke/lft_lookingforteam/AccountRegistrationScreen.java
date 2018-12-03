@@ -26,6 +26,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Manages the registration screen interface and operations
+ */
 public class AccountRegistrationScreen extends AppCompatActivity {
 
     private RequestQueue reqQueue;
@@ -107,7 +110,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
 
                                         //TODO change to account editing screen after it's been created
                                         // switch to Account Editing Screen, passing username
-                                        Intent i = new Intent(AccountRegistrationScreen.this, MyProfileViewScreen.class);
+                                        Intent i = new Intent(AccountRegistrationScreen.this, MainAppScreen.class);
                                         i.putExtra("PROFILE_USERNAME", username);
                                         startActivity(i);
                                     }
@@ -136,7 +139,13 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         });
     }
 
-    // password validation method
+    /**
+     * Helper method that checks a user-input password against restrictions imposed to improve
+     * account security and prevent bugs caused by certain characters or patterns in passwords
+     * @param pwd the password input by the user
+     * @param errorMsg used to create a message that lets the user know what's wrong with their password
+     * @return returns true if the password is valid, false if not
+     */
     private boolean passwordValidation(String pwd, StringBuilder errorMsg) {
 
         // pattern and matcher objects used to check for validity
@@ -208,7 +217,13 @@ public class AccountRegistrationScreen extends AppCompatActivity {
         return true;
     }
 
-    // username availability method
+    /**
+     * Helper method that checks a user-input username against restrictions imposed to improve
+     * account security and prevent bugs caused by certain characters or patterns in usernames
+     * @param username the username input by the user
+     * @param errorMsg used to create a message that lets the user know what's wrong with their username
+     * @return true if the username is valid, false if not
+     */
     private boolean usernameValidation(String username, StringBuilder errorMsg) {
 
         // pattern and matcher objects used to check for validity

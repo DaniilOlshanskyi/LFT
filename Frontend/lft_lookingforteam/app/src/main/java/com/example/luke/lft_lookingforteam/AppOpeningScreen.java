@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+/**
+ * Displays the opening screen of the app while performing startup operations
+ */
 public class AppOpeningScreen extends AppCompatActivity {
 
     GlobalState appState;
+    Intent switchScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,8 @@ public class AppOpeningScreen extends AppCompatActivity {
         // attempt to get username from SharedPreferences
         if (prefs.getString(Const.SHAREDPREFS_USERNAME_KEY, null) == null) {
             // if it's null, no user is logged-in, so go to login screen
-            Intent i = new Intent(AppOpeningScreen.this, LoginScreen.class);
-            startActivity(i);
+            switchScreen = new Intent(AppOpeningScreen.this, LoginScreen.class);
+            startActivity(switchScreen);
         } else {
             // if a non-null value is found for username, there must be a user logged-in:
             // 1: start websocket with username
@@ -32,18 +36,9 @@ public class AppOpeningScreen extends AppCompatActivity {
             Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Starting websocket with username: " + username); // log websocket start
             appState.startWebsocket(username); // start websocket
 
-            // 2: go to the swiping page based on usertype
-            int usertype = prefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);
-            if (usertype == Const.USERTYPE_BASIC_USER) {
-                Intent i = new Intent(AppOpeningScreen.this, UserSwipeScreen.class);
-                startActivity(i);
-            } else if (usertype == Const.USERTYPE_MODERATOR) {
-                Intent i = new Intent(AppOpeningScreen.this, ModSwipeScreen.class);
-                startActivity(i);
-            } else if (usertype == Const.USERTYPE_ADMIN) {
-                Intent i = new Intent(AppOpeningScreen.this, AdminSwipeScreen.class);
-                startActivity(i);
-            }
+            // 2: go to the main page
+            switchScreen = new Intent(AppOpeningScreen.this, MainAppScreen.class);
+            startActivity(switchScreen);
         }
     }
 }

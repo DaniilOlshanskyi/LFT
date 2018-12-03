@@ -21,6 +21,9 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main screen of the application, which manages the interfaces and operations for the user's profile viewing screen, swiping screen, and conversation list screen
+ */
 public class MainAppScreen extends AppCompatActivity {
 
     private SharedPreferences sharedPrefs;
@@ -63,6 +66,11 @@ public class MainAppScreen extends AppCompatActivity {
     }
 
     // sets up view pager by adding fragments to a sections page adapter and using it to set the adapter of the view pager
+
+    /**
+     * Sets up a supplied ViewPager object with a SectionsPageAdapter containing fragments for the profile viewing, swiping, and conversation list interfaces
+     * @param pager the supplied ViewPager
+     */
     private void setupViewPager(ViewPager pager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new MyProfileFragment(), "myProfileTab");
@@ -71,7 +79,9 @@ public class MainAppScreen extends AppCompatActivity {
         pager.setAdapter(adapter);
     }
 
-    // class for managing fragments
+    /**
+     * Custom FragmentPagerAdapter class that keeps a list of Fragment objects and their titles
+     */
     private class SectionsPageAdapter extends FragmentPagerAdapter{
 
         private final List<Fragment> fragmentList = new ArrayList<>();
