@@ -1,12 +1,28 @@
 package com.example.luke.lft_lookingforteam;
 
+/**
+ * Helper class containing useful constant values for the application such as JSON object keys, URLs, etc.
+ */
 public class Const {
     // Logcat Tags
     public static final String LOGTAG_FILE_CREATE = "File creation";
     public static final String LOGTAG_FILE_READ = "File read";
     public static final String LOGTAG_FILE_WRITE = "File write";
-    public static final String LOGTAG_CHAT_WEBSOCKET = "Chat websocket";
+    public static final String LOGTAG_WEBSOCKET_CHAT = "Chat websocket";
+    public static final String LOGTAG_WEBSOCKET_CREATION = "Websocket creation";
+    public static final String LOGTAG_WEBSOCKET_ERROR = "Websocket error";
     public static final String LOGTAG_JSONOBJECT_CREATION = "JSONObject creation";
+    public static final String LOGTAG_WEBSOCKET_SWIPING_MATCH = "Swiping match";
+    public static final String LOGTAG_WEBSOCKET_SWIPING_CARDS = "Swiping cards";
+    public static final String LOGTAG_JSONOBJECT_READ = "Reading JSON";
+
+    // Websockets
+    public static final String WEBSOCKET_CHAT_TAG = "m:";
+    public static final String WEBSOCKET_CHAT_CACHE_TAG = "g:";
+    public static final String WEBSOCKET_SWIPING_TAG = "L:";
+    public static final String WEBSOCKET_MATCHING_TAG = "F:";
+    public static final String WEBSOCKET_EMPTY_TAG = "E:";
+    public static final String WEBSOCKET_DATA_SEPARATOR = "&";
 
     // profile URLs
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
@@ -41,6 +57,7 @@ public class Const {
 
     //Intent object key names
     public static final String INTENT_CONVERSATION_USERNAME = "convoUsername";
+    public static final String INTENT_PROFILE_VIEW_USERNAME = "profileUsername";
 
     //Registration Screen EditText field character limits
     public static final int USERNAME_CHARACTER_LIMIT = 15;

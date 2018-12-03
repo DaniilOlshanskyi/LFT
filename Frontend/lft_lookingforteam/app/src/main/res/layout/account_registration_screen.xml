@@ -119,7 +119,7 @@
         android:ellipsize="none"
         android:maxLines="100"
         android:scrollHorizontally="false"
-        android:text="Passwords must be at least 8 characters, and contain at least 1 letter, 1 number, and 1 special character (@$!%*#?&amp;)"
+        android:text="Passwords must be at least 8 characters, and contain at least 1 letter, 1 number, and 1 special character (@$!%*#?)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accountCreation_password" />

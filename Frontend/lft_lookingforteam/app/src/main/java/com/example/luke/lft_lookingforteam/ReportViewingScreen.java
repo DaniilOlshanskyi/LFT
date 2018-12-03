@@ -18,6 +18,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Manages the administrative report-viewing interface and operations
+ */
 public class ReportViewingScreen extends AppCompatActivity {
 
     Button cancelButton2, suspendButton, banButton, viewButton;
@@ -26,7 +29,6 @@ public class ReportViewingScreen extends AppCompatActivity {
     String messageSent, chatLog;
     JSONObject report, badProfile;
     RequestQueue queue;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

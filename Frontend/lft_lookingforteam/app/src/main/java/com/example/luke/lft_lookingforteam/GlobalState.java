@@ -1,51 +1,80 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Custom Application class used to provide access to data/services needed across multiple activities within the application
+ */
 public class GlobalState extends Application {
 
-    private static WebSocketClient chatSocket;
-    private static JSONObject swipeProfileOnDeck;
+    private static WebSocketClient websocket;
+    private static List<SwipingCard> swipeCards;
+    private static Context appContext;
 
     public static TextView chatWindow, user2;  // not ideal, work with ConversationScreen to update chatwindow
 
-    // creates and starts a new chatSocket
-    public void startChatClient(String currentUser) {
+    public void onCreate() {
+        super.onCreate();
+        appContext = getApplicationContext();
+        swipeCards = new ArrayList<>();
+    }
+
+    /**
+     * Allows for static access of the application context
+     * @return returns the application context
+     */
+    public static Context getAppContext() {
+        return appContext;
+    }
+
+    /**
+     * Creates and connects a new websocket that handles messaging and swiping/matching services
+     * @param currentUser username of user currently logged in
+     */
+    public void startWebsocket(String currentUser) {
         // create URI for websocket creation
         URI uri;
         try {
             uri = new URI(Const.URL_OPEN_WEBSOCKET + currentUser);
         } catch (URISyntaxException uriSE) {
-            // if, somehow, something goes wrong when creating this, return and...
-            //TODO log it
+            // if, somehow, something goes wrong when creating this, log error and return
+            Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Websocket URI error: " + uriSE.toString());
             return;
         }
 
         // instantiate websocket from URI
-        chatSocket = new WebSocketClient(uri) {
+        websocket = new WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                // log get request
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Requesting cached messages...");
-                // request cached messages
-                chatSocket.send("g:");
+                // log websocket created
+                Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Websocket opened");
 
-                // get initial swipe candidate
-                chatSocket.send("L:");
+                // log cached messages request
+                Log.d(Const.LOGTAG_WEBSOCKET_CHAT, "Requesting cached messages...");
+                // request cached messages
+                websocket.send(Const.WEBSOCKET_CHAT_CACHE_TAG);
+
+                // log swipe profile request
+                Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting 3 initial swiping candidates...");
+                // get initial swipe candidates (3)
+                websocket.send(Const.WEBSOCKET_SWIPING_TAG);
+                websocket.send(Const.WEBSOCKET_SWIPING_TAG);
+                websocket.send(Const.WEBSOCKET_SWIPING_TAG);
             }
 
             @Override
@@ -55,23 +84,25 @@ public class GlobalState extends Application {
                 String[] contentElements;
 
                 // parse message for type and content
-                messageType = s.substring(0,0);
+                messageType = s.substring(0,1);
                 messageContent = s.substring(2, s.length());
 
                 // perform operations based on message type
 
-                // if chat message, type will be "m"
-                if (messageType.equals("m")){
+                // if chat message
+                if (messageType.equals(Const.WEBSOCKET_CHAT_TAG)){
                     String senderUsername;
                     String message;
 
+                    //TODO implement for multiple cached messages
+
                     // parse message for contents
-                    contentElements = messageContent.split("&");
+                    contentElements = messageContent.split(Const.WEBSOCKET_DATA_SEPARATOR);
                     senderUsername = contentElements[0];
                     message = contentElements[1];
 
                     // log message received
-                    Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Message Received: " + s + "\n\t" + "Sender: " + senderUsername + ", Message: " + message + "\n");
+                    Log.d(Const.LOGTAG_WEBSOCKET_CHAT, "Message Received: " + "Sender: " + senderUsername + ", Message: " + message);
 
                     // update conversation file
                     // iterate over conversation files
@@ -117,30 +148,24 @@ public class GlobalState extends Application {
                     //TODO set "new message" icon flag
                 }
 
-                // if swiping list message, type will be "L"
-                else if (messageType.equals("L")){
-                    // extract profile data from message and create JSONObject
-                    contentElements = messageContent.split("&");
-                    swipeProfileOnDeck = new JSONObject();
-                    try{
-                        swipeProfileOnDeck.put(Const.PROFILE_ID_KEY, contentElements[0]);
-                        swipeProfileOnDeck.put(Const.PROFILE_USERNAME_KEY, contentElements[1]);
-                        swipeProfileOnDeck.put(Const.PROFILE_PASSWORD_KEY, contentElements[2]);
-                        swipeProfileOnDeck.put(Const.PROFILE_PERIOD_KEY, contentElements[3]);
-                        swipeProfileOnDeck.put(Const.PROFILE_PHOTO_KEY, contentElements[4]);
-                        swipeProfileOnDeck.put(Const.PROFILE_REPORT_FLAG_KEY, Integer.parseInt(contentElements[5]));
-                        swipeProfileOnDeck.put(Const.PROFILE_MOD_FLAG_KEY, Integer.parseInt(contentElements[6]));
-                        swipeProfileOnDeck.put(Const.PROFILE_REPUTATION_KEY, Float.parseFloat(contentElements[7]));
-                        swipeProfileOnDeck.put(Const.PROFILE_LATEST_LOGIN_DATE_KEY, contentElements[8]);
-                        swipeProfileOnDeck.put(Const.PROFILE_SUSPENDED_KEY, Float.parseFloat(contentElements[9]));
-                    } catch (JSONException jsone){
-                        // log error
-                        Log.d(Const.LOGTAG_JSONOBJECT_CREATION, "Error creating JSONObject" + "\n\t" + jsone.toString());
-                    }
+                // if swiping list message
+                else if (messageType.equals(Const.WEBSOCKET_SWIPING_TAG)){
+                    // extract profile data from message
+                    contentElements = messageContent.split(Const.WEBSOCKET_DATA_SEPARATOR);
+
+                    // log swipe candidate received
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Received swiping profile for: " + contentElements[1] + ", creating swiping card");
+
+                    // create swiping card object and add it to the list
+                    SwipingCard newCard = new SwipingCard (contentElements[1], contentElements[3], contentElements[4], new ArrayList<String>(), new ArrayList<String>());
+                    swipeCards.add(newCard);
                 }
 
-                // if match message, type will be "F"
-                else if (messageType.equals("M")){
+                // if match message
+                else if (messageType.equals(Const.WEBSOCKET_MATCHING_TAG)){
+                    // log match received
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_MATCH, "Matched with user: " + messageContent + ", creating conversation file");
+
                     // message content should be username of matched user,
                     // so start conversation with them
                     File fileDir = getDir("conversation_files", MODE_PRIVATE);
@@ -156,37 +181,54 @@ public class GlobalState extends Application {
                     Toast.makeText(getApplicationContext(), "You matched with " + messageContent + ", go to messaging screen to start chatting", Toast.LENGTH_LONG).show();
                 }
 
+                // if server swiping queue for user is empty
+                else if (messageType.equals(Const.WEBSOCKET_EMPTY_TAG)){
+                    // log empty swiping queue
+                    Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Swiping queue empty");
+                }
+
                 // insert more message type cases as needed
             }
 
             @Override
             public void onClose(int i, String s, boolean b) {
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Websocket closed");
+                Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Websocket closed");
             }
 
             @Override
             public void onError(Exception e) {
                 // log error
-                Log.d(Const.LOGTAG_CHAT_WEBSOCKET, "Error: " + e.toString());
+                Log.d(Const.LOGTAG_WEBSOCKET_ERROR, e.toString());
             }
         };
-        chatSocket.connect();
+        websocket.connect();
     }
 
-    // closes chatSocket if not null
-    public void closeChatClient() {
-        if (chatSocket != null) {
-            chatSocket.close();
+    /**
+     * Closes the current websocket, if one is open
+     */
+    public void closeWebsocket() {
+        if (websocket != null) {
+            websocket.close();
         }
     }
 
-    // returns current chatSocket
-    public WebSocketClient getChatClient() {
-        return chatSocket;
+    /**
+     * Allows for static access of the websocket across the application
+     * @return returns the websocket
+     */
+    public static WebSocketClient getWebsocket() {
+        return websocket;
     }
 
-    // returns the next swipe profile for displaying and asks the server for a new one
-    public JSONObject getNextSwipeCandidate() {
-        return swipeProfileOnDeck;
+    /**
+     * Returns a SwipingCard object from the list, and requests a new swiping candidate from the server via websocket
+     * @return returns the SwipingCard at the bottom of the list
+     */
+    public SwipingCard getSwipeCandidate() {
+        // log swipe profile request
+        Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");
+        websocket.send(Const.WEBSOCKET_SWIPING_TAG);
+        return swipeCards.remove(0);
     }
 }

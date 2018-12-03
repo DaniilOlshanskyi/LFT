@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/accountView_username"
+                android:id="@+id/myProfileViewScreen_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
                 android:layout_marginRight="8dp"
                 android:text="Username"
                 android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/accountView_profilePic"
+                app:layout_constraintEnd_toStartOf="@+id/myProfileViewScreen_profilePic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,11 +44,11 @@
                 android:layout_marginTop="8dp"
                 android:text="Online:"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/accountView_username"
-                app:layout_constraintTop_toBottomOf="@+id/accountView_username" />
+                app:layout_constraintStart_toStartOf="@+id/myProfileViewScreen_username"
+                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_username" />
 
             <TextView
-                android:id="@+id/accountView_availability"
+                android:id="@+id/myProfileViewScreen_availability"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -58,12 +58,12 @@
                 android:layout_marginRight="8dp"
                 android:text="Availability"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/accountView_profilePic"
+                app:layout_constraintEnd_toStartOf="@+id/myProfileViewScreen_profilePic"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/accountView_username" />
+                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_username" />
 
             <ImageView
-                android:id="@+id/accountView_profilePic"
+                android:id="@+id/myProfileViewScreen_profilePic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="8dp"
@@ -80,7 +80,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/accountView_profilePic">
+                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_profilePic">
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/accountView_platform1"
