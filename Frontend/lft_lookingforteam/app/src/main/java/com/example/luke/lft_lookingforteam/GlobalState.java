@@ -229,6 +229,8 @@ public class GlobalState extends Application {
         // log swipe profile request
         Log.d(Const.LOGTAG_WEBSOCKET_SWIPING_CARDS, "Requesting new swiping candidate...");
         websocket.send(Const.WEBSOCKET_SWIPING_TAG);
+
+        // return the next swipe card
         return swipeCards.remove(0);
     }
 }

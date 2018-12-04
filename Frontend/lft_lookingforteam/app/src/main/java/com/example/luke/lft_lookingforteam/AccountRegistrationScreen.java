@@ -1,6 +1,8 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -105,14 +107,35 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                 new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(JSONObject response) {
-                                        // notify user that their account has been created :]
+                                        // if null response, there's already a user with the chosen username,
+                                        // so let user know and don't continue
+                                        if (response == null){
+                                            Toast.makeText(getApplicationContext(), "Username unavailable", Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+
+                                        // otherwise, their credentials are valid and their username is available,
+                                        // so notify user that their account has been created and:
                                         Toast.makeText(getApplicationContext(), "Account created :]", Toast.LENGTH_LONG).show();
 
+                                        // 1: store profile information in SharedPrefs
+                                        SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                                        prefEditor.putString(Const.SHAREDPREFS_USERNAME_KEY, username); // store username in SharedPrefs
+                                        prefEditor.putInt(Const.SHAREDPREFS_USERTYPE_KEY, 0); // store usertype in SharedPrefs
+                                        //TODO store more profile information as needed
+                                        prefEditor.apply(); // apply changes to SharedPrefs
+
+                                        // 2: start websocket as user
+                                        GlobalState appState = (GlobalState) getApplicationContext();
+                                        appState = (GlobalState) getApplicationContext();
+                                        Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Starting websocket with username: " + username); // log websocket start
+                                        appState.startWebsocket(username); // start websocket
+
                                         //TODO change to account editing screen after it's been created
-                                        // switch to Account Editing Screen, passing username
-                                        Intent i = new Intent(AccountRegistrationScreen.this, MainAppScreen.class);
-                                        i.putExtra("PROFILE_USERNAME", username);
-                                        startActivity(i);
+                                        // 3: switch to Account Editing Screen, passing username
+                                        Intent changeScreen = new Intent(AccountRegistrationScreen.this, MainAppScreen.class);
+                                        changeScreen.putExtra("PROFILE_USERNAME", username);
+                                        startActivity(changeScreen);
                                     }
                                 },
                                 new Response.ErrorListener() {
@@ -252,9 +275,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
             return false;
         }
 
-        // TODO make database query request to spring with username
-
-        // if username is available, return true
+        // if username is valid, return true
         return true;
     }
 }

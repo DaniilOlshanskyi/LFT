@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -41,14 +42,14 @@ public class SwipingScreenFragment extends Fragment {
 
         // get first two swipe candidates
         cards = new ArrayList<>();
-        cards.add(appState.getSwipeCandidate());
-        cards.add(appState.getSwipeCandidate());
+        //cards.add(appState.getSwipeCandidate());
+        //cards.add(appState.getSwipeCandidate());
 
         // instantiate buttons and set click listeners
         Button passBtn = view.findViewById(R.id.swipeScreen_passButton);
         Button connectBtn = view.findViewById(R.id.swipeScreen_connectButton);
         Button profileViewBtn = view.findViewById(R.id.swipeScreen_viewProfileButton);
-        Button swipeSettingsBtn = view.findViewById(R.id.swipeScreen_swipeSettingsButton);
+        ImageButton swipeSettingsBtn = view.findViewById(R.id.swipeScreen_swipeSettingsButton);
 
         passBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,8 +113,8 @@ public class SwipingScreenFragment extends Fragment {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // add blank card to swipeCandidates
-                //swipeCandidates.add();
-                //arrayAdapter.notifyDataSetChanged();
+                cards.add(new SwipingCard("", "", "", new ArrayList<String>(), new ArrayList<String>()));
+                cardAdapter.notifyDataSetChanged();
                 //TODO implement adding blank card
             }
 
