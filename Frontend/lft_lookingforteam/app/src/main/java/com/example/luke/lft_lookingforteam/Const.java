@@ -29,13 +29,13 @@ public class Const {
 
     //report URLs
     public static final String URL_GET_REPORT_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/reports/";    // append user ID of desired profile at end of URL
-    public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/post_report/";     //add profId of violator
+    public static final String URL_POST_REPORT = "http://proj309-ad-08.misc.iastate.edu:8080/postReport/";     //add profId of violator
 
     //websocket URL
     public static final String URL_OPEN_WEBSOCKET = "ws://proj309-ad-08.misc.iastate.edu:8080/websocket/";   // append username of current user at end of URL
 
     // profile JSON object key names
-    public static final String PROFILE_ID_KEY= "profId";
+    public static final String PROFILE_ID_KEY= "id";
     public static final String PROFILE_USERNAME_KEY = "profUsername";
     public static final String PROFILE_PASSWORD_KEY = "profPassword";
     public static final String PROFILE_PERIOD_KEY = "profPeriod";
@@ -47,7 +47,7 @@ public class Const {
     public static final String PROFILE_SUSPENDED_KEY = "profSuspend";
 
     //report JSON object key names
-    public static final String REPORT_USER_ID = "profId";
+//    public static final String REPORT_USER_ID = "profId";
     public static final String REPORT_CHATLOG = "reportChatlog";
     public static final String REPORT_RESOLVE_FLAG = "reportResolveFlag";
     public static final String REPORT_RESOLVE_DATE = "reportResolveDate";
