@@ -57,7 +57,7 @@ public class SwipeCardAdapter extends ArrayAdapter<SwipingCard> {
 
         // set profile picture
         ImageView profilePic = listItem.findViewById(R.id.swipeCard_profilePic);
-        Glide.with(getContext()).load(currentCard.getImageURL()).into(profilePic);
+        Glide.with(getContext()).load(Const.URL_PROFILE_PICTURES + currentCard.getImageURL()).into(profilePic);
 
         // TODO display platforms and games
 
