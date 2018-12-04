@@ -64,32 +64,32 @@ public class ReportCreateScreen extends AppCompatActivity {
                 message = messageEdit.getText().toString();
                 chat = messageCheck.isChecked();
                 prof = profileCheck.isChecked();
-                String violatorUsername = getIntent().getStringExtra(Const.INTENT_PROFILE_VIEW_USERNAME);
+                violatorId = getIntent().getIntExtra(Const.INTENT_PROFILE_VIEW_USERNAME, 0);
 
-                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + violatorUsername,
-                        null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                //when server sends back profile object
-                                violatorProfile = response;
-                                try {
-                                    violatorId = violatorProfile.getInt(Const.PROFILE_ID_KEY); //Gives profId
-                                } catch (JSONException jse) {
-                                    // if an error occurs with the JSON, log it
-                                    Log.d("Prof_Info_Fill", jse.toString());
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("Prof_GET_Req", error.toString());
-
-                            }
-                        });
+//                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + violatorUsername,
+//                        null,
+//                        new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                //when server sends back profile object
+//                                violatorProfile = response;
+//                                try {
+//                                    violatorId = violatorProfile.getInt(Const.PROFILE_ID_KEY); //Gives profId
+//                                } catch (JSONException jse) {
+//                                    // if an error occurs with the JSON, log it
+//                                    Log.d("Prof_Info_Fill", jse.toString());
+//                                }
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                Log.d("Prof_GET_Req", error.toString());
+//
+//                            }
+//                        });
                 reqQueue = Volley.newRequestQueue(getApplicationContext());
-                reqQueue.add(userRequest);
+//                reqQueue.add(userRequest);
 
                 if(messageCheck.isChecked()){
                     chatlog = getIntent().getStringExtra("chatlog");
@@ -99,45 +99,46 @@ public class ReportCreateScreen extends AppCompatActivity {
 
                 JSONObject newReport = new JSONObject();
                 try{
-                    if(chat){
+                    if(messageCheck.isChecked()){
                         newReport.put(Const.REPORT_CHATLOG, chatlog);
                     }else{
                         newReport.put(Const.REPORT_CHATLOG, "");
                     }
-                    newReport.put(Const.REPORT_USER_ID, violatorId);
-                    newReport.put(Const.REPORT_RESOLVE_FLAG, false);
-                    newReport.put(Const.REPORT_RESOLVE_DATE, date.getTime());
+//                    newReport.put(Const.REPORT_USER_ID, violatorId);
+                    newReport.put(Const.REPORT_RESOLVE_FLAG, 0);
                     newReport.put(Const.REPORT_MESSAGE, message);
+                    newReport.put(Const.REPORT_RESOLVE_DATE, "");
 
                 } catch (JSONException jse) {
                     Log.e("Creating JSON", jse.toString());
                 }
-                JsonObjectRequest postReq = new JsonObjectRequest(Request.Method.POST, Const.URL_POST_PROFILE + violatorId, newReport,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                // notify user that their account has been created :]
-                                Toast.makeText(getApplicationContext(), "Report sent", Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("Report_POST_Req", error.toString());
-                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                            }
-                        }) {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("Content-Type", "application/json");
-                        return params;
-                    }
-                };
+//                JsonObjectRequest postReq = new JsonObjectRequest(Request.Method.POST, Const.URL_POST_REPORT + violatorId, newReport,
+//                        new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                // notify user that their account has been created :]
+//                                Toast.makeText(getApplicationContext(), "Report sent", Toast.LENGTH_LONG).show();
+//                                finish();
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                Log.d("Report_POST_Req", error.toString());
+//                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+//                            }
+//                        }) {
+//                    @Override
+//                    public Map<String, String> getHeaders() throws AuthFailureError {
+//                        Map<String, String> params = new HashMap<>();
+//                        params.put("Content-Type", "application/json");
+//                        return params;
+//                    }
+//                };
 
                 // make POST request
-                reqQueue.add(postReq);
+//                reqQueue.add(postReq);
+                finish();
 
             }
         });

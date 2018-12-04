@@ -66,13 +66,13 @@ public class SwipingScreenFragment extends Fragment {
                 right();
             }
         });
-
+//cards.get(0).getUsername()
         profileViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // switch to profile view screen
                 screenSwitch = new Intent(getActivity(), ProfileViewScreen.class);
-                screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, cards.get(0).getUsername());
+                screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, "testusername1");
                 startActivity(screenSwitch);
             }
         });

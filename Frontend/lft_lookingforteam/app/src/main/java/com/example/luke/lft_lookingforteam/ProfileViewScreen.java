@@ -26,6 +26,7 @@ public class ProfileViewScreen extends AppCompatActivity {
     Button report, backButton;
     TextView usernameText;
     String profileUsername;
+    int profileId;
     JSONObject userProfile;
     RequestQueue queue;
 
@@ -44,30 +45,36 @@ public class ProfileViewScreen extends AppCompatActivity {
 
         usernameText.setText(profileUsername);
 
-//        JsonObjectRequest reportRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + profileUsername,
-//                null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        //when server sends back profile object
-//                        //TODO fill in games and profile picture
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.d("Prof_GET_Req", error.toString());
-//
-//                    }
-//                });
-//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//        queue.add(reportRequest);
+        JsonObjectRequest reportRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + profileUsername,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        userProfile = response;
+                        try {
+                            profileId = userProfile.getInt(Const.PROFILE_ID_KEY);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //when server sends back profile object
+                        //TODO fill in games and profile picture
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Prof_GET_Req", error.toString());
+
+                    }
+                });
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(reportRequest);
 
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent j = new Intent(ProfileViewScreen.this, ReportCreateScreen.class);
-                j.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, profileUsername);
+                j.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, profileId);
                 startActivity(j);
             }
         });
