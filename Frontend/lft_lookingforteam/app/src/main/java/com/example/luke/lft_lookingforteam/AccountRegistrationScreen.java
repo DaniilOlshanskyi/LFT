@@ -92,7 +92,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                             JSONObject put = newAcct.put(Const.PROFILE_USERNAME_KEY, username);
                             newAcct.put(Const.PROFILE_PASSWORD_KEY, password);
                             newAcct.put(Const.PROFILE_PERIOD_KEY, "availability not set");
-                            newAcct.put(Const.PROFILE_PHOTO_KEY, "");
+                            newAcct.put(Const.PROFILE_PHOTO_KEY, Const.URL_DEFAULT_PROFILE_PIC);
                             newAcct.put(Const.PROFILE_REPORT_FLAG_KEY, 0);
                             newAcct.put(Const.PROFILE_MOD_FLAG_KEY, 0);
                             newAcct.put(Const.PROFILE_REPUTATION_KEY, 0.0);
@@ -107,10 +107,16 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                 new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(JSONObject response) {
-                                        // if null response, there's already a user with the chosen username,
+                                        // if username of response is "&&&", there's already a user with the chosen username,
                                         // so let user know and don't continue
-                                        if (response == null){
-                                            Toast.makeText(getApplicationContext(), "Username unavailable", Toast.LENGTH_LONG).show();
+                                        try{
+                                            if (response.getString(Const.PROFILE_USERNAME_KEY).equals("&&&")){
+                                                Toast.makeText(getApplicationContext(), "Username unavailable", Toast.LENGTH_LONG).show();
+                                                return;
+                                            }
+                                        } catch (JSONException jsone) {
+                                            Log.d(Const.LOGTAG_JSONOBJECT_READ, "Could not extract username from JSON");
+                                            Toast.makeText(getApplicationContext(), "An error occurred, please try again", Toast.LENGTH_LONG).show();
                                             return;
                                         }
 
@@ -128,7 +134,7 @@ public class AccountRegistrationScreen extends AppCompatActivity {
                                         // 2: start websocket as user
                                         GlobalState appState = (GlobalState) getApplicationContext();
                                         appState = (GlobalState) getApplicationContext();
-                                        Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Starting websocket with username: " + username); // log websocket start
+                                        Log.d(Const.LOGTAG_WEBSOCKET, "Starting websocket with username: " + username); // log websocket start
                                         appState.startWebsocket(username); // start websocket
 
                                         //TODO change to account editing screen after it's been created

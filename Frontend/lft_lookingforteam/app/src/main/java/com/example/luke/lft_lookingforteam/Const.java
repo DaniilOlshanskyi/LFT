@@ -8,15 +8,11 @@ public class Const {
     public static final String LOGTAG_FILE_CREATE = "File creation";
     public static final String LOGTAG_FILE_READ = "File read";
     public static final String LOGTAG_FILE_WRITE = "File write";
-    public static final String LOGTAG_WEBSOCKET_CHAT = "Chat websocket";
-    public static final String LOGTAG_WEBSOCKET_CREATION = "Websocket creation";
-    public static final String LOGTAG_WEBSOCKET_ERROR = "Websocket error";
     public static final String LOGTAG_JSONOBJECT_CREATION = "JSONObject creation";
-    public static final String LOGTAG_WEBSOCKET_SWIPING_MATCH = "Swiping match";
-    public static final String LOGTAG_WEBSOCKET_SWIPING_CARDS = "Swiping cards";
     public static final String LOGTAG_JSONOBJECT_READ = "Reading JSON";
+    public static final String LOGTAG_WEBSOCKET = "Websocket";
 
-    // Websockets
+    // Websocket message elements
     public static final String WEBSOCKET_CHAT_TAG = "m:";
     public static final String WEBSOCKET_CHAT_CACHE_TAG = "g:";
     public static final String WEBSOCKET_SWIPING_TAG = "L:";
@@ -28,6 +24,8 @@ public class Const {
     public static final String URL_POST_PROFILE = "http://proj309-ad-08.misc.iastate.edu:8080/post_profile";
     public static final String URL_GET_PROFILE_BY_USERNAME = "http://proj309-ad-08.misc.iastate.edu:8080/all/username/";    // append username of desired profile at end of URL
     public static final String URL_GET_PROFILE_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/all/id/";    // append user ID of desired profile at end of URL
+    public static final String URL_PROFILE_PICTURES = "http://proj309-ad-08.misc.iastate.edu/home/bin/userpic/";  // append profile picture URL from JSON object to get direct path to picture
+    public static final String URL_DEFAULT_PROFILE_PIC = "placeholder.JPG";
 
     //report URLs
     public static final String URL_GET_REPORT_BY_ID = "http://proj309-ad-08.misc.iastate.edu:8080/reports/";    // append user ID of desired profile at end of URL

@@ -91,10 +91,15 @@ public class LoginScreen extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         int usertype = 0; // class of user (basic, mod, admin), default to basic
 
-                        // if server response is empty, username is invalid, so let user know and don't continue
-                        //TODO this doesn't work, fix it
-                        if (response.length() == 0) {
-                            Toast.makeText(getApplicationContext(), "Invalid Username", Toast.LENGTH_LONG).show();
+                        // if username of response is "&&&", username is invalid
+                        try{
+                            if (response.getString(Const.PROFILE_USERNAME_KEY).equals("&&&")){
+                                Toast.makeText(getApplicationContext(), "Invalid username", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        } catch (JSONException jsone) {
+                            Log.d(Const.LOGTAG_JSONOBJECT_READ, "Could not extract username from JSON");
+                            Toast.makeText(getApplicationContext(), "An error occurred, please try again", Toast.LENGTH_LONG).show();
                             return;
                         }
 
@@ -120,7 +125,7 @@ public class LoginScreen extends AppCompatActivity {
 
                         // 2: start websocket as user
                         appState = (GlobalState) getApplicationContext();
-                        Log.d(Const.LOGTAG_WEBSOCKET_CREATION, "Starting websocket with username: " + username); // log websocket start
+                        Log.d(Const.LOGTAG_WEBSOCKET, "Starting websocket with username: " + username); // log websocket start
                         appState.startWebsocket(username); // start websocket
 
                         // 3: open main screen
