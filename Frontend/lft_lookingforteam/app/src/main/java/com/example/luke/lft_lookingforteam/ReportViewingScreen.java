@@ -26,15 +26,19 @@ public class ReportViewingScreen extends AppCompatActivity {
     Button cancelButton2, suspendButton, banButton, viewButton;
     TextView messageText, messageTextSend;
     int reportId, profId;
-    String messageSent, chatLog;
+    String messageSent, chatLog, profUsername;
     JSONObject report, badProfile;
     RequestQueue queue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_viewing_screen);
         queue = Volley.newRequestQueue(getApplicationContext());
+
+        profUsername = getIntent().getStringExtra(Const.INTENT_PROFILE_VIEW_USERNAME);
+        reportId = getIntent().getIntExtra("reportId", 1);
 
         JsonObjectRequest reportRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_REPORT_BY_ID + reportId,
                 null,
@@ -97,13 +101,13 @@ public class ReportViewingScreen extends AppCompatActivity {
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(chatLog.length() == 0){
+//                if(chatLog.length() == 0){
                     Intent i = new Intent(ReportViewingScreen.this, ProfileViewScreen.class);
-                    i.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, profId);
+                    i.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, profUsername);
                     startActivity(i);
-                }else{
-                    //TODO show chatlog somehow
-                }
+//                }else{
+//                    //TODO show chatlog somehow
+//                }
             }
         });
 

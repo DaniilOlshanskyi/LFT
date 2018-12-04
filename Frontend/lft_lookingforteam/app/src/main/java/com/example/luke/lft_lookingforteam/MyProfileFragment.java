@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class MyProfileFragment extends Fragment {
 
-    private Button editProfileBtn, logoutBtn;
+    private Button editProfileBtn, logoutBtn, reportViewButton;
     private TextView usernameView, availabilityView;
     private ImageView profilePicView;
     private Intent i;
@@ -31,6 +31,7 @@ public class MyProfileFragment extends Fragment {
         // instantiate buttons
         editProfileBtn = view.findViewById(R.id.profileViewScreen_reportButton);
         logoutBtn = view.findViewById(R.id.myProfileViewScreen_logoutButton);
+        reportViewButton = view.findViewById(R.id.ReportViewButton);
 
         // set edit profile button to switch to profile editing screen when pressed
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,16 @@ public class MyProfileFragment extends Fragment {
                 // go to login screen
                 i = new Intent(getActivity(), LoginScreen.class);
                 startActivity(i);
+            }
+        });
+
+        reportViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent j = new Intent(getActivity(), ReportViewingScreen.class);
+                j.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, "testusername1");
+                j.putExtra("reportId", 1);
+                startActivity(j);
             }
         });
 
