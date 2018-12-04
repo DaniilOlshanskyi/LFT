@@ -125,6 +125,21 @@ public class WebSocketServer extends SpringBeanAutowiringSupport {
 					newMessages(session, fileName.substring(0, fileName.indexOf("|")), username);
 				}
 			}
+			folder = new File("matches/");
+			listOfFiles = folder.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				String fileName = listOfFiles[i].getName();
+				if (fileName.substring(0,fileName.indexOf(".txt")).equals(username)) {
+					byte[] bytes = Files.readAllBytes(listOfFiles[i].toPath());
+					String fileContents = new String(bytes, "UTF-8");
+					String[] s = fileContents.split("&");
+					logger.info(s.toString());
+					for (int k = 0; k<s.length; k++) {
+						sendMessageToPArticularUser(username, "F:"+s[k]);
+					}
+				}
+			}
+			
 		} // Else, if it is a new message sent
 		else if (code.equals("m:")) {
 			BufferedWriter writer = null;
@@ -274,7 +289,7 @@ public class WebSocketServer extends SpringBeanAutowiringSupport {
 				written = true;
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(listOfFiles[i], true));
-					writer.write("|" + match);
+					writer.write("&" + match);
 					writer.close();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -284,7 +299,7 @@ public class WebSocketServer extends SpringBeanAutowiringSupport {
 		
 		if (!written) {
 			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(username+".txt"));
+				BufferedWriter writer = new BufferedWriter(new FileWriter("matches/" +username+".txt"));
 				writer.write(match);
 				writer.close();
 			} catch (Exception e) {
