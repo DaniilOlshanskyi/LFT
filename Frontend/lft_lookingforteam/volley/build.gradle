@@ -50,7 +50,7 @@ version = '1.1.2-SNAPSHOT'
 android {
 
     defaultConfig {
-        minSdkVersion = 8
+        minSdkVersion 8
     }
     compileSdkVersion 25
     buildToolsVersion = '28.0.3'

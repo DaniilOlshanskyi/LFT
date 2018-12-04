@@ -26,29 +26,27 @@ import java.util.List;
  */
 public class MainAppScreen extends AppCompatActivity {
 
-    private SharedPreferences sharedPrefs;
-    private int usertype;
-
-    private SectionsPageAdapter sPageAdapter;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // get usertype to determine which layout to display
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        usertype = sharedPrefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int usertype = sharedPrefs.getInt(Const.SHAREDPREFS_USERTYPE_KEY, Const.USERTYPE_BASIC_USER);
+
+        ViewPager viewPager;
+        TabLayout tabLayout;
 
         // set view layout and set up tabs based on usertype
         if (usertype == Const.USERTYPE_ADMIN){
             setContentView(R.layout.admin_main_screen);
-            //TODO reference views
+            viewPager = findViewById(R.id.adminMainScreen_tabViewPager);
+            tabLayout = findViewById(R.id.adminMainScreen_tabs);
         }
         else if (usertype == Const.USERTYPE_MODERATOR){
             setContentView(R.layout.mod_main_screen);
-            //TODO reference views
+            viewPager = findViewById(R.id.modMainScreen_tabViewPager);
+            tabLayout = findViewById(R.id.modMainScreen_tabs);
         }
         else {
             setContentView(R.layout.user_main_screen);
@@ -57,7 +55,7 @@ public class MainAppScreen extends AppCompatActivity {
         }
 
         // set up ViewPager with sections adapter
-        setupViewPager(viewPager);
+        setupViewPager(viewPager, usertype);
 
         // set tab layout
         tabLayout.setupWithViewPager(viewPager);
@@ -70,12 +68,22 @@ public class MainAppScreen extends AppCompatActivity {
     /**
      * Sets up a supplied ViewPager object with a SectionsPageAdapter containing fragments for the profile viewing, swiping, and conversation list interfaces
      * @param pager the supplied ViewPager
+     * @param usertype usertype of current user
      */
-    private void setupViewPager(ViewPager pager){
+    private void setupViewPager(ViewPager pager, int usertype){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MyProfileFragment(), "myProfileTab");
-        adapter.addFragment(new SwipingScreenFragment(), "swipingScreenTab");
-        adapter.addFragment(new ConversationListFragment(), "conversationListTab");
+        adapter.addFragment(new MyProfileFragment(), "Profile");
+        adapter.addFragment(new SwipingScreenFragment(), "Swiping");
+        adapter.addFragment(new ConversationListFragment(), "Messaging");
+
+        // if mod/admin, add appropriate fragments
+        if (usertype == Const.USERTYPE_ADMIN){
+            // TODO add fragments for admin screens
+        }
+        else if (usertype == Const.USERTYPE_MODERATOR){
+            // TODO add fragment for report view screen
+        }
+
         pager.setAdapter(adapter);
     }
 

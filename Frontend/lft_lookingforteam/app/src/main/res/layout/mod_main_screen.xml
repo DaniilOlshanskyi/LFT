@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/modMainScreen_topLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/modMainScreen_buttonHeader"
-        style="?android:attr/buttonBarStyle"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/modMainScreen_appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/modMainScreen_myProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="My Profile" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/modMainScreen_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/modMainScreen_swipeScreenButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Swiping" />
+        </android.support.design.widget.TabLayout>
 
-        <Button
-            android:id="@+id/modMainScreen_messagingButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Messages" />
+    </android.support.design.widget.AppBarLayout>
 
-    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/modMainScreen_tabViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
 </android.support.constraint.ConstraintLayout>

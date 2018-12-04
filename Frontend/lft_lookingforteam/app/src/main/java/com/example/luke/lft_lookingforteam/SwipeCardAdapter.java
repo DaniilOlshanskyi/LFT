@@ -7,16 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Custom ArrayAdapter class used to fill fields in swiping cards in the user interface from SwipingCard objects
  */
 public class SwipeCardAdapter extends ArrayAdapter<SwipingCard> {
-    private Context context;
-    private List<SwipingCard> cards;
 
     /**
      * SwipeCardAdapter constructor. Calls its superconstructor
@@ -26,8 +27,6 @@ public class SwipeCardAdapter extends ArrayAdapter<SwipingCard> {
      */
     public SwipeCardAdapter(@NonNull Context context, int resource, ArrayList<SwipingCard> cards) {
         super(context, resource, cards);
-        this.context = context;
-        this.cards = cards;
     }
 
     /**
@@ -42,11 +41,11 @@ public class SwipeCardAdapter extends ArrayAdapter<SwipingCard> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if (listItem == null) {
-            listItem = LayoutInflater.from(context).inflate(R.layout.swipe_card, parent, false);
+            listItem = LayoutInflater.from(getContext()).inflate(R.layout.swipe_card, parent, false);
         }
 
         // get swiping card at position
-        SwipingCard currentCard = cards.get(position);
+        SwipingCard currentCard = getItem(position);
 
         // set username
         TextView username = listItem.findViewById(R.id.swipeCard_username);
@@ -56,7 +55,11 @@ public class SwipeCardAdapter extends ArrayAdapter<SwipingCard> {
         TextView availability = listItem.findViewById(R.id.swipeCard_availability);
         availability.setText("Online: " + currentCard.getAvailability());
 
-        // TODO get and set image from URL, and display platforms and games
+        // set profile picture
+        ImageView profilePic = listItem.findViewById(R.id.swipeCard_profilePic);
+        Glide.with(getContext()).load(currentCard.getImageURL()).into(profilePic);
+
+        // TODO display platforms and games
 
         return listItem;
     }

@@ -26,10 +26,7 @@ public class SwipingScreenFragment extends Fragment {
     private SwipeCardAdapter cardAdapter;
     private SwipeFlingAdapterView flingAdapterView;
 
-    private Button passBtn, connectBtn, profileViewBtn, swipeSettingsBtn;
-
     private Intent screenSwitch;
-    private GlobalState appState;
     private WebSocketClient websocket;
 
 
@@ -39,8 +36,8 @@ public class SwipingScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.swipe_screen, container, false);
 
         // get app state and websocket
-        appState = (GlobalState) GlobalState.getAppContext();
-        websocket = appState.getWebsocket();
+        GlobalState appState = (GlobalState) GlobalState.getAppContext();
+        websocket = GlobalState.getWebsocket();
 
         // get first two swipe candidates
         cards = new ArrayList<>();
@@ -48,10 +45,10 @@ public class SwipingScreenFragment extends Fragment {
         cards.add(appState.getSwipeCandidate());
 
         // instantiate buttons and set click listeners
-        passBtn = view.findViewById(R.id.swipeScreen_passButton);
-        connectBtn = view.findViewById(R.id.swipeScreen_connectButton);
-        profileViewBtn = view.findViewById(R.id.swipeScreen_viewProfileButton);
-        swipeSettingsBtn = view.findViewById(R.id.swipeScreen_swipeSettingsButton);
+        Button passBtn = view.findViewById(R.id.swipeScreen_passButton);
+        Button connectBtn = view.findViewById(R.id.swipeScreen_connectButton);
+        Button profileViewBtn = view.findViewById(R.id.swipeScreen_viewProfileButton);
+        Button swipeSettingsBtn = view.findViewById(R.id.swipeScreen_swipeSettingsButton);
 
         passBtn.setOnClickListener(new View.OnClickListener() {
             @Override

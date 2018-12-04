@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MyProfileViewScreen" />
         <activity android:name=".AccountRegistrationScreen" />
         <activity android:name=".AppOpeningScreen">
             <intent-filter>
@@ -22,18 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserSwipeScreen" />
-        <activity android:name=".ConversationListScreen" />
         <activity android:name=".ProfileViewScreen" />
-        <activity android:name=".ModSwipeScreen" />
-        <activity android:name=".AdminSwipeScreen" />
         <activity android:name=".ConversationScreen" />
         <activity android:name=".ReportCreateScreen" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".ReportViewingScreen" />
         <activity android:name=".MainAppScreen" />
         <activity android:name=".EditProfileScreen" />
-        <activity android:name=".SwipingReference_NotPartOfProject"></activity>
     </application>
 
 </manifest>
