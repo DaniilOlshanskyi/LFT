@@ -41,7 +41,7 @@ public class Reports implements Serializable{
 	private Long reportChatlog;
 	
 	@Column(name="reportResolveFlag")
-	private Integer reportResolveFlag = 0;
+	private Integer reportResolveFlag;
 	
 	@Column(name="reportResolveDate")
 	private String reportResolveDate;

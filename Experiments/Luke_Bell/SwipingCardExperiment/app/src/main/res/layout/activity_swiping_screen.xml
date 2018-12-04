@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SwipingScreen"
+    android:id="@+id/coordinatorLayout">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_conversion_absoluteWidth="384dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_conversion_absoluteWidth="384dp" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include
+        layout="@layout/content_swiping_screen"
+        tools:layout_conversion_absoluteHeight="511dp"
+        tools:layout_editor_absoluteY="56dp"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_height="wrap_content"
+        tools:layout_conversion_absoluteWidth="384dp"
+        android:layout_width="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        tools:layout_conversion_absoluteHeight="40dp"
+        tools:layout_editor_absoluteY="511dp"
+        tools:layout_editor_absoluteX="328dp"
+        tools:layout_conversion_absoluteWidth="40dp" />
+
+</android.support.constraint.ConstraintLayout>

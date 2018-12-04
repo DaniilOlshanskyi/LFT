@@ -3,19 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MyProfileViewScreen">
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        tools:layout_editor_absoluteX="384dp">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/linearLayout"
@@ -35,7 +43,7 @@
                 android:textSize="30sp"
                 app:layout_constraintEnd_toStartOf="@+id/profileViewScreen_profilePic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/profileViewScreen_profilePic" />
 
             <TextView
                 android:id="@+id/textView22"
@@ -120,11 +128,29 @@
                 android:id="@+id/myProfileViewScreen_logoutButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="88dp"
+                android:layout_marginLeft="88dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginRight="80dp"
                 android:text="Logout"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/profileViewScreen_reportButton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/profileViewScreen_reportButton"
+                app:layout_constraintTop_toBottomOf="@+id/profileViewScreen_reportButton" />
+
+            <Button
+                android:id="@+id/ReportViewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="59dp"
+                android:layout_marginRight="59dp"
+                android:text="View Reports"
+                app:layout_constraintEnd_toStartOf="@+id/myProfileViewScreen_logoutButton"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileViewScreen_reportButton" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

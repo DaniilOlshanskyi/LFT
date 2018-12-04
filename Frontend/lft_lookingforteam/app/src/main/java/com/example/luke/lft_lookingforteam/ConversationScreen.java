@@ -95,7 +95,7 @@ public class ConversationScreen extends AppCompatActivity {
                 String socketMsg = "m:" + recipientUsername + "@" + toSend;
 
                 // log message sent
-                Log.d(Const.LOGTAG_WEBSOCKET_CHAT, "Message sent: " + "Recipient: " + recipientUsername + ", Message: " + toSend);
+                Log.d(Const.LOGTAG_WEBSOCKET, "Message sent: " + "Recipient: " + recipientUsername + ", Message: " + toSend);
 
                 // send message
                 appState.getWebsocket().send(socketMsg);

@@ -1,6 +1,7 @@
 package com.example.luke.lft_lookingforteam;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -12,13 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+
+import com.bumptech.glide.Glide;
 
 /**
  * Fragment class that manages the user's profile viewing interface and operations
  */
 public class MyProfileFragment extends Fragment {
 
-    private Button editProfileBtn, logoutBtn;
+    private Button editProfileBtn, logoutBtn, reportViewButton;
     private TextView usernameView, availabilityView;
     private ImageView profilePicView;
     private Intent i;
@@ -31,6 +35,7 @@ public class MyProfileFragment extends Fragment {
         // instantiate buttons
         editProfileBtn = view.findViewById(R.id.profileViewScreen_reportButton);
         logoutBtn = view.findViewById(R.id.myProfileViewScreen_logoutButton);
+        reportViewButton = view.findViewById(R.id.ReportViewButton);
 
         // set edit profile button to switch to profile editing screen when pressed
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +52,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // reset SharedPrefs to get rid of stored username
-                PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit().clear().commit();
+                PreferenceManager.getDefaultSharedPreferences(GlobalState.getAppContext()).edit().clear().commit();
 
                 // close websocket
                 GlobalState appState = (GlobalState) getActivity().getApplicationContext();
@@ -56,6 +61,17 @@ public class MyProfileFragment extends Fragment {
                 // go to login screen
                 i = new Intent(getActivity(), LoginScreen.class);
                 startActivity(i);
+            }
+        });
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(GlobalState.getAppContext());
+
+        reportViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent j = new Intent(getActivity(), ReportViewingScreen.class);
+                j.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, "testusername1");
+                j.putExtra("reportId", 1);
+                startActivity(j);
             }
         });
 
@@ -67,8 +83,10 @@ public class MyProfileFragment extends Fragment {
 
         // instantiate image view
         profilePicView = view.findViewById(R.id.profileViewScreen_profilePic);
+        Glide.with(GlobalState.getAppContext()).load(Const.URL_PROFILE_PICTURES + prefs.getString(Const.SHAREDPREFS_PROFILEPIC_KEY, Const.URL_DEFAULT_PROFILE_PIC)).into(profilePicView);
 
-        //TODO set image
+        usernameView.setText(prefs.getString(Const.SHAREDPREFS_USERNAME_KEY, "Username"));
+        availabilityView.setText(prefs.getString(Const.SHAREDPREFS_AVAILABILITY_KEY, "Availability"));
 
         //TODO implement rest of profile view screen
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -37,13 +38,21 @@ public class SwipingScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.swipe_screen, container, false);
 
         // get app state and websocket
-        GlobalState appState = (GlobalState) GlobalState.getAppContext();
+        final GlobalState appState = (GlobalState) GlobalState.getAppContext();
         websocket = GlobalState.getWebsocket();
 
         // get first two swipe candidates
         cards = new ArrayList<>();
-        //cards.add(appState.getSwipeCandidate());
-        //cards.add(appState.getSwipeCandidate());
+        SwipingCard temp;
+        temp = appState.getSwipeCandidate();
+
+        if (temp == null){
+            temp = new SwipingCard("No users available", "", Const.URL_DEFAULT_PROFILE_PIC, new ArrayList<String>(), new ArrayList<String>());
+            cards.add(temp);
+        } else {
+            cards.add(temp);
+            cards.add(appState.getSwipeCandidate());
+        }
 
         // instantiate buttons and set click listeners
         Button passBtn = view.findViewById(R.id.swipeScreen_passButton);
@@ -73,6 +82,7 @@ public class SwipingScreenFragment extends Fragment {
                 // switch to profile view screen
                 screenSwitch = new Intent(getActivity(), ProfileViewScreen.class);
                 screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, cards.get(0).getUsername());
+                screenSwitch.putExtra(Const.PROFILE_PHOTO_KEY, cards.get(0).getImageURL());
                 startActivity(screenSwitch);
             }
         });
@@ -80,7 +90,8 @@ public class SwipingScreenFragment extends Fragment {
         swipeSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO open swipe settings
+                //TODO implement swipe settings
+                Toast.makeText(GlobalState.getAppContext(), "Swipe filters not yet implemented", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,16 +117,17 @@ public class SwipingScreenFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                // right means "connect" so send match request to server
-                websocket.send(Const.WEBSOCKET_MATCHING_TAG);
+                // right means "connect" so send match request to server, and log it
+                String username = ((SwipingCard) dataObject).getUsername();
+                Log.d(Const.LOGTAG_WEBSOCKET, "Sending match request for " + username);
+                websocket.send(Const.WEBSOCKET_MATCHING_TAG + username);
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // add blank card to swipeCandidates
-                cards.add(new SwipingCard("", "", "", new ArrayList<String>(), new ArrayList<String>()));
+                // get another card and notify the adapter
+                cards.add(appState.getSwipeCandidate());
                 cardAdapter.notifyDataSetChanged();
-                //TODO implement adding blank card
             }
 
             @Override
@@ -129,7 +141,7 @@ public class SwipingScreenFragment extends Fragment {
             public void onItemClicked(int itemPosition, Object dataObject) {
                 // switch to profile view screen
                 screenSwitch = new Intent(getActivity(), ProfileViewScreen.class);
-                screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, cards.get(0).getUsername());
+                screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, cards.get(itemPosition).getUsername());
                 startActivity(screenSwitch);
             }
         });
