@@ -66,31 +66,31 @@ public class Reports implements Serializable{
 //		profId = id;
 //	}
 	
-	public Long getChatlog() {
+	public Long getreportChatlog() {
 		return reportChatlog;
 	}
-	public void setChatlog(Long chatlog) {
+	public void setreportChatlog(Long chatlog) {
 		reportChatlog = chatlog;
 	}
 	
-	public Integer getResolveFlag() {
+	public Integer getreportResolveFlag() {
 		return reportResolveFlag;
 	}
-	public void setResolveFlag(Integer resolveFlag) {
+	public void setreportResolveFlag(Integer resolveFlag) {
 		reportResolveFlag = resolveFlag;
 	}
 	
-	public String getResolveDate() {
+	public String getreportResolveDate() {
 		return reportResolveDate;
 	}
-	public void setResolveDate(String resolveDate) {
+	public void setreportResolveDate(String resolveDate) {
 		reportResolveDate = resolveDate;
 	}
 	
-	public String getMessage() {
+	public String getreportMessage() {
 		return reportMessage;
 	}
-	public void setMessage(String message) {
+	public void setreportMessage(String message) {
 		reportMessage = message;
 	}
 }
