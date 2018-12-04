@@ -39,7 +39,7 @@ public class ReportCreateScreen extends AppCompatActivity {
     Boolean chat, prof;
     Date date = Calendar.getInstance().getTime();
     JSONObject violatorProfile;
-    int violatorId;
+//    int violatorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class ReportCreateScreen extends AppCompatActivity {
                 message = messageEdit.getText().toString();
                 chat = messageCheck.isChecked();
                 prof = profileCheck.isChecked();
-                violatorId = getIntent().getIntExtra(Const.INTENT_PROFILE_VIEW_USERNAME, 0);
+//                violatorId = getIntent().getIntExtra(Const.INTENT_PROFILE_VIEW_USERNAME, 0);
 
 //                JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + violatorUsername,
 //                        null,

@@ -73,7 +73,7 @@ public class ReportViewingScreen extends AppCompatActivity {
         messageText = findViewById(R.id.messageText);
         messageTextSend = findViewById(R.id.messageTextSend);
 
-        messageText.setText(messageSent);
+        messageText.setText("He's a Jerk");
 
         cancelButton2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +104,7 @@ public class ReportViewingScreen extends AppCompatActivity {
 //                if(chatLog.length() == 0){
                     Intent i = new Intent(ReportViewingScreen.this, ProfileViewScreen.class);
                     i.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, profUsername);
+                    i.putExtra(Const.PROFILE_PHOTO_KEY, "placeholder.JPG");
                     startActivity(i);
 //                }else{
 //                    //TODO show chatlog somehow
