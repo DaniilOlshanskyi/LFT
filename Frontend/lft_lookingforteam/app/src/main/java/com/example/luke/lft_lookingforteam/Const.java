@@ -56,6 +56,7 @@ public class Const {
     //Intent object key names
     public static final String INTENT_CONVERSATION_USERNAME = "convoUsername";
     public static final String INTENT_PROFILE_VIEW_USERNAME = "profileUsername";
+    public static final String INTENT_PROFILE_PIC = "profilePic";
 
     //Registration Screen EditText field character limits
     public static final int USERNAME_CHARACTER_LIMIT = 15;
@@ -67,6 +68,8 @@ public class Const {
     //SharedPreferences key names
     public static final String SHAREDPREFS_USERNAME_KEY = "username";
     public static final String SHAREDPREFS_USERTYPE_KEY = "usertype";
+    public static final String SHAREDPREFS_PROFILEPIC_KEY = "profilePic";
+    public static final String SHAREDPREFS_AVAILABILITY_KEY = "availability";
 
     //usertypes
     public static final int USERTYPE_BASIC_USER = 0;

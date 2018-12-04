@@ -97,8 +97,6 @@ public class GlobalState extends Application {
                     String senderUsername;
                     String message;
 
-                    //TODO implement for multiple cached messages
-
                     // parse message for contents
                     contentElements = messageContent.split(Const.WEBSOCKET_DATA_SEPARATOR);
                     senderUsername = contentElements[0];
@@ -147,8 +145,6 @@ public class GlobalState extends Application {
                     if (chatWindow != null && user2 != null && user2.getText().equals(senderUsername)) {
                         chatWindow.append(senderUsername + ": " + message + "\n");
                     }
-
-                    //TODO set "new message" icon flag
                 }
 
                 // if swiping list message

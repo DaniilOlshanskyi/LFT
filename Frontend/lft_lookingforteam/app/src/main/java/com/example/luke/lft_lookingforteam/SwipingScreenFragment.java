@@ -140,7 +140,7 @@ public class SwipingScreenFragment extends Fragment {
             public void onItemClicked(int itemPosition, Object dataObject) {
                 // switch to profile view screen
                 screenSwitch = new Intent(getActivity(), ProfileViewScreen.class);
-                screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, cards.get(0).getUsername());
+                screenSwitch.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, cards.get(itemPosition).getUsername());
                 startActivity(screenSwitch);
             }
         });

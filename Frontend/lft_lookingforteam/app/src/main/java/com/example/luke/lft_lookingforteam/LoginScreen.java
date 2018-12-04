@@ -90,6 +90,8 @@ public class LoginScreen extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         int usertype = 0; // class of user (basic, mod, admin), default to basic
+                        String profilePic = Const.URL_DEFAULT_PROFILE_PIC;
+                        String availability = "availability not set";
 
                         // if username of response is "&&&", username is invalid
                         try{
@@ -112,6 +114,13 @@ public class LoginScreen extends AppCompatActivity {
 
                             // get usertype from response
                             usertype = response.getInt(Const.PROFILE_MOD_FLAG_KEY);
+
+                            // get profile pic URL from response
+                            profilePic = response.getString(Const.PROFILE_PHOTO_KEY);
+
+                            // get availability from response
+                            availability = response.getString(Const.PROFILE_PERIOD_KEY);
+
                         } catch (JSONException jse) {
                             Toast.makeText(getApplicationContext(), jse.toString(), Toast.LENGTH_LONG).show();
                         }
@@ -120,6 +129,8 @@ public class LoginScreen extends AppCompatActivity {
                         // 1: store profile information in SharedPrefs
                         prefEditor.putString(Const.SHAREDPREFS_USERNAME_KEY, username); // store username in SharedPrefs
                         prefEditor.putInt(Const.SHAREDPREFS_USERTYPE_KEY, usertype); // store usertype in SharedPrefs
+                        prefEditor.putString(Const.SHAREDPREFS_PROFILEPIC_KEY, profilePic); // store profile pic URL in SharedPrefs
+                        prefEditor.putString(Const.SHAREDPREFS_AVAILABILITY_KEY, availability); // store availability in SharedPrefs
                         //TODO store more profile information as needed
                         prefEditor.apply(); // apply changes to SharedPrefs
 
