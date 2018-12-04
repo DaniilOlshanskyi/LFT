@@ -64,7 +64,7 @@ public class ReportCreateScreen extends AppCompatActivity {
                 message = messageEdit.getText().toString();
                 chat = messageCheck.isChecked();
                 prof = profileCheck.isChecked();
-                String violatorUsername = getIntent().getStringExtra("username");
+                String violatorUsername = getIntent().getStringExtra(Const.INTENT_PROFILE_VIEW_USERNAME);
 
                 JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.GET, Const.URL_GET_PROFILE_BY_USERNAME + violatorUsername,
                         null,

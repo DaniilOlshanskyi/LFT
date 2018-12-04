@@ -29,7 +29,7 @@ public class MyProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.my_profile_view_screen, container, false);
 
         // instantiate buttons
-        editProfileBtn = view.findViewById(R.id.myProfileViewScreen_editProfileButton);
+        editProfileBtn = view.findViewById(R.id.profileViewScreen_reportButton);
         logoutBtn = view.findViewById(R.id.myProfileViewScreen_logoutButton);
 
         // set edit profile button to switch to profile editing screen when pressed
@@ -60,13 +60,13 @@ public class MyProfileFragment extends Fragment {
         });
 
         // instantiate text views
-        usernameView = view.findViewById(R.id.myProfileViewScreen_username);
+        usernameView = view.findViewById(R.id.profileViewScreen_username);
         availabilityView = view.findViewById(R.id.myProfileViewScreen_availability);
 
         //TODO set text
 
         // instantiate image view
-        profilePicView = view.findViewById(R.id.myProfileViewScreen_profilePic);
+        profilePicView = view.findViewById(R.id.profileViewScreen_profilePic);
 
         //TODO set image
 

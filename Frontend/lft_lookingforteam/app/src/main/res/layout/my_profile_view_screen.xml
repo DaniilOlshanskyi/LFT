@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/myProfileViewScreen_username"
+                android:id="@+id/profileViewScreen_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -33,19 +33,19 @@
                 android:layout_marginRight="8dp"
                 android:text="Username"
                 android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/myProfileViewScreen_profilePic"
+                app:layout_constraintEnd_toStartOf="@+id/profileViewScreen_profilePic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Online:"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/myProfileViewScreen_username"
-                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_username" />
+                app:layout_constraintStart_toStartOf="@+id/profileViewScreen_username"
+                app:layout_constraintTop_toBottomOf="@+id/profileViewScreen_username" />
 
             <TextView
                 android:id="@+id/myProfileViewScreen_availability"
@@ -58,12 +58,12 @@
                 android:layout_marginRight="8dp"
                 android:text="Availability"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/myProfileViewScreen_profilePic"
-                app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_username" />
+                app:layout_constraintEnd_toStartOf="@+id/profileViewScreen_profilePic"
+                app:layout_constraintStart_toEndOf="@+id/textView22"
+                app:layout_constraintTop_toBottomOf="@+id/profileViewScreen_username" />
 
             <ImageView
-                android:id="@+id/myProfileViewScreen_profilePic"
+                android:id="@+id/profileViewScreen_profilePic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="8dp"
@@ -80,7 +80,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_profilePic">
+                app:layout_constraintTop_toBottomOf="@+id/profileViewScreen_profilePic">
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/accountView_platform1"
@@ -102,7 +102,7 @@
             </android.support.design.widget.TabLayout>
 
             <Button
-                android:id="@+id/myProfileViewScreen_editProfileButton"
+                android:id="@+id/profileViewScreen_reportButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -123,9 +123,9 @@
                 android:layout_marginTop="8dp"
                 android:text="Logout"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/myProfileViewScreen_editProfileButton"
-                app:layout_constraintStart_toStartOf="@+id/myProfileViewScreen_editProfileButton"
-                app:layout_constraintTop_toBottomOf="@+id/myProfileViewScreen_editProfileButton" />
+                app:layout_constraintEnd_toEndOf="@+id/profileViewScreen_reportButton"
+                app:layout_constraintStart_toStartOf="@+id/profileViewScreen_reportButton"
+                app:layout_constraintTop_toBottomOf="@+id/profileViewScreen_reportButton" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

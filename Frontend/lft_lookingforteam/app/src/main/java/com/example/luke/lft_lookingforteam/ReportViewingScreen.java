@@ -99,7 +99,7 @@ public class ReportViewingScreen extends AppCompatActivity {
             public void onClick(View v) {
                 if(chatLog.length() == 0){
                     Intent i = new Intent(ReportViewingScreen.this, ProfileViewScreen.class);
-                    i.putExtra("profId", profId);
+                    i.putExtra(Const.INTENT_PROFILE_VIEW_USERNAME, profId);
                     startActivity(i);
                 }else{
                     //TODO show chatlog somehow
