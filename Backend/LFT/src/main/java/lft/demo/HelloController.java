@@ -68,7 +68,14 @@ public class HelloController {
      */
     @GetMapping(path="/all/username/{username}")
     public @ResponseBody Profiles getUserByUsername(@PathVariable(value="username") String username){
-    	return userRepository.findByprofUsername(username);
+    	Profiles temp = userRepository.findByprofUsername(username);
+    	if(temp!=null) {
+    		return temp;
+    	} else {
+    		temp = new Profiles();
+    		temp.setprofusername("&&&");
+    		return temp;
+    	}
     }
     
     /**
@@ -79,7 +86,13 @@ public class HelloController {
      */
     @PostMapping("/post_profile")
     Profiles newProfile(@RequestBody Profiles profile) {
-    	return userRepository.save(profile);
+    	if(userRepository.findByprofUsername(profile.getprofUsername())==null) {
+    		return userRepository.save(profile);
+    	} else {
+    		Profiles temp = new Profiles();
+    		temp.setprofusername("&&&");
+    		return temp;
+    	}
     }
     
     /**
